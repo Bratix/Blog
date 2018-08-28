@@ -3,7 +3,21 @@ from django.views.generic import CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from .models import Blog, BlogPost, Comment
+from .models import Blog, BlogPost, Comment, Category
+
+class CategoryView(generic.ListView):
+    template_name = 'blogapp/category.html'
+
+    def get_queryset(self):
+        return Category.objects.all()
+        
+class BlogsbyCategoryView(generic.ListView):
+    template_name = 'blogapp/category_detail.html'
+
+    def get_queryset(self):
+        current_category = Category.objects.get(id=self.kwargs['pk'])
+        return Blog.objects.filter(category = current_category)
+
 
 class IndexView(generic.ListView):
     template_name = 'blogapp/index.html'
@@ -18,9 +32,11 @@ class BlogDetailView(generic.DetailView):
 
 
 
+
+
 class BlogCreate(CreateView):
     model = Blog
-    fields = ['blog_title']
+    fields = ['blog_title','category']
     
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -42,11 +58,9 @@ class BlogPostCreate(CreateView):
     fields = ['post_title','post_text']
 
     def form_valid(self, form): 
-        #form.instance.user = self.request.user
+        form.instance.user = self.request.user
         form.instance.blog = Blog.objects.get(id=self.kwargs['pk'])
         return super(BlogPostCreate, self).form_valid(form)
-    
-    
 
 class BlogPostUpdate(UpdateView):
     model = BlogPost
@@ -56,6 +70,12 @@ class BlogPostDelete(DeleteView):
     model = BlogPost
     success_url = reverse_lazy('blog:index')
 
+class BlogsPostSearchByTag(generic.ListView):
+    template_name = 'blogapp/search.html'
+
+    def get_queryset(self):
+        wanted_tag = self.request.GET.get('tag_search').split()
+        return BlogPost.objects.filter(tags__name__in = wanted_tag ).distinct()
 
 
 class CommentCreate(CreateView):

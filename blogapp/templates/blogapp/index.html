@@ -1,3 +1,9 @@
+<form action="{% url 'blog:search_tag' %}" method="GET" >
+    <input type="text" placeholder="search" name = "tag_search" >
+    <button type="submit">Submit</button>
+
+</form>
+
 {% for blog in object_list %}
 <h1><a href="{% url 'blog:detail' blog.id %}">{{ blog.blog_title }}</a></h1>
 <br>
@@ -13,3 +19,5 @@
 <hr>
 {% endfor %}
 <a href="{% url 'blog:blog_create' %}">New Blog</a>
+<br>
+<a href="{% url 'blog:category' %}"> Categories </a>

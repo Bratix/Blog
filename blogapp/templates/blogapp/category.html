@@ -1,0 +1,6 @@
+{% for category in object_list %}
+<a href="{% url 'blog:category_detail' category.id %}"> {{ category.name }} </a>
+<br>
+{% endfor %}
+
+<!-- {" urls 'blog:category_detail' category.id %} -->

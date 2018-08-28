@@ -30,4 +30,12 @@ urlpatterns = [
     path('delete/comment/<pk>', views.CommentDelete.as_view(), name = "comment_delete"),
     #/blogs/update/blog/1
     path('update/<pk>/comment', views.CommentUpdate.as_view(), name = "comment_update"),
+
+    #blogs/view/categories
+    path('view/categories', views.CategoryView.as_view(), name = "category"),
+    #blogs/view/categories/1
+    path('view/categories/<pk>', views.BlogsbyCategoryView.as_view(), name = "category_detail"),
+
+    #blogs/search/tags
+    path('view/search/tags', views.BlogsPostSearchByTag.as_view(), name = 'search_tag')
 ]

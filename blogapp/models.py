@@ -4,12 +4,21 @@ from datetime import datetime
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.conf import settings
+from taggit.managers import TaggableManager
+
+class Category(models.Model):
+    name = models.CharField(max_length = 30)
+
+    def __str__(self):
+        return self.name
 
 class Blog(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    blog_title = models.CharField(max_length=50)
-    #picture = models.FileField(null=True, blank=True)
-    creation_date = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    category = models.ForeignKey(Category, on_delete = models.CASCADE)
+    blog_title = models.CharField(max_length = 50)
+    picture = models.FileField(null = True, blank = True)
+    tags = TaggableManager()
+    creation_date = models.DateTimeField(auto_now_add = True)
 
     def __str__(self):
         return self.blog_title
@@ -19,12 +28,15 @@ class Blog(models.Model):
     
 
 class BlogPost(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE) 
-    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE) 
+    blog = models.ForeignKey(Blog, on_delete = models.CASCADE)
     post_title = models.CharField(max_length = 50)
-    creation_date = models.DateTimeField(auto_now_add=True)
     post_text = models.CharField(max_length = 50000)
-
+    tags = TaggableManager()
+    picture = models.FileField(null=True, blank=True)
+    creation_date = models.DateTimeField(auto_now_add = True)
+    
+   
     def __str__(self):
         return self.post_title
 

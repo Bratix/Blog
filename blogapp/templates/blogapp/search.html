@@ -1,0 +1,10 @@
+{% for blogpost in object_list %}
+<h1>{{ blogpost.post_title }}</h1>
+<br>
+<h2>{{ blogpost.post_text }}</h2>
+{% for tag in blogpost.tags.all %}
+    {{ tag.name }}
+    <br>
+{% endfor %}
+<br>
+{% endfor %}
