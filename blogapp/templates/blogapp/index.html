@@ -1,0 +1,15 @@
+{% for blog in object_list %}
+<h1><a href="{% url 'blog:detail' blog.id %}">{{ blog.blog_title }}</a></h1>
+<br>
+<h2>{{ blog.user.username }}</h2>
+<br>
+<form id="my_form" method="post" action="{% url 'blog:blog_delete' blog.id %}">
+    {% csrf_token %}
+    {% if user == blog.user %}
+    <button type="submit" >Delete blog</button>
+    {% endif %}
+</form>
+
+<hr>
+{% endfor %}
+<a href="{% url 'blog:blog_create' %}">New Blog</a>

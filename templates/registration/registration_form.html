@@ -1,0 +1,7 @@
+<h3>Create new account!</h3>
+                    <form class = "form-horizontal" action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% include "registration/basic_form.html" %}
+                                <br>
+                                <button type="submit" class="btn btn-success" >Submit</button>
+                    </form>

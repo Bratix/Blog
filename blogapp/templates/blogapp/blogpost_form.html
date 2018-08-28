@@ -1,0 +1,10 @@
+<h2>Make your post!</h2>
+    <form class = "form-horizontal" action="" method ="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include "blogapp/basic_form.html" %}
+    
+        {% if user.is_authenticated %}
+        <br>
+        <button type="submit" class="btn btn-success"> Create </button>
+        {% endif %}
+    </form>

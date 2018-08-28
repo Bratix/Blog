@@ -1,0 +1,45 @@
+{% for blogpost in blog.blogpost_set.all %}
+<h1>{{ blogpost.post_title }}</h1>
+<br>
+<h2>{{ blogpost.post_text }}</h2>
+<br>
+
+<form id="my_form" method="post" action="{% url 'blog:post_delete' blogpost.id %}">
+    {% csrf_token %}
+    {% if user == blogpost.user %}
+        <button type="submit" >Delete post</button>
+    {% endif %}
+    
+</form>
+
+<h1>Comments</h1>
+{% for comment in blogpost.comment_set.all %}
+<h3>{{ comment.comment_text }} by {{ comment.user.username }}</h3> <h5>at {{comment.creation_date|date:'d M Y'}} at {{comment.creation_date|date:'H:i'}}</h5>
+<form id="my_form" method="post" action="{% url 'blog:comment_delete' comment.id %}">
+    {% csrf_token %}
+
+    {% if user == comment.user or user == blog.user or user.is_superuser %}
+        <button type="submit" >Delete comment</button>
+    {% endif %}
+
+</form>
+<hr>
+
+{% endfor %}
+
+<form id="my_form" method="post" action="{% url 'blog:comment_create' blogpost.id %}">
+    {% csrf_token %}
+    <button type="submit" >Create comment</button>
+</form>
+
+<hr>
+{% endfor %}
+
+<form id="my_form" method="post" action="{% url 'blog:post_create' blog.id %}">
+    {% csrf_token %}
+
+    {% if user == comment.user or user == blog.user%}
+        <button type="submit" >Post create</button>
+    {% endif %}
+
+</form>
