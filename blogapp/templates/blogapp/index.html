@@ -1,4 +1,5 @@
-<form action="{% url 'blog:search_tag' %}" method="GET" >
+{% extends 'base.html' %}
+{% comment %} <form action="{% url 'blog:search_tag' %}" method="GET" >
     <input type="text" placeholder="search" name = "tag_search" >
     <button type="submit">Submit</button>
 
@@ -20,4 +21,34 @@
 {% endfor %}
 <a href="{% url 'blog:blog_create' %}">New Blog</a>
 <br>
-<a href="{% url 'blog:category' %}"> Categories </a>
+<a href="{% url 'blog:category' %}"> Categories </a> {% endcomment %}
+
+{% block body %}
+
+<section class="welcome-post-sliders owl-carousel">
+
+        <!-- Single Slide -->
+        {% for blog in object_list %}
+            <div class="welcome-single-slide">
+                <!-- Post Thumb -->
+                <img src="{{ blog.picture.url }}" alt="">
+                <!-- Overlay Text -->
+                <div class="project_title">
+                    <div class="post-date-commnents d-flex">
+                        <a href="#">{{blog.creation_date|date:'d M Y'}}</a>
+                        <a href="#">{{blog.user.username}}</a>
+                    </div>
+                    <a href="#">
+                        <h5>{{ blog.blog_title }}</h5>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+        
+
+
+    </section>
+
+{% endblock body %}
+
+
