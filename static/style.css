@@ -1429,7 +1429,7 @@ li {
 .bg-pattern {
     background-attachment: fixed;
     background-position: center center;
-    background-image: url(img/bg-img/bg-pattern.jpg);
+    
     position: relative;
     background-size: cover;
     z-index: 1;
@@ -1493,9 +1493,10 @@ li {
 }
 
 .text-medium{
-    font-size: 25px;
+    font-size: 21px;
 }
 
 .text-large{
-    font-size: 35px;
+    font-size: 27px;
 }
+

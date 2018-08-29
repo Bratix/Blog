@@ -39,3 +39,4 @@ urlpatterns = [
     #blogs/search/tags
     path('view/search/tags', views.BlogsPostSearchByTag.as_view(), name = 'search_tag')
 ]
+

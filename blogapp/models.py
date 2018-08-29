@@ -8,7 +8,8 @@ from taggit.managers import TaggableManager
 
 class Category(models.Model):
     name = models.CharField(max_length = 30)
-
+    picture = models.FileField(null = True, blank = True)
+    
     def __str__(self):
         return self.name
 
