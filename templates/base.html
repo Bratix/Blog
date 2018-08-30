@@ -98,8 +98,8 @@
                         </div>
                         <!-- Search Form -->
                         <div class="search-hidden-form">
-                            <form action="#" method="get">
-                                <input type="search" name="search" id="search-anything" placeholder="Search Anything...">
+                            <form action="{% url 'blog:search_tag' %}" method="get">
+                                <input type="text" name="search" id="search-anything" placeholder="Search Anything...">
                                 <input type="submit" value="" class="d-none">
                                 <span class="searchBtn"><i class="fa fa-times" aria-hidden="true"></i></span>
                             </form>
@@ -118,7 +118,7 @@
                 <!-- Logo Area Start -->
                 <div class="col-12">
                     <div class="logo_area text-center">
-                        <a href="{% url 'blog:index' %}" class="yummy-logo">Blogo</a>
+                        <a href="{% url 'blog:index' %}" class="yummy-logo"> {% block title %}Blogo{% endblock title %}</a>
                     </div>
                 </div>
             </div>
@@ -150,13 +150,13 @@
                                     <a class="nav-link" href="{% url 'blog:category' %}">Categories</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="archive.html">Archive</a>
+                                    <a class="nav-link" href="#">Archive</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">About</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="contact.html">Contact</a>
+                                    <a class="nav-link" href="#">Contact</a>
                                 </li>
                             </ul>
                         </div>
@@ -184,6 +184,7 @@
             </div>
         </div>
     </footer>
+    <br>
 
     <!-- ****** Footer Menu Area End ****** -->
 

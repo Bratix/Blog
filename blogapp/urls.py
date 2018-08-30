@@ -10,6 +10,18 @@ urlpatterns = [
     #/blogs/1
     path('<pk>', views.BlogDetailView.as_view(), name = "detail"),
 
+    path('posts/<pk>', views.BlogPostDetailView.as_view(), name = "blogpost_detail"),
+    
+    #blogs/view/categories
+    path('view/categories', views.CategoryView.as_view(), name = "category"),
+    #blogs/view/categories/1
+    path('view/categories/<pk>', views.BlogsbyCategoryView.as_view(), name = "category_detail"),
+
+    #blogs/search/tags
+    path('view/search/tags', views.BlogsPostSearchByTag.as_view(), name = 'search_tag'),
+
+
+    #Create/Delete/Update views
     #/blogs/create/blog
     path('create/blog', views.BlogCreate.as_view(), name = "blog_create"),
     #/blogs/delete/blog/1
@@ -24,19 +36,12 @@ urlpatterns = [
     #/blogs/update/post/1
     path('update/<pk>/post', views.BlogPostUpdate.as_view(), name = "post_update"),
 
-    #/blogs/create/comment
+    #/blogs/create/1/comment
     path('create/<pk>/comment', views.CommentCreate.as_view(), name = "comment_create"),
     #/blogs/delete/blog/1
     path('delete/comment/<pk>', views.CommentDelete.as_view(), name = "comment_delete"),
     #/blogs/update/blog/1
     path('update/<pk>/comment', views.CommentUpdate.as_view(), name = "comment_update"),
 
-    #blogs/view/categories
-    path('view/categories', views.CategoryView.as_view(), name = "category"),
-    #blogs/view/categories/1
-    path('view/categories/<pk>', views.BlogsbyCategoryView.as_view(), name = "category_detail"),
-
-    #blogs/search/tags
-    path('view/search/tags', views.BlogsPostSearchByTag.as_view(), name = 'search_tag')
 ]
 

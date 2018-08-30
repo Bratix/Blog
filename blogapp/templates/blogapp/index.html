@@ -1,9 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %}   
+{% block title %}Welcome to Blogo{% endblock title %}
 
 {% block body %}
 
 <section class="welcome-post-sliders owl-carousel">
 
+        
         <!-- Single Slide -->
         {% for blog in all_blogs %}
             <div class="welcome-single-slide">
@@ -15,7 +17,7 @@
                         <a href="#">{{blog.creation_date|date:'d M Y'}}</a>
                         <a href="#">{{blog.user.username}}</a>
                     </div>
-                    <a href="#">
+                    <a href="{% url 'blog:detail' blog.id %}">
                         <h5>{{ blog.blog_title }}</h5>
                     </a>
                 </div>
@@ -23,15 +25,43 @@
         {% endfor %}
 </section>
 
+<div class="text-center">
+    <form action="{% url 'blog:blog_create'%}" method="post">
+            {% csrf_token %}
+            <h4 class="mb-30"><button type="submit" class="btn contact-btn">Make your own blog</button></h4>
+    </form>
+</div>
+
+
+
+
 <section class="categories_area clearfix" id="about">
+
+    <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                    <div class="single-widget-area about-me-widget text-center">
+                            <div class="widget-title">
+                                <h6>Categories</h6>
+                            </div>
+                    </div>
+                </div>
+
+    </div>
+
+    <div class="text-center"><h1> <strong>Browse something new!</strong> </h1></div>
+    <br>
+        
+    
+
     <div class="container">
         <div class="row">
+                
             {% for category in all_categories %}
             <div class="col-12 col-md-6 col-lg-4">
                     <div class="single_catagory wow fadeInUp" data-wow-delay=".3s">
                         <img src="{{ category.picture.url }}" alt="" height="300" width="400">
                         <div class="catagory-title">
-                            <a href="#">
+                            <a href="{% url 'blog:category_detail' category.id %}">
                                 <h5> {{ category.name }} </h5>
                             </a>
                         </div>
@@ -44,6 +74,19 @@
 </section>
 
 <section class="blog_area section_padding_0_80">
+
+        <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                        <div class="single-widget-area about-me-widget text-center">
+                                <div class="widget-title">
+                                    <h6>Popular posts</h6>
+                                </div>
+                        </div>
+                    </div>
+    
+        </div>
+
+
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8">
@@ -70,27 +113,13 @@
                                                 <a href="#">{{featured_post.creation_date|date:'d M Y'}} at {{featured_post.creation_date|date:'H:i'}}</a>
                                             </div>
                                         </div>
-                                        <!-- Post Comment & Share Area -->
-                                        <div class="post-comment-share-area d-flex">
-                                            <!-- Post Favourite -->
-                                            <div class="post-favourite">
-                                                <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> 10</a>
-                                            </div>
-                                            <!-- Post Comments -->
-                                            <div class="post-comments">
-                                                <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>
-                                            </div>
-                                            <!-- Post Share -->
-                                            <div class="post-share">
-                                                <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
-                                    <a href="#">
+                                    <a href="{% url 'blog:blogpost_detail' featured_post.id %}">
                                         <h2 class="post-headline">{{featured_post.post_title}}</h2>
                                     </a>
-                                    <p>{{featured_post.post_title}}</p>
-                                    <a href="#" class="read-more">Continue Reading..</a>
+                                    <p>{{featured_post.post_text}}</p>
+                                    <a href="{% url 'blog:blogpost_detail' featured_post.id %}" class="read-more">Continue Reading..</a>
                                 </div>
                             </div>
                         </div>
@@ -120,26 +149,13 @@
                                                 </div>
                                             </div>
                                             <!-- Post Comment & Share Area -->
-                                            <div class="post-comment-share-area d-flex">
-                                                <!-- Post Favourite -->
-                                                <div class="post-favourite">
-                                                    <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> 10</a>
-                                                </div>
-                                                <!-- Post Comments -->
-                                                <div class="post-comments">
-                                                    <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>
-                                                </div>
-                                                <!-- Post Share -->
-                                                <div class="post-share">
-                                                    <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
-                                                </div>
-                                            </div>
+                                           
                                         </div>
-                                        <a href="#">
+                                        <a href="{% url 'blog:blogpost_detail' post.id %}">
                                             <h4 class="post-headline">{{post.post_title}}</h4>
                                         </a>
                                         <p>{{post.post_text}}</p>
-                                        <a href="#" class="read-more">Continue Reading..</a>
+                                        <a href="{% url 'blog:blogpost_detail' post.id %}" class="read-more">Continue Reading..</a>
                                     </div>
                                 </div>
                             </div>
@@ -149,11 +165,12 @@
 
                     </div>
                 </div>
+
                 <!-- ****** Blog Sidebar ****** -->
                 <div class="col-12 col-sm-8 col-md-6 col-lg-4">
                     <div class="blog-sidebar mt-5 mt-lg-0">
                         <!-- Single Widget Area -->
-                        <div class="single-widget-area about-me-widget text-center">
+                        <!-- <div class="single-widget-area about-me-widget text-center">
                             <div class="widget-title">
                                 <h6>About Me</h6>
                             </div>
@@ -162,15 +179,15 @@
                             </div>
                             <h4 class="font-shadow-into-light">Shopia Bernard</h4>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
-                        </div>
+                        </div> -->
 
                         <!-- Single Widget Area -->
-                        <div class="single-widget-area popular-post-widget">
+                        <!-- <div class="single-widget-area popular-post-widget">
                             <div class="widget-title text-center">
                                 <h6>Populer Post</h6>
-                            </div>
+                            </div> -->
                             <!-- Single Popular Post -->
-                            <div class="single-populer-post d-flex">
+                            <!-- <div class="single-populer-post d-flex">
                                 <img src="img/sidebar-img/1.jpg" alt="">
                                 <div class="post-content">
                                     <a href="#">
@@ -180,7 +197,7 @@
                                 </div>
                             </div>
                           
-                        </div>
+                        </div> -->
 
                         
                     </div>

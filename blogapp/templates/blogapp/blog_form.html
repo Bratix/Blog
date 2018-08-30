@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block body %}
 <h2>Make your blog!</h2>
     <form class = "form-horizontal" action="" method ="POST" enctype="multipart/form-data">
     {% csrf_token %}
@@ -8,3 +11,5 @@
         <button type="submit" class="btn btn-success"> Create </button>
         {% endif %}
     </form>
+
+{% endblock body %}

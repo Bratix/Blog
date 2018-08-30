@@ -8,7 +8,7 @@ from .models import Blog, BlogPost, Comment, Category
 
 class IndexView(View):
     def get(self, request):
-        context = { 'all_blogs' : Blog.objects.all, 'all_categories': Category.objects.all, 'featuredd_post': BlogPost.objects.order_by('?')[:1], 'all_posts': BlogPost.objects.order_by('?') }
+        context = { 'all_blogs' : Blog.objects.all, 'all_categories': Category.objects.order_by('?')[:3], 'featuredd_post': BlogPost.objects.order_by('?')[:1], 'all_posts': BlogPost.objects.order_by('?') }
         return render(request, 'blogapp/index.html', context )
 
 class CategoryView(generic.ListView):
@@ -29,6 +29,10 @@ class BlogDetailView(generic.DetailView):
     model = Blog
     template_name = 'blogapp/detail.html'
 
+class BlogPostDetailView(generic.DetailView):
+    model = BlogPost
+    template_name = 'blogapp/blogpost_detail.html'
+
 
 
 
@@ -36,7 +40,7 @@ class BlogDetailView(generic.DetailView):
 
 class BlogCreate(CreateView):
     model = Blog
-    fields = ['blog_title','category']
+    fields = ['blog_title','category','picture']
     
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -74,7 +78,7 @@ class BlogsPostSearchByTag(generic.ListView):
     template_name = 'blogapp/search.html'
 
     def get_queryset(self):
-        wanted_tag = self.request.GET.get('tag_search').split()
+        wanted_tag = self.request.GET.get('search').split()
         return BlogPost.objects.filter(tags__name__in = wanted_tag ).distinct()
 
 

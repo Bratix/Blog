@@ -1,6 +1,21 @@
-{% for field in form %}
-            <span>{{ field.errors }}</span>
-    
-    <label class="text-small"> {{ field.label_tag }}</label>
-    <div>{{ field }}</div>
+{% for field in form %}                       
+    <span>{{ field.errors }}</span>
+
+            {% if field.label == 'Password' %}
+
+                <div class="form-group">
+                    <input type="password" class="form-control" id="{{field.id_for_label}}" name=" {{field.name}}" placeholder="{{ field.label }}">
+                </div>
+            {% elif field.label == 'Picture' %}
+
+                <div class="form-group">
+                    <input type="file" class="form-control" id="{{field.id_for_label}}" name=" {{field.name}}" placeholder="{{ field.label }}">
+                </div>
+
+            {% else %}
+                <div class="form-group">
+                    <input type="text" class="form-control" id="{{field.id_for_label}}" name=" {{field.name}}" placeholder="{{ field.label }}">
+                </div>
+            {% endif %}
+
 {% endfor %}
