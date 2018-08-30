@@ -6,7 +6,7 @@
         <div class="row h-100 align-items-center">
             <div class="col-12">
                 <div class="bradcumb-title text-center">
-                    <h2>{{blogpost.blog.blog_title}}</h2>
+                    <a href="{% url 'blog:detail' blogpost.blog.id  %}"><h2>{{blogpost.blog.blog_title}}</h2></a>
                 </div>
             </div>
         </div>
@@ -32,6 +32,37 @@
                         <a href="#">{{blogpost.creation_date|date:'d M Y'}} at {{blogpost.creation_date|date:'H:i'}}</a>
                     </div>
                 </div>
+                <div class="post-comment-share-area d-flex">
+
+                        {% if user.id == blogpost.blog.user.id %}
+
+                        <!-- Post Update -->
+                        <div class="post-comments">
+                                <form action="{% url 'blog:post_update' blogpost.id %}" method="post" visible = "off">
+                                        {% csrf_token %}
+                                        <div class="text-center">
+                                                <button type="submit" class="btn contact-btn">Update post</button>
+                                        </div>
+                                </form>
+                                
+                        </div>
+                        
+                            <!-- Post Delete -->
+                            
+                        <div class="post-comments">
+                                <form action="{% url 'blog:post_delete' blogpost.id %}" method="post" visible = "off">
+                                        {% csrf_token %}
+                                        <div class="text-center">
+                                                <button type="submit" class="btn contact-btn">Delete this post</button>
+                                            </div>
+                                </form>
+                                
+                        </div>
+                        {% endif %}
+                        
+                        
+                        
+                    </div>
                 
             </div>
             <a href="#">
@@ -41,46 +72,82 @@
             <p>{{blogpost.post_text}}</p>
         </div>
     </div>
-
-</div>
-
-<!-- Comment Area Start -->
-<div class="comment_area section_padding_50 clearfix col-6 col-md-offset-3">
-        <h4 class="mb-30">{{ blogpost.comment_set.count }} comments</h4>
-
-        {% for comment in blogpost.comment_set.all %}
-        <ol>
-            <!-- Single Comment Area -->
-            <li class="single_comment_area">
-                <div class="comment-wrapper d-flex">
-                    <!-- Comment Meta -->
-                    <div class="comment-author">
-                        <img src="img/blog-img/17.jpg" alt="">
-                    </div>
-                    <!-- Comment Content -->
-                    <div class="comment-content">
-                        <span class="comment-date text-muted">{{comment.creation_date|date:'d M Y'}} at {{comment.creation_date|date:'H:i'}}</span>
-                        <h5>{{comment.user.username}}</h5>
-                        <p>{{comment.comment_text}}</p>
-                        <!-- <a href="#">Like</a>
-                        <a class="active" href="#">Reply</a> -->
-                    </div>
-                </div>
-            </li>
-        </ol>
+    <div class="tags-area">
+        {% for tag in blogpost.tags.names %}
+            <a href="#">{{tag}}</a>
         {% endfor %}
-        
         
     </div>
 
-    {% if user.is_authenticated %}
+
+    <!-- Comment Area Start -->
+    <div class="comment_area section_padding_50 clearfix col-6 col-md-offset-3">
+            <h4 class=>{{ blogpost.comment_set.count }} comments</h4>
+    
+            {% for comment in blogpost.comment_set.all %}
+            <ol>
+                <!-- Single Comment Area -->
+                <li class="single_comment_area">
+                    <div class="comment-wrapper d-flex">
+                        <!-- Comment Meta -->
+                        <div class="comment-author">
+                            <img src="" alt="">
+                        </div>
+                        <!-- Comment Content -->
+                        <div class="comment-content">
+                            <span class="comment-date text-muted">{{comment.creation_date|date:'d M Y'}} at {{comment.creation_date|date:'H:i'}}</span>
+                            <h5>{{comment.user.username}}</h5>
+                            <p>{{comment.comment_text}}</p>
+                            <!-- <a href="#">Like</a>
+                            <a class="active" href="#">Reply</a> -->
+                        </div>
+                        <div class="post-comment-share-area d-flex">
+
+                                {% if user.id == comment.user.id %}
+        
+                                <!-- Post Update -->
+                                <div class="post-comments">
+                                        <form action="{% url 'blog:comment_update' comment.id %}" method="post" visible = "off">
+                                                {% csrf_token %}
+                                                <div class="text-center">
+                                                        <button type="submit" class="btn btn-link">Update post</button>
+                                                </div>
+                                        </form>
+                                        
+                                </div>
+                                {% endif %}
+
+                                    <!-- Post Delete -->
+                                {% if user.id == comment.user.id or user.is_superuser or user.id == blogpost.user.id %}  
+                                <div class="post-comments">
+                                        <form action="{% url 'blog:comment_delete' comment.id %}" method="post" visible = "off">
+                                                {% csrf_token %}
+                                                <div class="text-center">
+                                                        <button type="submit" class="btn btn-link">Delete comment</button>
+                                                    </div>
+                                        </form>
+                                        
+                                </div>
+                                {% endif %}
+                                
+                                
+                                
+                            </div>
+                    </div>
+                </li>
+            </ol>
+            {% endfor %}
+            
+            
+        </div>
+        {% if user.is_authenticated %}
     <!-- Leave A Comment -->
-    <div class="leave-comment-area section_padding_50 clearfix col-8 col-md-offset-2">
-        <div class="comment-form">
-            <form action="{% url 'blog:comment_create' blogpost.id %}" method="post">
-                {% csrf_token %}
-                <h4 class="mb-30"><button type="submit" class="btn contact-btn"> Leave A Comment</button></h4>
-            </form>
+    <div class="leave-comment-area section_padding_10 clearfix col-12   ">
+        <div class="comment-form text-center">
+                <form action="{% url 'blog:comment_create' blogpost.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn contact-btn"> Leave A Comment</button>
+                    </form>
 
             <!-- Comment Form -->
             <!-- <form action="{% url 'blog:comment_create' blogpost.id %}" method="post">
@@ -94,6 +161,8 @@
     {% else %}
     <div class="text-center"><h1><strong>Login to leave comments</strong></h1></div>
     {% endif %}
+
+</div>
 
 
 {% endblock body %}

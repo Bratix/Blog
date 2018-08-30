@@ -1,62 +1,16 @@
 {% extends 'base.html' %}   
-<!-- {% for blogpost in blog.blogpost_set.all %}
-<h1>{{ blogpost.post_title }}</h1>
-<br>
-<h2>{{ blogpost.post_text }}</h2>
-<br>
 
-<form id="my_form" method="post" action="{% url 'blog:post_delete' blogpost.id %}">
-    {% csrf_token %}
-    {% if user == blogpost.user %}
-        <button type="submit" >Delete post</button>
-    {% endif %}
-    
-</form>
-
-<h1>Comments</h1>
-{% for comment in blogpost.comment_set.all %}
-<h3>{{ comment.comment_text }} by {{ comment.user.username }}</h3> <h5>at {{comment.creation_date|date:'d M Y'}} at {{comment.creation_date|date:'H:i'}}</h5>
-<form id="my_form" method="post" action="{% url 'blog:comment_delete' comment.id %}">
-    {% csrf_token %}
-
-    {% if user == comment.user or user == blog.user or user.is_superuser %}
-        <button type="submit" >Delete comment</button>
-    {% endif %}
-
-</form>
-<hr>
-
-{% endfor %}
-
-<form id="my_form" method="post" action="{% url 'blog:comment_create' blogpost.id %}">
-    {% csrf_token %}
-    <button type="submit" >Create comment</button>
-</form>
-
-<hr>
-{% endfor %}
-
-<form id="my_form" method="post" action="{% url 'blog:post_create' blog.id %}">
-    {% csrf_token %}
-
-    {% if user == comment.user or user == blog.user%}
-        <button type="submit" >Post create</button>
-    {% endif %}
-
-</form> -->
 
 {% block body %}
 <!-- Preloader Start -->
-<!-- <div id="preloader">
-        <div class="yummy-load"></div>
-</div> -->
+
 
 <div class="breadcumb-area" style="background-image: url({{blog.picture.url}});">
     <div class="container h-100">
         <div class="row h-100 align-items-center">
             <div class="col-12">
                 <div class="bradcumb-title text-center">
-                    <h2>{{blog.blog_title}}</h2>
+                   <a href="{% url 'blog:detail' blog.id  %}"><h2>{{blog.blog_title}}</h2></a> 
                 </div>
             </div>
         </div>
@@ -95,17 +49,17 @@
                                         <!-- Post Comment & Share Area -->
                                         <div class="post-comment-share-area d-flex">
                                             <!-- Post Favourite -->
-                                            <div class="post-favourite">
+                                            <!-- <div class="post-favourite">
                                                 <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> 10</a>
-                                            </div>
+                                            </div> -->
                                             <!-- Post Comments -->
-                                            <div class="post-comments">
+                                            <!-- <div class="post-comments">
                                                 <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>
-                                            </div>
+                                            </div> -->
                                             <!-- Post Share -->
-                                            <div class="post-share">
+                                            <!-- <div class="post-share">
                                                 <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                     <p></p>
@@ -168,17 +122,53 @@
                                 <h6>About Me</h6>
                             </div>
                             <div class="about-me-widget-thumb">
-                                <img src="img/about-img/1.jpg" alt="">
+                                <img src="" alt="">
                             </div>
                             <h4 class="font-shadow-into-light" style="font-size: 30px">{{ blog.user.username }}</h4>
                         </div>
 
-                        <!-- Single Widget Area -->
+                        {% if user.id == blog.user.id %}
+                        <!-- Post Create -->
+                        <div >
+                                <form action="{% url 'blog:post_create' blog.id %}" method="post" visible = "off">
+                                        {% csrf_token %}
+                                        <div class="text-center">
+                                                <button type="submit" class="btn contact-btn">Create a new post</button>
+                                            </div>
+                                </form>
+                                
+                        </div>
+                            <!-- Post Update -->
+                        <div >
+                                <form action="{% url 'blog:blog_update' blog.id %}" method="post" visible = "off">
+                                        {% csrf_token %}
+                                        <div class="text-center">
+                                                <button type="submit" class="btn contact-btn">Update your blog</button>
+                                        </div>
+                                </form>
+                                
+                        </div>
                         
+                            <!-- Post Delete -->
+                            
+                        <div >
+                                <form action="{% url 'blog:blog_delete' blog.id %}" method="post" visible = "off">
+                                        {% csrf_token %}
+                                        <div class="text-center">
+                                                <button type="submit" class="btn contact-btn">Delete blog</button>
+                                            </div>
+                                </form>
+                                
+                        </div>
+                        {% endif %}
                     </div>
+                    <!-- Single Widget Area -->
+                    
+                    
                 </div>
             </div>
         </div>
 </section>
+
 
 {% endblock body %}

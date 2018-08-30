@@ -33,6 +33,12 @@ class BlogPostDetailView(generic.DetailView):
     model = BlogPost
     template_name = 'blogapp/blogpost_detail.html'
 
+class BlogsPostSearchByTag(generic.ListView):
+    template_name = 'blogapp/search.html'
+
+    def get_queryset(self):
+        wanted_tag = self.request.GET.get('search').split()
+        return BlogPost.objects.filter(tags__name__in = wanted_tag ).distinct()
 
 
 
@@ -48,7 +54,7 @@ class BlogCreate(CreateView):
 
 class BlogUpdate(UpdateView):
     model = Blog
-    fields = ['blog_title']
+    fields = ['blog_title', 'category', 'picture']
 
 class BlogDelete(DeleteView):
     model = Blog
@@ -59,7 +65,7 @@ class BlogDelete(DeleteView):
 
 class BlogPostCreate(CreateView):
     model = BlogPost
-    fields = ['post_title','post_text']
+    fields = ['post_title','post_text','picture','tags']
 
     def form_valid(self, form): 
         form.instance.user = self.request.user
@@ -73,13 +79,6 @@ class BlogPostUpdate(UpdateView):
 class BlogPostDelete(DeleteView):
     model = BlogPost
     success_url = reverse_lazy('blog:index')
-
-class BlogsPostSearchByTag(generic.ListView):
-    template_name = 'blogapp/search.html'
-
-    def get_queryset(self):
-        wanted_tag = self.request.GET.get('search').split()
-        return BlogPost.objects.filter(tags__name__in = wanted_tag ).distinct()
 
 
 class CommentCreate(CreateView):
@@ -97,4 +96,5 @@ class CommentUpdate(UpdateView):
 
 class CommentDelete(DeleteView):
     model = Comment
-    success_url = reverse_lazy('blog:index')
+    def get_success_url(self):
+        return reverse_lazy('blog:index')

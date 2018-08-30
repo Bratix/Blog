@@ -1190,6 +1190,7 @@ li {
     background-position: center center;
 }
 
+
 /* -------------------- 
 :: 14.0 Single Blog CSS
 -------------------- */
@@ -1500,3 +1501,19 @@ li {
     font-size: 27px;
 }
 
+.btn-link {
+    margin-top: 50px;
+    width: 35px;
+    height: 12px;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #fff;
+    background-color: #fc6c3f;
+    border-radius: 30px;
+}
+
+.btn-link:hover {
+    color: #fff;
+    background-color: #d43f10;
+}

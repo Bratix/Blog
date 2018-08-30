@@ -99,7 +99,7 @@
                         <!-- Search Form -->
                         <div class="search-hidden-form">
                             <form action="{% url 'blog:search_tag' %}" method="get">
-                                <input type="text" name="search" id="search-anything" placeholder="Search Anything...">
+                                <input type="text" name="search" id="search-anything" placeholder="Search posts by tags ">
                                 <input type="submit" value="" class="d-none">
                                 <span class="searchBtn"><i class="fa fa-times" aria-hidden="true"></i></span>
                             </form>
@@ -130,8 +130,8 @@
                         <!-- Menu Area Start -->
                         <div class="collapse navbar-collapse justify-content-center" id="yummyfood-nav">
                             <ul class="navbar-nav" id="yummy-nav">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="{% url 'blog:index' %}">Home <span class="sr-only">(current)</span></a>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'blog:index' %}">Home</a>
                                 </li>
                                 {% comment %} <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
@@ -171,20 +171,8 @@
     {% endblock body %}
 
 
-    <!-- ****** Footer Menu Area Start ****** -->
-    <footer class="footer_area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <!-- Copywrite Text -->
-                    <div class="copy_right_text text-center">
-                        <p>Copyright @2018 All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <br>
+    
+        
 
     <!-- ****** Footer Menu Area End ****** -->
 
