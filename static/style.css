@@ -1169,7 +1169,7 @@ li {
 }
 
 .contact-btn {
-    margin-top: 50px;
+    margin-top: 20px;
     width: 160px;
     height: 40px;
     font-size: 12px;
@@ -1501,11 +1501,10 @@ li {
     font-size: 27px;
 }
 
-.btn-link {
-    margin-top: 50px;
-    width: 35px;
-    height: 12px;
-    font-size: 12px;
+ .btn-link {
+    margin-right: 3px;
+    height: 25px;
+    font-size: 10px;
     text-transform: uppercase;
     font-weight: 500;
     color: #fff;

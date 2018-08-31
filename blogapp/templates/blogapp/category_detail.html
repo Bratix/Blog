@@ -1,35 +1,38 @@
 {% extends 'base.html' %}
 
 {% block body %}
-        {% for blog in object_list %}
-        <div class="col-4 col-md-offset-4">
-                <div class="single-post wow fadeInUp" data-wow-delay=".2s">
-                    <!-- Post Thumb -->
-                    <div class="post-thumb">
-                        <img src="{{ blog.picture.url }}" alt="">
-                    </div>
-                    <!-- Post Content -->
-                    <div class="post-content">
-                        <div class="post-meta d-flex">
-                            <div class="post-author-date-area d-flex">
-                                <!-- Post Author -->
-                                <div class="post-author">
-                                    <a href="#">By {{ blog.user.username }}</a>
-                                </div>
-                                <!-- Post Date -->
-                                <div class="post-date">
-                                    <a href="#">{{blog.creation_date|date:'d M Y'}} at {{featured_post.creation_date|date:'H:i'}}</a>
-                                </div>
+<div class="row">
+    {% for blog in object_list %}
+    <div class="col-4 col-md-offset-4">
+            <div class="single-post wow fadeInUp" data-wow-delay=".2s">
+                <!-- Post Thumb -->
+                <div class="post-thumb">
+                    <img src="{{ blog.picture.url }}" alt="">
+                </div>
+                <!-- Post Content -->
+                <div class="post-content">
+                    <div class="post-meta d-flex">
+                        <div class="post-author-date-area d-flex">
+                            <!-- Post Author -->
+                            <div class="post-author">
+                                <a href="#">By {{ blog.user.username }}</a>
                             </div>
-                            
+                            <!-- Post Date -->
+                            <div class="post-date">
+                                <a href="#">{{blog.creation_date|date:'d M Y'}} at {{featured_post.creation_date|date:'H:i'}}</a>
+                            </div>
                         </div>
-                        <a href="#">
-                            <h2 class="post-headline">{{blog.blog_title}}</h2>
-                        </a>
-                        <br>
-                        <a href="{% url 'blog:detail' blog.id %}" class="read-more">Continue Reading..</a>
+                        
                     </div>
+                    <a href="#">
+                        <h2 class="post-headline">{{blog.blog_title}}</h2>
+                    </a>
+                    <br>
+                    <a href="{% url 'blog:detail' blog.id %}" class="read-more">Continue Reading..</a>
                 </div>
             </div>
-        {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+        
 {% endblock body %}

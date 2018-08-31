@@ -19,11 +19,12 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls'), name = "login"),
     path('register/', views.UserFormView.as_view(), name = "register"),
-    path('blogs/', include('blogapp.urls')),
+    path('',include('blogapp.urls'))
 ]
 
 if settings.DEBUG:

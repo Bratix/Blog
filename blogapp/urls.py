@@ -5,42 +5,46 @@ from . import views
 app_name = "blog"
 
 urlpatterns = [
-    #/blogs/
+    #home page
     path('', views.IndexView.as_view(), name = "index"),
-    #/blogs/1
+    #blog details page
     path('<pk>', views.BlogDetailView.as_view(), name = "detail"),
-
+    #blog post detail page
     path('posts/<pk>', views.BlogPostDetailView.as_view(), name = "blogpost_detail"),
-    
-    #blogs/view/categories
+    #like url
+    path('posts/<pk>/like', views.PostLike.as_view(), name = "post_like"),
+
+
+
+    #view/categories
     path('view/categories', views.CategoryView.as_view(), name = "category"),
-    #blogs/view/categories/1
+    #view/categories/1
     path('view/categories/<pk>', views.BlogsbyCategoryView.as_view(), name = "category_detail"),
 
-    #blogs/search/tags
+    #view/search/tags
     path('view/search/tags', views.BlogsPostSearchByTag.as_view(), name = 'search_tag'),
 
 
     #Create/Delete/Update views
-    #/blogs/create/blog
+    #create/blog
     path('create/blog', views.BlogCreate.as_view(), name = "blog_create"),
-    #/blogs/delete/blog/1
+    #delete/blog/1
     path('delete/blog/<pk>', views.BlogDelete.as_view(), name = "blog_delete"),
-    #/blogs/update/blog/1
+    #update/blog/1
     path('update/blog/<pk>', views.BlogUpdate.as_view(), name = "blog_update"),
 
-    #/blogs/create/post
+    #create/post
     path('create/<pk>/post', views.BlogPostCreate.as_view(), name = "post_create"),
-    #/blogs/delete/post/1
+    #delete/post/1
     path('delete/post/<pk>', views.BlogPostDelete.as_view(), name = "post_delete"),
-    #/blogs/update/post/1
+    #update/post/1
     path('update/<pk>/post', views.BlogPostUpdate.as_view(), name = "post_update"),
 
-    #/blogs/create/1/comment
+    #create/1/comment
     path('create/<pk>/comment', views.CommentCreate.as_view(), name = "comment_create"),
-    #/blogs/delete/blog/1
+    #delete/blog/1
     path('delete/comment/<pk>', views.CommentDelete.as_view(), name = "comment_delete"),
-    #/blogs/update/blog/1
+    #update/blog/1
     path('update/<pk>/comment', views.CommentUpdate.as_view(), name = "comment_update"),
 
 ]

@@ -31,6 +31,7 @@ class Blog(models.Model):
 class BlogPost(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE) 
     blog = models.ForeignKey(Blog, on_delete = models.CASCADE)
+    likes = models.ManyToManyField(User, related_name="post_likes")
     post_title = models.CharField(max_length = 50)
     post_text = models.CharField(max_length = 50000)
     tags = TaggableManager()
@@ -42,7 +43,7 @@ class BlogPost(models.Model):
         return self.post_title
 
     def get_absolute_url(self):
-        return reverse("blog:detail", kwargs={"pk": self.blog.id}) 
+        return reverse("blog:blogpost_detail", kwargs={"pk": self.id}) 
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)

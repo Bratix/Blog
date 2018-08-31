@@ -1,9 +1,10 @@
 from django.views import generic, View
-from django.views.generic import CreateView, DeleteView, UpdateView
+from django.views.generic import CreateView, DeleteView, UpdateView, RedirectView
 from django.urls import reverse_lazy
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from .models import Blog, BlogPost, Comment, Category
+from django.contrib.auth.models import User
 
 
 class IndexView(View):
@@ -17,7 +18,7 @@ class CategoryView(generic.ListView):
     def get_queryset(self):
         return Category.objects.all()
 
-        
+    
 class BlogsbyCategoryView(generic.ListView):
     template_name = 'blogapp/category_detail.html'
 
@@ -40,6 +41,18 @@ class BlogsPostSearchByTag(generic.ListView):
         wanted_tag = self.request.GET.get('search').split()
         return BlogPost.objects.filter(tags__name__in = wanted_tag ).distinct()
 
+class PostLike(RedirectView):
+    def get_redirect_url(self, **kwargs):
+        tab_kw = self.kwargs.get('pk')
+        post = get_object_or_404(BlogPost, pk = tab_kw)
+        user = self.request.user
+        if user.is_authenticated:
+            if user in post.likes.all() :
+                post.likes.remove (user)
+            else:
+                post.likes.add(user)
+
+        return post.get_absolute_url() 
 
 
 
@@ -78,7 +91,8 @@ class BlogPostUpdate(UpdateView):
 
 class BlogPostDelete(DeleteView):
     model = BlogPost
-    success_url = reverse_lazy('blog:index')
+    def get_success_url(self):
+        return reverse_lazy('blog:detail',kwargs = {'pk': BlogPost.objects.get(id=self.kwargs['pk']).blog.id})
 
 
 class CommentCreate(CreateView):
@@ -96,5 +110,7 @@ class CommentUpdate(UpdateView):
 
 class CommentDelete(DeleteView):
     model = Comment
+
     def get_success_url(self):
-        return reverse_lazy('blog:index')
+        return reverse_lazy('blog:blogpost_detail',kwargs = {'pk': Comment.objects.get(id=self.kwargs['pk']).post.id})
+    
