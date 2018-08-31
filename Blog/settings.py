@@ -129,3 +129,6 @@ MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = 'blog:index'
 LOGOUT_REDIRECT_URL = 'login'
+
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
