@@ -1,10 +1,26 @@
-<h2>Make your comment!</h2>
-    <form class = "form-horizontal" action="" method ="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {% include "blogapp/basic_form.html" %}
-    
-        {% if user.is_authenticated %}
-        <br>
-        <button type="submit" class="btn btn-success"> Create </button>
-        {% endif %}
-    </form>
+{% extends "base.html" %}
+
+{% block body%}
+<div class = "container-field">
+        <div class="text-center"><h1><strong> Post a comment </strong></h1></div>
+        <br><br>
+    <div class = "row">
+        
+        <div class = "col-md-4 col-md-offset-4">
+                    <form class = "form-horizontal" action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% include "basic_form.html" %}
+                        <div class = "form-horizontal">
+                                <div class="text-center">
+                                    <button type="submit" class="btn contact-btn">Post comment</button>
+                                </div>
+                            
+                            
+                        </div>
+                    </form>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
