@@ -12,7 +12,9 @@ urlpatterns = [
     #blog post detail page
     path('posts/<pk>', views.BlogPostDetailView.as_view(), name = "blogpost_detail"),
     #like url
-    path('posts/<pk>/like', views.PostLike.as_view(), name = "post_like"),
+    path('posts/<pk>/like', views.PostLike, name = "post_like"),
+
+    path('option', views.TheView.as_view()),
 
 
 
