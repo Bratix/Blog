@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 
 class IndexView(View):
     def get(self, request):
-        context = { 'all_blogs' : Blog.objects.all, 'all_categories': Category.objects.order_by('?')[:3], 'featuredd_post': BlogPost.objects.order_by('?')[:1], 'all_posts': BlogPost.objects.order_by('?') }
+        context = { 'all_blogs' : Blog.objects.all, 'all_categories': Category.objects.order_by('?')[:3], 'all_posts': BlogPost.objects.order_by('?') }
         return render(request, 'blogapp/index.html', context )
 
 class CategoryView(generic.ListView):

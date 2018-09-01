@@ -82,7 +82,7 @@
                 <div class="col-12 col-lg-8">
                     <div class="row">
 
-                        {% for featured_post in featuredd_post %}
+                        {% for featured_post in all_posts|slice:":1" %}
                         <!-- Single Post -->
                         <div class="col-12">
                             <div class="single-post wow fadeInUp" data-wow-delay=".2s">
@@ -116,7 +116,7 @@
                         {% endfor %}
                         
 
-                        {% for post in all_posts %}
+                        {% for post in all_posts|slice:"1:" %}
                             <!-- Single Post -->
                         <div class="col-12">
                                 <div class="list-blog single-post d-sm-flex wow fadeInUpBig" data-wow-delay=".8s">
