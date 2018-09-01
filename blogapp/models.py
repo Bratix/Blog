@@ -31,7 +31,7 @@ class Blog(models.Model):
 class BlogPost(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE) 
     blog = models.ForeignKey(Blog, on_delete = models.CASCADE)
-    likes = models.ManyToManyField(User, related_name="post_likes")
+    likes = models.ManyToManyField(User, related_name="post_likes", blank=True)
     post_title = models.CharField(max_length = 50)
     post_text = models.CharField(max_length = 50000)
     tags = TaggableManager()

@@ -14,7 +14,7 @@
 </div>
 
 <div class="row">
-        <div class="col-md-7 col-md-offset-2 section_padding_80">
+        <div class="col-md-7 col-md-offset-1 section_padding_80">
                 <div class="single-post wow fadeInUp" data-wow-delay=".2s">
                     <!-- Post Thumb -->
                     <div class="post-thumb text-center">
@@ -90,7 +90,7 @@
                                                     <form action="{% url 'blog:comment_update' comment.id %}" method="post" visible = "off">
                                                             {% csrf_token %}
                                                             <div class="text-center">
-                                                                    <button type="submit" class="btn btn-link">Update post</button>
+                                                                    <button type="submit" class="btn btn-link">Update Commentt</button>
                                                             </div>
                                                     </form>
                                                     
@@ -142,9 +142,37 @@
                 {% endif %}
             
             </div>
-
+            <div class="col-2 col-sm-8 col-md-2 col-lg-4 section_padding_100">
+                <div class="blog-sidebar mt-5 mt-lg-0">
+                    {% if user.id == blogpost.user.id %}
+                        
+                    <div class="post-comments">
+                            <form action="{% url 'blog:post_update' blogpost.id %}" method="post" visible = "off">
+                                    {% csrf_token %}
+                                    <div class="text-center">
+                                            <button type="submit" class="btn contact-btn">Update post</button>
+                                    </div>
+                            </form>
+                            
+                    </div>
+                    <br><br>
+                    <div class="post-comments">
+                        <form action="{% url 'blog:post_delete' blogpost.id %}" method="post" visible = "off">
+                                {% csrf_token %}
+                                <div class="text-center">
+                                        <button type="submit" class="btn contact-btn">Delete post</button>
+                                    </div>
+                        </form>
+                        
+                    </div>
+                    {% endif %}
+                </div>
+                      
+            </div> 
 </div>
 
 
+
+        
 
 {% endblock body %}
