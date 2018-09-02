@@ -37,10 +37,19 @@
             
                             </div>
                             <div class="post-comment-share-area d-flex">
+                                {% if  user in blogpost.likes.all %}
                                 <!-- Post Like -->
                                 <div class="post-favourite">
-                                    <a href = "#" data-href="{% url 'blog:post_like' blogpost.id %}" data-post_id = "{{blogpost.id}}" ><i class="fa fa-heart-o like_button" aria-hidden="true"></i><span id = "like-counter">{{blogpost.likes.count}}</span> </a>
+                                    <a href = "#" class="like_button" data-href="{% url 'blog:post_like' blogpost.id %}" data-post_id = "{{blogpost.id}}" ><i class="fa fa-heart liked" aria-hidden="true"></i><span id = "like-counter"> {{blogpost.likes.count}}</span> </a>
                                 </div>
+                                
+                                {% else %}
+                                <!-- Post Like -->
+                                <div class="post-favourite">
+                                    <a href = "#" class="like_button" data-href="{% url 'blog:post_like' blogpost.id %}" data-post_id = "{{blogpost.id}}" ><i class="fa fa-heart-o liked" aria-hidden="true"></i><span id = "like-counter"> {{blogpost.likes.count}}</span> </a>
+                                </div>
+                                {% endif %}
+                                
                                 <!-- Post Comments -->
                                 <div class="post-comments">
                                     <a href="{% url 'blog:comment_create' blogpost.id %}"><i class="fa fa-comment-o" aria-hidden="true"></i> {{blogpost.comment_set.count}}</a>

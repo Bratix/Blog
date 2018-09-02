@@ -6,15 +6,25 @@ $(document).ready(function(){
         var token = $("input[name='csrfmiddlewaretoken']").val()
         $.ajax({
             type: "POST",
-            url: url,
-            token: token,
-            csrfmiddlewaretoken: token,
             headers: {
                 "X-CSRFToken": token,
+            },
+            url: url,
+            dataType: "json",
+
+            }).done(function(object_) {
+            console.log(object_)
+            $("#like-counter").html(" " + object_.like_counter)
+            if(object_.user_like === true)
+            {
+            $(".liked").removeClass(".fa fa-heart-o")
+            $(".liked").addClass(".fa fa-heart")}
+            
+            else
+            {
+            $(".liked").removeClass(".fa fa-heart")
+            $(".liked").addClass(".fa fa-heart-o")
             }
-            }).done(function(response) {
-            console.log(response)
-            $("#like-counter").html("10")
-            });
+        });
     })
 })
