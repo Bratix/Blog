@@ -138,7 +138,7 @@
                                 </form>
                                 
                         </div>
-                            <!-- Post Update -->
+                            <!-- Blog Update -->
                         <div >
                                 <form action="{% url 'blog:blog_update' blog.id %}" method="post" visible = "off">
                                         {% csrf_token %}
@@ -149,7 +149,7 @@
                                 
                         </div>
                         
-                            <!-- Post Delete -->
+                            <!-- Blog Delete -->
                             
                         <div >
                                 <form action="{% url 'blog:blog_delete' blog.id %}" method="post" visible = "off">

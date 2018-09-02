@@ -1501,7 +1501,7 @@ li {
     font-size: 27px;
 }
 
- .btn-link {
+.btn-link {
     margin-right: 3px;
     height: 25px;
     font-size: 10px;
@@ -1515,4 +1515,5 @@ li {
 .btn-link:hover {
     color: #fff;
     background-color: #d43f10;
+    text-decoration: none;
 }
