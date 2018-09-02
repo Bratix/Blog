@@ -85,7 +85,7 @@ class BlogCreate(CreateView):
 class BlogUpdate(UpdateView):
     model = Blog
     template_name = "blogapp/blog_update.html"
-    fields = ['blog_title', 'category', 'picture',"tags"]
+    fields = ['blog_title', 'category', 'picture','tags']
 
 class BlogDelete(DeleteView):
     model = Blog

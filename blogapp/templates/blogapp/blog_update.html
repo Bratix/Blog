@@ -3,6 +3,17 @@
 {% block body%}
 {% load widget_tweaks %}
 <div class = "container-field">
+
+        <span class="tag-class hidden">
+            {% for tag in blog.tags.names %}
+            {% if forloop.last %}
+            {{tag}}
+            {% else %}
+            {{tag}},&nbsp;
+            {% endif %}   
+            {% endfor %}
+        </span>
+
         <div class="text-center"><h1><strong>Update your blog</strong></h1></div>
         <br><br>
     <div class = "row">
@@ -11,16 +22,24 @@
                     <form  action="" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
 
+                        <label>Blog title</label>
                         <div class="form-group">
                             {% render_field form.blog_title class="form-control"  value=blog.blog_title  %}
                         </div>
 
+                        <label>Blog category</label>
                         <div class="form-group">
                             {% render_field form.category class="category_preselected" data-value=blog.category.id %}
                         </div>
                         
+                        <label>Blog picture</label>
                         <div class="form-group">
                             {% render_field form.picture class="form-control" %}
+                        </div>
+
+                        <label>Blog tags</label>
+                        <div class="form-group">
+                            {% render_field form.tags class="form-control taggit-input" %}
                         </div>
 
                         <div class = "form-horizontal">
