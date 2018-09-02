@@ -51,6 +51,7 @@ def PostLike(request, **kwargs):
     tab_kw = kwargs.get('pk')
     post = BlogPost.objects.get(id = tab_kw)
     user = request.user
+    user_like = False
     if user.is_authenticated:
         if user in post.likes.all() :
             post.likes.remove(user)
@@ -75,7 +76,7 @@ class TheView(View):
 
 class BlogCreate(CreateView):
     model = Blog
-    fields = ['blog_title','category','picture']
+    fields = ['blog_title','category','picture',"tags"]
     
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -83,7 +84,8 @@ class BlogCreate(CreateView):
 
 class BlogUpdate(UpdateView):
     model = Blog
-    fields = ['blog_title', 'category', 'picture']
+    template_name = "blogapp/blog_update.html"
+    fields = ['blog_title', 'category', 'picture',"tags"]
 
 class BlogDelete(DeleteView):
     model = Blog
@@ -103,7 +105,8 @@ class BlogPostCreate(CreateView):
 
 class BlogPostUpdate(UpdateView):
     model = BlogPost
-    fields = ['post_title','post_text']
+    fields = ['post_title','post_text','picture','tags']
+    template_name = "blogapp/blogpost_update.html"
 
 class BlogPostDelete(DeleteView):
     model = BlogPost
@@ -123,6 +126,7 @@ class CommentCreate(CreateView):
 class CommentUpdate(UpdateView):
     model = Comment
     fields = ['comment_text']
+    template_name = "blogapp/comment_update.html"
 
 class CommentDelete(DeleteView):
     model = Comment

@@ -1,3 +1,4 @@
 Django
 uwsgi
 django-taggit
+widget_tweaks

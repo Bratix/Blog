@@ -33,7 +33,7 @@ class BlogPost(models.Model):
     blog = models.ForeignKey(Blog, on_delete = models.CASCADE)
     likes = models.ManyToManyField(User, related_name="post_likes", blank=True)
     post_title = models.CharField(max_length = 50)
-    post_text = models.CharField(max_length = 50000)
+    post_text = models.TextField()
     tags = TaggableManager()
     picture = models.FileField(null=True, blank=True)
     creation_date = models.DateTimeField(auto_now_add = True)

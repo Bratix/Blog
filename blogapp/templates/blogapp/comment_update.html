@@ -3,8 +3,6 @@
 {% block body%}
 {% load widget_tweaks %}
 <div class = "container-field">
-        <div class="text-center"><h1><strong> Post a comment </strong></h1></div>
-        <br><br>
     <div class = "row">
         
         <div class = "col-md-4 col-md-offset-4">
@@ -12,12 +10,12 @@
                         {% csrf_token %}
 
                         <div class="form-group">
-                                {% render_field form.comment_text class="form-control"  placeholder="Enter comment here"  %}
+                                {% render_field form.comment_text class="form-control"  value=comment.comment_text  %}
                         </div>
 
                         <div class = "form-horizontal">
                             <div class="text-center">
-                                <button type="submit" class="btn contact-btn">Post comment</button>
+                                <button type="submit" class="btn contact-btn">Update comment</button>
                             </div>
                         </div>
                     </form>

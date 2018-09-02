@@ -3,7 +3,7 @@
 {% block body%}
 {% load widget_tweaks %}
 <div class = "container-field">
-        <div class="text-center"><h1><strong>Crate your blog and let the fun begin!</strong></h1></div>
+        <div class="text-center"><h1><strong>Update your post</strong></h1></div>
         <br><br>
     <div class = "row">
         
@@ -12,21 +12,20 @@
                         {% csrf_token %}
 
                         <div class="form-group">
-                            {% render_field form.blog_title class="form-control"  placeholder="Enter your blog title"  %}
+                            {% render_field form.post_title class="form-control"  value=blogpost.post_title  %}
                         </div>
-
-                        <label >Select a blog category from the list below:</label>
+                        
                         <div class="form-group">
-                            {% render_field form.category %}
+                            {% render_field form.post_text class="form-control textarea-update" data-value=blogpost.post_text %}
                         </div>
 
-                        <label>Upload a picture for your blog:</label>    
+                        <label>Upload a picture for your post:</label>    
                         <div class="form-group">
                             {% render_field form.picture class="form-control" %}
-                        </div>
+                        </div> 
 
                         <div class="form-group">
-                                {% render_field form.tags class="form-control" placeholder="Make tags for your blog" %}
+                            {% render_field form.tags class="form-control" class="form-control" value=blogpost.tags.names %}
                         </div>
 
                         <div class = "form-horizontal">
