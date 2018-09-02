@@ -1,7 +1,11 @@
 $(document).ready(function(){
-    
-    $(".textarea-update").ready(function(){
-        var text = $(this).data("value")
+
+        var text = $(".textarea-update").data("value")
         console.log("text", text)
-    })
+        $(".textarea-update").html(text)
+
+        var tags = $(".tag-class").text().replace(/ /g,'');
+        console.log("text",tags)
+        $(".taggit-input").val(tags)
+        
 })

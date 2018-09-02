@@ -11,26 +11,39 @@
                     <form  action="" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
 
+                        <label>Post title</label>
                         <div class="form-group">
                             {% render_field form.post_title class="form-control"  value=blogpost.post_title  %}
                         </div>
-                        
+                        <label>Post description</label>
                         <div class="form-group">
                             {% render_field form.post_text class="form-control textarea-update" data-value=blogpost.post_text %}
                         </div>
 
-                        <label>Upload a picture for your post:</label>    
+                        <label>Post picture</label>    
                         <div class="form-group">
                             {% render_field form.picture class="form-control" %}
                         </div> 
 
+                        <span class="tag-class hidden">
+                            {% for tag in blogpost.tags.names %}
+                            {% if forloop.last %}
+                            {{tag}}
+                            {% else %}
+                            {{tag}},&nbsp;
+                            {% endif %}   
+                            {% endfor %}
+                        </span >
+                                
+                                
+                        <label>Post tags (separate with commas)</label>
                         <div class="form-group">
-                            {% render_field form.tags class="form-control" class="form-control" value=blogpost.tags.names %}
+                            {% render_field form.tags class="form-control taggit-input" value=blogpost.tags.names %}
                         </div>
 
                         <div class = "form-horizontal">
                             <div class="text-center">
-                                <button type="submit" class="btn contact-btn">Create your blog</button>
+                                <button type="submit" class="btn contact-btn">Update post</button>
                             </div>    
                         </div>
                     </form>
