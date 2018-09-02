@@ -17,6 +17,8 @@
         <div class="col-md-7 col-md-offset-1 section_padding_80">
                 <div class="single-post wow fadeInUp" data-wow-delay=".2s">
                     <!-- Post Thumb -->
+                    <input type="hidden" name="post_id" id = "post_id" value = "{{blogpost.id}}">
+
                     <div class="post-thumb text-center">
                         <img src="{{ blogpost.picture.url }}" alt="">
                     </div>
@@ -35,10 +37,19 @@
             
                             </div>
                             <div class="post-comment-share-area d-flex">
-                                <!-- Post Favourite -->
+                                {% if  user in blogpost.likes.all %}
+                                <!-- Post Like -->
                                 <div class="post-favourite">
-                                    <a href="{% url 'blog:post_like' blogpost.id %}"><i class="fa fa-heart-o" aria-hidden="true"></i>{{blogpost.likes.count}}</a>
+                                    <a href = "#" class="like_button" data-href="{% url 'blog:post_like' blogpost.id %}" data-post_id = "{{blogpost.id}}" ><i class="fa fa-heart liked" aria-hidden="true"></i><span id = "like-counter"> {{blogpost.likes.count}}</span> </a>
                                 </div>
+                                
+                                {% else %}
+                                <!-- Post Like -->
+                                <div class="post-favourite">
+                                    <a href = "#" class="like_button" data-href="{% url 'blog:post_like' blogpost.id %}" data-post_id = "{{blogpost.id}}" ><i class="fa fa-heart-o liked" aria-hidden="true"></i><span id = "like-counter"> {{blogpost.likes.count}}</span> </a>
+                                </div>
+                                {% endif %}
+                                
                                 <!-- Post Comments -->
                                 <div class="post-comments">
                                     <a href="{% url 'blog:comment_create' blogpost.id %}"><i class="fa fa-comment-o" aria-hidden="true"></i> {{blogpost.comment_set.count}}</a>
@@ -171,7 +182,20 @@
             </div> 
 </div>
 
-
+<!-- <script>
+    $(document).ready(function(){
+        $(".like_button").click(function(e){
+            e.preventDefault
+            var url = $(this).attr("href")
+            $.ajax({
+                url: url,
+                context: document.body
+              }).done(function(response) {
+                console.log(reposnse)
+              });
+        })
+    })
+</script> -->
 
         
 

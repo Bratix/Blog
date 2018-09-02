@@ -1,16 +1,21 @@
 from django.views import generic, View
 from django.views.generic import CreateView, DeleteView, UpdateView, RedirectView
 from django.urls import reverse_lazy
+import json
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from .models import Blog, BlogPost, Comment, Category
 from django.contrib.auth.models import User
+from django.core import serializers
+from django.http import JsonResponse
 
 
 class IndexView(View):
     def get(self, request):
         context = { 'all_blogs' : Blog.objects.all, 'all_categories': Category.objects.order_by('?')[:3], 'all_posts': BlogPost.objects.order_by('?') }
         return render(request, 'blogapp/index.html', context )
+       
 
 class CategoryView(generic.ListView):
     template_name = 'blogapp/category.html'
@@ -41,19 +46,30 @@ class BlogsPostSearchByTag(generic.ListView):
         wanted_tag = self.request.GET.get('search').split()
         return BlogPost.objects.filter(tags__name__in = wanted_tag ).distinct()
 
-class PostLike(RedirectView):
-    def get_redirect_url(self, **kwargs):
-        tab_kw = self.kwargs.get('pk')
-        post = get_object_or_404(BlogPost, pk = tab_kw)
-        user = self.request.user
-        if user.is_authenticated:
-            if user in post.likes.all() :
-                post.likes.remove (user)
-            else:
-                post.likes.add(user)
+def PostLike(request, **kwargs):
 
-        return post.get_absolute_url() 
+    tab_kw = kwargs.get('pk')
+    post = BlogPost.objects.get(id = tab_kw)
+    user = request.user
+    if user.is_authenticated:
+        if user in post.likes.all() :
+            post.likes.remove(user)
+            user_like = False
+        else:
+            post.likes.add(user)
+            user_like = True
+    
+    like_number = post.likes.count()
+    object_ = json.dumps({'like_counter': like_number,'user_like' : user_like})
+    return HttpResponse(object_,content_type='application/json')
+    
 
+class TheView(View):
+
+    def options(self, request, id):
+        response = HttpResponse()
+        response['allow'] = ','.join(['get', 'post', 'put', 'delete', 'options'])
+        return response
 
 
 
