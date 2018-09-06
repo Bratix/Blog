@@ -12,10 +12,10 @@ $(document).ready(function(){
             url: url,
             dataType: "json",
 
-            }).done(function(object_) {
-            console.log(object_)
-            $("#like-counter").html(" " + object_.like_counter)
-            if(object_.user_like === true)
+            }).done(function() {
+            console.log()
+            $("#like-counter").html(" " + like_counter)
+            if(user_like === true)
             {
             $(".liked").removeClass(".fa fa-heart-o")
             $(".liked").addClass(".fa fa-heart")}

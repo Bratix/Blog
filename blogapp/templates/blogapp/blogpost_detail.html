@@ -17,7 +17,6 @@
         <div class="col-md-7 col-md-offset-1 section_padding_80">
                 <div class="single-post wow fadeInUp" data-wow-delay=".2s">
                     <!-- Post Thumb -->
-                    <input type="hidden" name="post_id" id = "post_id" value = "{{blogpost.id}}">
 
                     <div class="post-thumb text-center">
                         <img src="{{ blogpost.picture.url }}" alt="">
@@ -52,7 +51,7 @@
                                 
                                 <!-- Post Comments -->
                                 <div class="post-comments">
-                                    <a href="{% url 'blog:comment_create' blogpost.id %}"><i class="fa fa-comment-o" aria-hidden="true"></i> {{blogpost.comment_set.count}}</a>
+                                    <a href="{% url 'blog:comment_create' blogpost.id %}"><i class="fa fa-comment-o" aria-hidden="true"></i> <span id="comment-count"> {{blogpost.comment_set.count}}</span></a>
                                 </div>
                             </div>
                             
@@ -73,11 +72,11 @@
                 
             
                 <!-- Comment Area Start -->
-                <div class="comment_area section_padding_50 clearfix col-6 col-md-offset-3">
+                <div class="comment_area section_padding_50 clearfix col-6 col-md-offset-3" id="refresh-div">
                         <h4 class=>{{ blogpost.comment_set.count }} comments</h4>
-                
-                        {% for comment in blogpost.comment_set.all %}
                         <ol>
+                        {% for comment in blogpost.comment_set.all %}
+                        
                             <!-- Single Comment Area -->
                             <li class="single_comment_area">
                                 <div class="comment-wrapper d-flex">
@@ -120,39 +119,37 @@
                                             </div>
                                             {% endif %}
                                             
-                                            
-                                            
-                                        </div>
+                                    </div>
                                 </div>
                             </li>
-                        </ol>
+                        
                         {% endfor %}
+                        </ol>
                         
-                        
-                    </div>
+                </div>
                     {% if user.is_authenticated %}
                 <!-- Leave A Comment -->
                 <div class="leave-comment-area section_padding_10 clearfix col-12   ">
                     <div class="comment-form text-center">
-                            <form action="{% url 'blog:comment_create' blogpost.id %}" method="post">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn contact-btn"> Leave A Comment</button>
-                                </form>
             
                         <!-- Comment Form -->
-                        <!-- <form action="{% url 'blog:comment_create' blogpost.id %}" method="post">
+                        <form data-action="{% url 'blog:comment_create' blogpost.id %}" method="post" class="comment-form">
+                            {% csrf_token %}
                             <div class="form-group">
-                                <textarea class="form-control" name="message" id="message" cols="30" rows="10" placeholder="Add your comment here"></textarea>
+                                <textarea class="form-control comment-text" name="comment_text" id="id_comment_text" maxlength="3000" cols="30" rows="10" placeholder="Add your comment here" required ></textarea>
                             </div>
                             <button type="submit" class="btn contact-btn">Post Comment</button>
-                        </form> -->
+                        </form>
+
                     </div>
                 </div>
+
                 {% else %}
                 <div class="text-center"><h1><strong>Login to leave comments</strong></h1></div>
                 {% endif %}
             
             </div>
+
             <div class="col-2 col-sm-8 col-md-2 col-lg-4 section_padding_100">
                 <div class="blog-sidebar mt-5 mt-lg-0">
                     {% if user.id == blogpost.user.id %}
@@ -182,21 +179,13 @@
             </div> 
 </div>
 
-<!-- <script>
-    $(document).ready(function(){
-        $(".like_button").click(function(e){
-            e.preventDefault
-            var url = $(this).attr("href")
-            $.ajax({
-                url: url,
-                context: document.body
-              }).done(function(response) {
-                console.log(reposnse)
-              });
-        })
-    })
-</script> -->
-
         
 
 {% endblock body %}
+{% block script %}
+
+{% load staticfiles %}
+<script src="{% static 'js/like.js' %}"></script>
+<script src="{% static 'js/post_comment.js' %}"></script>
+
+{% endblock script %}   

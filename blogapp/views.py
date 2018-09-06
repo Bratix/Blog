@@ -1,14 +1,42 @@
 from django.views import generic, View
 from django.views.generic import CreateView, DeleteView, UpdateView, RedirectView
 from django.urls import reverse_lazy
-import json
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from .models import Blog, BlogPost, Comment, Category
 from django.contrib.auth.models import User
+import json
 from django.core import serializers
 from django.http import JsonResponse
+
+class CommentMixin:
+    """
+    Mixin to add AJAX support to a form.
+    Must be used with an object-based FormView (e.g. CreateView)
+    """
+    def form_invalid(self, form):
+        response = super().form_invalid(form)
+        if self.request.is_ajax():
+            return JsonResponse(form.errors, status=400)
+        else:
+            return response
+
+    def form_valid(self, form):
+        # We make sure to call the parent's form_valid() method because
+        # it might do some processing (in the case of CreateView, it will
+        # call form.save() for example).
+        response = super().form_valid(form)
+        if self.request.is_ajax():
+            data = {
+                'pk': self.object.pk,
+                'obj': self.object
+            }
+            return JsonResponse(data)
+        else:
+            return response
+
+
 
 
 class IndexView(View):
@@ -43,7 +71,7 @@ class BlogsPostSearchByTag(generic.ListView):
     template_name = 'blogapp/search.html'
 
     def get_queryset(self):
-        wanted_tag = self.request.GET.get('search').split()
+        wanted_tag = self.request.GET.get('search').split(",")
         return BlogPost.objects.filter(tags__name__in = wanted_tag ).distinct()
 
 def PostLike(request, **kwargs):
@@ -61,16 +89,8 @@ def PostLike(request, **kwargs):
             user_like = True
     
     like_number = post.likes.count()
-    object_ = json.dumps({'like_counter': like_number,'user_like' : user_like})
-    return HttpResponse(object_,content_type='application/json')
-    
+    return JsonResponse({'like_counter': like_number,'user_like' : user_like})
 
-class TheView(View):
-
-    def options(self, request, id):
-        response = HttpResponse()
-        response['allow'] = ','.join(['get', 'post', 'put', 'delete', 'options'])
-        return response
 
 
 
@@ -114,14 +134,30 @@ class BlogPostDelete(DeleteView):
         return reverse_lazy('blog:detail',kwargs = {'pk': BlogPost.objects.get(id=self.kwargs['pk']).blog.id})
 
 
-class CommentCreate(CreateView):
+class CommentCreate(CommentMixin,CreateView):
     model = Comment
     fields = ['comment_text']
-    
+
+    def form_invalid(self, form):
+        response = super().form_invalid(form)
+        if self.request.is_ajax():
+            return JsonResponse(form.errors, status=400)
+        else:
+            return response
+        
     def form_valid(self, form): 
         form.instance.user = self.request.user
         form.instance.post = BlogPost.objects.get(id=self.kwargs['pk'])
-        return super(CommentCreate, self).form_valid(form)
+        response = super(CommentCreate, self).form_valid(form)
+        if self.request.is_ajax():
+            data = {
+                'pk': self.id,
+            }
+            return JsonResponse(data)
+        else:
+            return response
+
+        
 
 class CommentUpdate(UpdateView):
     model = Comment

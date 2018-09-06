@@ -54,3 +54,10 @@
 
 </div>
 {% endblock %}
+{% block script %}
+
+{% load staticfiles %}
+<script src="{% static 'js/ptext.js' %}"></script>
+<script src="{% static 'js/category_preselect.js' %}"></script>
+
+{% endblock script %}

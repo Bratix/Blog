@@ -14,8 +14,6 @@ urlpatterns = [
     #like url
     path('posts/<pk>/like', views.PostLike, name = "post_like"),
 
-    path('option', views.TheView.as_view()),
-
 
 
     #view/categories
