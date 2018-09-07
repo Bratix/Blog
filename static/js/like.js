@@ -1,7 +1,6 @@
 $(document).ready(function(){
     $(".like_button").click(function(e){
         e.preventDefault()
-        console.log("like.clicked")
         var url = $(this).data("href")
         var token = $("input[name='csrfmiddlewaretoken']").val()
         $.ajax({

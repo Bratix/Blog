@@ -10,35 +10,6 @@ import json
 from django.core import serializers
 from django.http import JsonResponse
 
-class CommentMixin:
-    """
-    Mixin to add AJAX support to a form.
-    Must be used with an object-based FormView (e.g. CreateView)
-    """
-    def form_invalid(self, form):
-        response = super().form_invalid(form)
-        if self.request.is_ajax():
-            return JsonResponse(form.errors, status=400)
-        else:
-            return response
-
-    def form_valid(self, form):
-        # We make sure to call the parent's form_valid() method because
-        # it might do some processing (in the case of CreateView, it will
-        # call form.save() for example).
-        response = super().form_valid(form)
-        if self.request.is_ajax():
-            data = {
-                'pk': self.object.pk,
-                'obj': self.object
-            }
-            return JsonResponse(data)
-        else:
-            return response
-
-
-
-
 class IndexView(View):
     def get(self, request):
         context = { 'all_blogs' : Blog.objects.all, 'all_categories': Category.objects.order_by('?')[:3], 'all_posts': BlogPost.objects.order_by('?') }
@@ -134,7 +105,7 @@ class BlogPostDelete(DeleteView):
         return reverse_lazy('blog:detail',kwargs = {'pk': BlogPost.objects.get(id=self.kwargs['pk']).blog.id})
 
 
-class CommentCreate(CommentMixin,CreateView):
+class CommentCreate(CreateView):
     model = Comment
     fields = ['comment_text']
 
@@ -149,9 +120,14 @@ class CommentCreate(CommentMixin,CreateView):
         form.instance.user = self.request.user
         form.instance.post = BlogPost.objects.get(id=self.kwargs['pk'])
         response = super(CommentCreate, self).form_valid(form)
+
         if self.request.is_ajax():
             data = {
-                'pk': self.id,
+                'pk' : self.object.pk,
+                'comment_text' : self.object.comment_text,
+                'user' : str(self.object.user),
+                'creation_date' : self.object.creation_date,
+                'comment_count' : self.object.post.comment_set.count(),
             }
             return JsonResponse(data)
         else:

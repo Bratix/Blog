@@ -39,19 +39,20 @@
                                 {% if  user in blogpost.likes.all %}
                                 <!-- Post Like -->
                                 <div class="post-favourite">
-                                    <a href = "#" class="like_button" data-href="{% url 'blog:post_like' blogpost.id %}" data-post_id = "{{blogpost.id}}" ><i class="fa fa-heart liked" aria-hidden="true"></i><span id = "like-counter"> {{blogpost.likes.count}}</span> </a>
+                                    <a href = "#" class="like_button" data-href="{% url 'blog:post_like' blogpost.id %}" data-post_id = "{{blogpost.id}}" ><i class="fa fa-heart liked" aria-hidden="true"></i>&nbsp;<span id = "like-counter">{{blogpost.likes.count}}</span> </a>
                                 </div>
                                 
                                 {% else %}
                                 <!-- Post Like -->
                                 <div class="post-favourite">
-                                    <a href = "#" class="like_button" data-href="{% url 'blog:post_like' blogpost.id %}" data-post_id = "{{blogpost.id}}" ><i class="fa fa-heart-o liked" aria-hidden="true"></i><span id = "like-counter"> {{blogpost.likes.count}}</span> </a>
+                                    <a href = "#" class="like_button" data-href="{% url 'blog:post_like' blogpost.id %}" data-post_id = "{{blogpost.id}}" ><i class="fa fa-heart-o liked" aria-hidden="true"></i>&nbsp;<span id = "like-counter">{{blogpost.likes.count}}</span> </a>
                                 </div>
                                 {% endif %}
                                 
                                 <!-- Post Comments -->
                                 <div class="post-comments">
-                                    <a href="{% url 'blog:comment_create' blogpost.id %}"><i class="fa fa-comment-o" aria-hidden="true"></i> <span id="comment-count"> {{blogpost.comment_set.count}}</span></a>
+                                    <a href="{% url 'blog:comment_create' blogpost.id %}"><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;<span id="comment-count">{{blogpost.comment_set.count}}</span></a>
+                                    <input type="text" value={{blogpost.comment_set.count}}  id="comment-count-hidden" class="hidden">
                                 </div>
                             </div>
                             
@@ -72,13 +73,13 @@
                 
             
                 <!-- Comment Area Start -->
-                <div class="comment_area section_padding_50 clearfix col-6 col-md-offset-3" id="refresh-div">
-                        <h4 class=>{{ blogpost.comment_set.count }} comments</h4>
-                        <ol>
+                <div class="comment_area section_padding_50 clearfix col-6 col-md-offset-3">
+                        <h4 class="comment-count-main">{{ blogpost.comment_set.count }} comments</h4>
+                        <ol class="refresh-list">
                         {% for comment in blogpost.comment_set.all %}
                         
                             <!-- Single Comment Area -->
-                            <li class="single_comment_area">
+                            <li class="single_comment_area" id="{{ comment.id }}-object">
                                 <div class="comment-wrapper d-flex">
                                     <!-- Comment Meta -->
                                     <div class="comment-author">
@@ -86,7 +87,7 @@
                                     </div>
                                     <!-- Comment Content -->
                                     <div class="comment-content">
-                                        <span class="comment-date text-muted">{{comment.creation_date|date:'d M Y'}} at {{comment.creation_date|date:'H:i'}}</span>
+                                        <span class="comment-date text-muted">{{comment.creation_date|date:"d M Y"}} at {{comment.creation_date|date:"H:i"}}</span>
                                         <h5>{{comment.user.username}}</h5>
                                         <p>{{comment.comment_text}}</p>
                                         <!-- <a href="#">Like</a>
@@ -97,7 +98,7 @@
                                             {% if user.id == comment.user.id %}
             
                                             <div class="post-comments">
-                                                    <form action="{% url 'blog:comment_update' comment.id %}" method="post" visible = "off">
+                                                    <form data-action_update="{% url 'blog:comment_update' comment.id %}" action="{% url 'blog:comment_update' comment.id %}" method="post" visible = "off" >
                                                             {% csrf_token %}
                                                             <div class="text-center">
                                                                     <button type="submit" class="btn btn-link">Update Comment</button>
@@ -109,14 +110,14 @@
             
                                             {% if user.id == comment.user.id or user.is_superuser or user.id == blogpost.user.id %}  
                                             <div class="post-comments">
-                                                    <form action="{% url 'blog:comment_delete' comment.id %}" method="post" visible = "off">
-                                                            {% csrf_token %}
+                                                    <form data-action_delete="{% url 'blog:comment_delete' comment.id %}" action="" method="post" visible = "off" id="comment-delete-{{forloop.counter}}" data-value="{{ comment.id }}">
+                                                        {% csrf_token %}
                                                             <div class="text-center">
                                                                     <button type="submit" class="btn btn-link">Delete comment</button>
                                                                 </div>
                                                     </form>
-                                                    
                                             </div>
+                                            
                                             {% endif %}
                                             
                                     </div>
@@ -125,6 +126,7 @@
                         
                         {% endfor %}
                         </ol>
+                        
                         
                 </div>
                     {% if user.is_authenticated %}
@@ -138,7 +140,7 @@
                             <div class="form-group">
                                 <textarea class="form-control comment-text" name="comment_text" id="id_comment_text" maxlength="3000" cols="30" rows="10" placeholder="Add your comment here" required ></textarea>
                             </div>
-                            <button type="submit" class="btn contact-btn">Post Comment</button>
+                            <button type="submit" class="btn contact-btn" id="comment-post">Post Comment</button>
                         </form>
 
                     </div>
@@ -182,10 +184,14 @@
         
 
 {% endblock body %}
+
 {% block script %}
 
 {% load staticfiles %}
 <script src="{% static 'js/like.js' %}"></script>
 <script src="{% static 'js/post_comment.js' %}"></script>
+<script src="{% static 'js/delete_comment.js' %}"></script>
 
 {% endblock script %}   
+
+

@@ -1,7 +1,9 @@
 $(document).ready(function(){
-    $(".comment-form").on('submit',function(e){
-        e.preventDefault();
-        
+
+    $(".comment-form").submit(function(e){
+        e.preventDefault()
+        e.stopImmediatePropagation()
+
         var text = $('#id_comment_text').val()
         var url = $(this).data("action")
         var token = $("input[name='csrfmiddlewaretoken']").val()
@@ -16,10 +18,12 @@ $(document).ready(function(){
             data: {
                 comment_text: text,
             },
-        }).done(function(){
+        }).done(function(data){
             $('#id_comment_text').val("")
-            console.log(pk)
+            $('#comment-count').text(data.comment_count)
+            $('.comment-count-main').text(data.comment_count+ " comments")
+            $('#comment-count-hidden').attr('value', data.comment_count)
+            $(".refresh-list").load(location.href + " .refresh-list")
         });
-    })
-        
+    });
 })
