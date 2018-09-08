@@ -33,7 +33,7 @@ $(document).ready(function(){
             $('#comment-count').text(data.comment_count)
             $('.comment-count-main').text(data.comment_count+ " comments")
 
-            var Com = $("#emptycom").clone().removeClass("hidden").attr('id','')
+            var Com = $("#emptycom").clone().removeClass("hidden").attr('id','').fadeIn(600)
             Com.find("#comdate").html(date.getDate()+" "+monthNames[date.getMonth()]+" "+ date.getFullYear()+" at "+('0'+date.getHours()).slice(-2)+":"+('0'+date.getMinutes()).slice(-2))
             Com.find("#comuser").html(data.user)   
             Com.find("#comtext").html(data.comment_text)
@@ -65,7 +65,7 @@ $(document).ready(function(){
                 $('#comment-count').html(current_comment_count-1)
                 $('.comment-count-main').html(current_comment_count-1 + " comments") 
             })
-            $(this).closest('li').remove()
+            $(this).closest('li').fadeOut(600)
         });
     
 });

@@ -9,6 +9,9 @@ from django.contrib.auth.models import User
 import json
 from django.core import serializers
 from django.http import JsonResponse
+# from operator import and_, or_
+# import functools
+# from django.db.models import Q
 
 class IndexView(View):
     def get(self, request):
@@ -44,6 +47,7 @@ class BlogsPostSearchByTag(generic.ListView):
     def get_queryset(self):
         wanted_tag = self.request.GET.get('search').split(",")
         return BlogPost.objects.filter(tags__name__in = wanted_tag ).distinct()
+        #return BlogPost.objects.filter(functools.reduce(or_, [Q(tags__name__icontains=q) for q in wanted_tag]))
 
 def PostLike(request, **kwargs):
 
