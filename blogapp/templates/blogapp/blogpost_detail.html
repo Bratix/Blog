@@ -17,13 +17,13 @@
         <div class="col-md-7 col-md-offset-1 section_padding_80">
                 <div class="single-post wow fadeInUp" data-wow-delay=".2s">
                     <!-- Post Thumb -->
-
                     <div class="post-thumb text-center">
                         <img src="{{ blogpost.picture.url }}" alt="">
                     </div>
                     <!-- Post Content -->
                     <div class="post-content">
                         <div class="post-meta d-flex">
+
                             <div class="post-author-date-area d-flex">
                                 <!-- Post Author -->
                                 <div class="post-author">
@@ -33,8 +33,8 @@
                                 <div class="post-date">
                                     <a href="#">{{blogpost.creation_date|date:'d M Y'}} at {{blogpost.creation_date|date:'H:i'}}</a>
                                 </div>
-            
                             </div>
+
                             <div class="post-comment-share-area d-flex">
                                 {% if  user in blogpost.likes.all %}
                                 <!-- Post Like -->
@@ -52,7 +52,6 @@
                                 <!-- Post Comments -->
                                 <div class="post-comments">
                                     <a href="{% url 'blog:comment_create' blogpost.id %}"><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;<span id="comment-count">{{blogpost.comment_set.count}}</span></a>
-                                    <input type="text" value={{blogpost.comment_set.count}}  id="comment-count-hidden" class="hidden">
                                 </div>
                             </div>
                             
@@ -67,19 +66,18 @@
                 <div class="tags-area">
                     {% for tag in blogpost.tags.names %}
                         <a href="#">{{tag}}</a>
-                    {% endfor %}
-                    
+                    {% endfor %}      
                 </div>
                 
             
                 <!-- Comment Area Start -->
                 <div class="comment_area section_padding_50 clearfix col-6 col-md-offset-3">
                         <h4 class="comment-count-main">{{ blogpost.comment_set.count }} comments</h4>
-                        <ol class="refresh-list">
+                        <ol class="comment-list">
                         {% for comment in blogpost.comment_set.all %}
                         
                             <!-- Single Comment Area -->
-                            <li class="single_comment_area" id="{{ comment.id }}-object">
+                            <li class="single_comment_area">
                                 <div class="comment-wrapper d-flex">
                                     <!-- Comment Meta -->
                                     <div class="comment-author">
@@ -87,37 +85,27 @@
                                     </div>
                                     <!-- Comment Content -->
                                     <div class="comment-content">
-                                        <span class="comment-date text-muted">{{comment.creation_date|date:"d M Y"}} at {{comment.creation_date|date:"H:i"}}</span>
+                                        <span class="comment-date text-muted">{{comment.creation_date|date:"j M Y"}} at {{comment.creation_date|date:"H:i"}}</span>
                                         <h5>{{comment.user.username}}</h5>
                                         <p>{{comment.comment_text}}</p>
-                                        <!-- <a href="#">Like</a>
-                                        <a class="active" href="#">Reply</a> -->
                                     </div>
                                     <div class="post-comment-share-area d-flex">
             
                                             {% if user.id == comment.user.id %}
             
                                             <div class="post-comments">
-                                                    <form data-action_update="{% url 'blog:comment_update' comment.id %}" action="{% url 'blog:comment_update' comment.id %}" method="post" visible = "off" >
-                                                            {% csrf_token %}
-                                                            <div class="text-center">
-                                                                    <button type="submit" class="btn btn-link">Update Comment</button>
-                                                            </div>
-                                                    </form>
-                                                    
+                                                <div class="text-center">
+                                                    <button data-url="{% url 'blog:comment_update' comment.id %}"  type="submit" class="btn btn-link">Update Comment</button>
+                                                </div> 
                                             </div>
                                             {% endif %}
             
                                             {% if user.id == comment.user.id or user.is_superuser or user.id == blogpost.user.id %}  
                                             <div class="post-comments">
-                                                    <form data-action_delete="{% url 'blog:comment_delete' comment.id %}" action="" method="post" visible = "off" id="comment-delete-{{forloop.counter}}" data-value="{{ comment.id }}">
-                                                        {% csrf_token %}
-                                                            <div class="text-center">
-                                                                    <button type="submit" class="btn btn-link">Delete comment</button>
-                                                                </div>
-                                                    </form>
+                                                <div class="text-center">
+                                                    <button data-url="{% url 'blog:comment_delete' comment.id %}" type="button" class="btn btn-link btn-cdelete">Delete comment</button>
+                                                </div>
                                             </div>
-                                            
                                             {% endif %}
                                             
                                     </div>
@@ -181,7 +169,39 @@
             </div> 
 </div>
 
-        
+<!-- Single Comment Area -->
+<li class="single_comment_area hidden" id="emptycom">
+    <div class="comment-wrapper d-flex">
+        <!-- Comment Meta -->
+        <div class="comment-author">
+            <img src="" alt="">
+        </div>
+        <!-- Comment Content -->
+        <div class="comment-content">
+            <span class="comment-date text-muted" id="comdate"></span>
+            <h5 id="comuser">{{comment.user.username}}</h5>
+            <p id="comtext">{{comment.comment_text}}</p>
+            <!-- <a href="#">Like</a>
+            <a class="active" href="#">Reply</a> -->
+        </div>
+        <div class="post-comment-share-area d-flex">
+
+                <div class="post-comments">
+                    <div class="text-center">
+                        <button data-url="{% url 'blog:comment_update' 0 %}"  type="submit" class="btn btn-link">Update Comment</button>
+                    </div> 
+                </div>
+                  
+                <div class="post-comments">
+                    <div class="text-center">
+                        <button data-url="{% url 'blog:comment_delete' 0 %}" type="button" class="btn btn-link btn-cdelete">Delete comment</button>
+                    </div>
+                </div>
+               
+                
+        </div>
+    </div>
+</li>      
 
 {% endblock body %}
 
@@ -189,9 +209,8 @@
 
 {% load staticfiles %}
 <script src="{% static 'js/like.js' %}"></script>
-<script src="{% static 'js/post_comment.js' %}"></script>
-<script src="{% static 'js/delete_comment.js' %}"></script>
-
-{% endblock script %}   
+<script src="{% static 'js/post-delete-update-comment.js' %}"></script>
+    
+{% endblock script %} 
 
 

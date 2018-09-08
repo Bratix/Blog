@@ -60,7 +60,11 @@ def PostLike(request, **kwargs):
             user_like = True
     
     like_number = post.likes.count()
-    return JsonResponse({'like_counter': like_number,'user_like' : user_like})
+    data = {
+        'like_counter': like_number,
+        'user_like' : user_like,
+    }
+    return JsonResponse(data)
 
 
 
