@@ -87,7 +87,15 @@
                                     <div class="comment-content">
                                         <span class="comment-date text-muted">{{comment.creation_date|date:"j M Y"}} at {{comment.creation_date|date:"H:i"}}</span>
                                         <h5>{{comment.user.username}}</h5>
-                                        <p>{{comment.comment_text}}</p>
+                                        <p id="comtext">{{comment.comment_text}}</p>
+                                        <div class="comment-text-update hidden">
+                                            <div class="form-group">
+                                                <textarea class="form-control" name="comment_text" id="comment_text" maxlength="3000" cols="30" rows="10" placeholder="Add your comment here" required >{{comment.comment_text}}</textarea>
+                                            </div>
+                                            <button data-url="{% url 'blog:comment_update' comment.id %}" type="submit" class="btn contact-btn update-com">Confirm</button>
+                                        </div>
+                                            
+                                        
                                     </div>
                                     <div class="post-comment-share-area d-flex">
             
@@ -95,7 +103,7 @@
             
                                             <div class="post-comments">
                                                 <div class="text-center">
-                                                    <button data-url="{% url 'blog:comment_update' comment.id %}"  type="submit" class="btn btn-link">Update Comment</button>
+                                                    <button type="button" class="btn btn-link btn-cupdate">Update Comment</button>
                                                 </div> 
                                             </div>
                                             {% endif %}
@@ -181,14 +189,18 @@
             <span class="comment-date text-muted" id="comdate"></span>
             <h5 id="comuser">{{comment.user.username}}</h5>
             <p id="comtext">{{comment.comment_text}}</p>
-            <!-- <a href="#">Like</a>
-            <a class="active" href="#">Reply</a> -->
+                <div class="comment-text-update hidden">
+                    <div class="form-group">
+                        <textarea class="form-control" name="comment_text" id="comment_text" maxlength="3000" cols="30" rows="10" placeholder="Add your comment here" required >{{comment.comment_text}}</textarea>
+                    </div>
+                    <button data-url="{% url 'blog:comment_update' 0 %}" type="submit" class="btn contact-btn update-com">Confirm</button>
+                </div>
         </div>
         <div class="post-comment-share-area d-flex">
 
                 <div class="post-comments">
                     <div class="text-center">
-                        <button data-url="{% url 'blog:comment_update' 0 %}"  type="submit" class="btn btn-link">Update Comment</button>
+                        <button type="button" class="btn btn-link btn-cupdate">Update Comment</button>
                     </div> 
                 </div>
                   
