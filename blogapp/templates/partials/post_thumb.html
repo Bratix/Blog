@@ -1,0 +1,20 @@
+<img src="{{ post.picture.url }}" alt="" >
+
+<h5 class="grey-text"> by {{ post.user.username }}</h5>
+
+<h5 class="grey-text">{{post.creation_date|date:'d M Y'}} at {{post.creation_date|date:'H:i'}}</h5>
+
+<a href="{% url 'blog:blogpost_detail' post.id %}" class="thumb-link">
+    <h3>{{post.post_title}}</h3>
+</a>
+
+<p class="padding-bottom-20">&nbsp;{{post.post_text}}</p>
+
+<div class="tags-area">
+    {% for tag in post.tags.names %}
+        <a href="#" class="btn-link">{{tag}}</a>
+    {% endfor %}      
+</div>
+<br>
+<a href="{% url 'blog:blogpost_detail' post.id %}" class="btn-link">Continue Reading...</a>
+
