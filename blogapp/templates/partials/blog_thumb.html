@@ -1,0 +1,8 @@
+<div class="blog-picture col-md-offset-1 col-md-3">
+    <img src="{{ blog.picture.url }}" alt="" height="300" width="400">
+</div>
+
+<div class="blog-content col-md-offset-2 col-md-3">
+    <a href="{% url 'blog:detail' blog.id %}"> <h3>{{ blog.blog_title }}</h3> </a> <h3 class="lightgrey-text"> by {{blog.user.username}}</h3>
+    <h4 class="lightgrey-text">{{blog.creation_date|date:'d M Y'}}</h4>
+</div>

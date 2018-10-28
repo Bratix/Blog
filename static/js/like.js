@@ -3,6 +3,8 @@ $(document).ready(function(){
         e.preventDefault()
         var url = $(this).data("href")
         var token = $("input[name='csrfmiddlewaretoken']").val()
+        console.log(token);
+        
         $.ajax({
             type: "POST",
             headers: {
@@ -16,13 +18,13 @@ $(document).ready(function(){
             
             if(data.user_like === true)
             {
-            $(".liked").removeClass(".fa fa-heart-o")
-            $(".liked").addClass(".fa fa-heart")}
+            $(".liked").removeClass(".glyphicon glyphicon-heart-empty")
+            $(".liked").addClass(".glyphicon glyphicon-heart")}
             
             else
             {
-            $(".liked").removeClass(".fa fa-heart")
-            $(".liked").addClass(".fa fa-heart-o")
+            $(".liked").removeClass(".glyphicon glyphicon-heart")
+            $(".liked").addClass(".glyphicon glyphicon-heart-empty")
             }
         });
     })
