@@ -1,28 +1,174 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}   
+
 
 {% block body %}
+<!-- Preloader Start -->
 
-{% include "partials/blog_breadcumb.html" %}
 
-<div class="row">
-    <section class="col-md-5 col-md-offset-1">   
-
-        {% for post in blog.blogpost_set.all %}
-    
-            <div class="post-thumb pl-25">
-                {% include "partials/post_thumb.html"%}
+<div class="breadcumb-area" style="background-image: url({{blog.picture.url}});">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="bradcumb-title text-center">
+                   <a href="{% url 'blog:detail' blog.id  %}"><h2>{{blog.blog_title}}</h2></a> 
+                </div>
             </div>
-    
-        {% endfor %}
-    </section>
-        
-    <section class="col-md-offset-2 col-md-3">
-        {% include "partials/about_me.html" %}
-        {% if user.id == blog.user.id %}
-            {% include "partials/blog_action_buttons.html" %}
-            
-        {% endif %}
-    </section>
+        </div>
+    </div>
 </div>
+
+
+<section class="single_blog_area section_padding_80">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8">
+                    <div class="row no-gutters">
+
+                        
+
+                        <!-- Single Post -->
+                        <div class="col-10 col-sm-11">
+                            <div class="single-post">
+                                <!-- Post Thumb -->
+                                <div class="post-thumb">
+                                    <img src="img/blog-img/10.jpg" alt="">
+                                </div>
+                                <!-- Post Content -->
+                                <div class="post-content">
+                                    <div class="post-meta d-flex">
+                                        <div class="post-author-date-area d-flex">
+                                            <!-- Post Author -->
+                                            <div class="post-author">
+                                                <a href="#">By {{blog.user.username}}</a>
+                                            </div>
+                                            <!-- Post Date -->
+                                            <div class="post-date">
+                                                <a href="#">Created:{{blog.creation_date|date:'d M Y'}} at {{blog.creation_date|date:'H:i'}}</a>
+                                            </div>
+                                        </div>
+                                        <!-- Post Comment & Share Area -->
+                                        <div class="post-comment-share-area d-flex">
+                                            <!-- Post Favourite -->
+                                            <!-- <div class="post-favourite">
+                                                <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> 10</a>
+                                            </div> -->
+                                            <!-- Post Comments -->
+                                            <!-- <div class="post-comments">
+                                                <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>
+                                            </div> -->
+                                            <!-- Post Share -->
+                                            <!-- <div class="post-share">
+                                                <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                    <p></p>
+                                </div>
+                            </div>
+
+                            <!-- Tags Area -->
+                            <div class="tags-area">
+                                {% for tag in blog.tags.names %}
+                                    <a href="#">{{tag}}</a>
+                                {% endfor %}
+                                
+                            </div>
+
+                        </div>
+                    </div>
+                    {% for post in blog.blogpost_set.all %}
+                            <!-- Single Post -->
+                            <div class="col-12">
+                                <div class="single-post wow fadeInUp" data-wow-delay=".2s">
+                                    <!-- Post Thumb -->
+                                    <div class="post-thumb">
+                                        <img src="{{ post.picture.url }}" alt="">
+                                    </div>
+                                    <!-- Post Content -->
+                                    <div class="post-content">
+                                        <div class="post-meta d-flex">
+                                            <div class="post-author-date-area d-flex">
+                                                <!-- Post Author -->
+                                                <div class="post-author">
+                                                    <a href="#">By {{ post.user.username }}</a>
+                                                </div>
+                                                <!-- Post Date -->
+                                                <div class="post-date">
+                                                    <a href="#">{{post.creation_date|date:'d M Y'}} at {{featured_post.creation_date|date:'H:i'}}</a>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <a href="#">
+                                            <h2 class="post-headline">{{post.post_title}}</h2>
+                                        </a>
+                                        <br>
+                                        <a href="{% url 'blog:blogpost_detail' post.id %}" class="read-more">Continue Reading..</a>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                    {% endfor %}
+                </div>
+                
+
+
+                <!-- ****** Blog Sidebar ****** -->
+                <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                    <div class="blog-sidebar mt-5 mt-lg-0">
+                        <!-- Single Widget Area -->
+                        <div class="single-widget-area about-me-widget text-center">
+                            <div class="widget-title">
+                                <h6>About Me</h6>
+                            </div>
+                            <div class="about-me-widget-thumb">
+                                <img src="" alt="">
+                            </div>
+                            <h4 class="font-shadow-into-light" style="font-size: 30px">{{ blog.user.username }}</h4>
+                        </div>
+
+                        {% if user.id == blog.user.id %}
+                        <!-- Post Create -->
+                        <div >
+                                <form action="{% url 'blog:post_create' blog.id %}" method="post" visible = "off">
+                                        {% csrf_token %}
+                                        <div class="text-center">
+                                                <button type="submit" class="btn contact-btn">Create a new post</button>
+                                            </div>
+                                </form>
+                                
+                        </div>
+                            <!-- Blog Update -->
+                        <div >
+                                <form action="{% url 'blog:blog_update' blog.id %}" method="post" visible = "off">
+                                        {% csrf_token %}
+                                        <div class="text-center">
+                                                <button type="submit" class="btn contact-btn">Update your blog</button>
+                                        </div>
+                                </form>
+                                
+                        </div>
+                        
+                            <!-- Blog Delete -->
+                            
+                        <div >
+                                <form action="{% url 'blog:blog_delete' blog.id %}" method="post" visible = "off">
+                                        {% csrf_token %}
+                                        <div class="text-center">
+                                                <button type="submit" class="btn contact-btn">Delete blog</button>
+                                            </div>
+                                </form>
+                                
+                        </div>
+                        {% endif %}
+                    </div>
+                    <!-- Single Widget Area -->
+                    
+                    
+                </div>
+            </div>
+        </div>
+</section>
+
 
 {% endblock body %}
