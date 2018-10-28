@@ -2,21 +2,31 @@
 
 {% block body %}
 
-{% include "partials/blog_breadcumb.html" %}
+{% include "partials/blog_breadcumb.html" with blog=blogpost.blog %}
 
 <div class="row">
-    <section class="col-md-4 col-md-offset-1">   
+    <section class="col-md-6 col-md-offset-1">   
             <div class="post-thumb pl-25">
-                {% include "partials/post_thumb.html"  with blogpost=post  %}
+                {% include "partials/post_content.html" with post=blogpost %}
             </div>
+            
     </section>
         
-    <section class="col-md-offset-2 col-md-3">
+    <section class="col-md-offset-2 col-md-2">
         {% include "partials/about_me.html" %}
-        {% if user.id == blog.user.id %}
+        
+        {% if user.id == blogpost.user.id %}
             {% include "partials/blogpost_action_buttons.html" %}
         {% endif %}
+        
     </section>
 </div>
 
 {% endblock body %}
+
+{% block jscript %}
+
+{% load staticfiles %}
+<script src="{% static 'js/like.js' %}"></script>
+<script src="{% static 'js/post-delete-update-comment.js' %}"></script>
+{% endblock jscript %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block body%}
+{% load widget_tweaks %}
+<div class = "container-field">
+        <div class="text-center"><h1><strong>Create your post</strong></h1></div>
+        <br><br>
+
+    <div class = "row">
+            
+        <div class = "col-md-4 col-md-offset-4">
+            <form  action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    {% render_field form.post_title class="form-control"  placeholder="Enter your post title"  %}
+                </div>
+
+                <div class="form-group">
+                    {% render_field form.post_text class="form-control" placeholder="Enter post description" %}
+                </div>
+
+                <label>Upload a picture for your post:</label>    
+                <div class="form-group">
+                    {% render_field form.picture class="form-control" %}
+                </div>
+
+                <div class="form-group">
+                        {% render_field form.tags class="form-control" placeholder="Make tags for your post" %}
+                </div>
+
+                <div class = "form-horizontal">
+                    <div class="text-center">
+                        <button type="submit" class="btn contact-btn">Create your blog</button>
+                    </div>    
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

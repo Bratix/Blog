@@ -3,9 +3,22 @@
 .padding-top-20{
     padding-top: 20px;
 }
-
+.padding-bottom-10{
+    padding-bottom: 10px;
+}
 .padding-bottom-20{
     padding-bottom: 20px;
+}
+.padding-left-100{
+    padding-left: 100px;
+}
+
+.mr-50{
+    margin-right: 50px;
+}
+
+.mb-20{
+    margin-bottom: 20px;
 }
 
 .pl-50{
@@ -98,13 +111,14 @@ h1,h2,h3,h4,h5{
 }
 
 body{
-    background: white url("jpg/background.jpg");
+    background: white url("img/background.jpg");
 }
 
 a {
     color: black;
     white-space: nowrap;
     font-family: 'Mali', cursive;
+    text-decoration: none;
 }
 
 a:hover{
@@ -159,25 +173,14 @@ img{
 
 .btn-link :active,visited{
     color: black;
-    font-family: 'Mali', cursive;
-    border-radius: 30px;
-    font-weight: 500;
-    font-size: 20px;
     background-color: white;
 }
 
 .btn-link:hover{
     color: white;
     text-decoration: none;
-    font-family: 'Mali', cursive;
-    border-radius: 30px;
-    font-weight: 500;
-    font-size: 20px;
-    margin-left: 3px;
     background-color: skyblue;
 }
-
-
 
 
 /* swiper */
@@ -240,8 +243,84 @@ img{
     font-weight: bolder;
 }
 
+.comment-form textarea:focus{
+    border-color: skyblue;
+    border-width: 1px;
+    height: 100px;
+    width: 18cm;
+    border-radius: 10px;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
 
+.comment-form textarea{
+    border-color: grey;
+    border-width: 1px;
+    height: 100px;
+    width: 18cm;
+    border-radius: 10px;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
 
+.comment-content{
+    border-width: thin;
+    border-style: solid;
+    border-color: skyblue;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
 
+/* comment buttons */
 
+.comment-buttons form{
+    display: inline;
+}
+.comment-buttons button{
+    font-size: 15px;
+}
+.comment-buttons button:hover{
+    font-size: 15px;
+}
 
+.input-text{
+    border-color: darkblue;
+    border-radius: 3px;
+}
+
+.btn-link-category{
+    color: black;
+    font-family: 'Mali', cursive;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 20px;
+    background-color: white;
+    padding: 5px;
+    border: solid;
+    border-width: 1px;
+    border-color: skyblue;
+    width: 110px;
+}
+
+.btn-link-category :active,visited{
+    color: black;
+    background-color: white;
+}
+
+.btn-link-category:hover{
+    color: white;
+    text-decoration: none;
+    background-color: skyblue;
+}
+
+ .container-category{
+    position: relative;
+    text-align: center;
+ }
+
+ .catagory-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

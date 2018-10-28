@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row">
+        {% for category in object_list %}
+
+        <div class="container-category col-md-3 ml-30 mb-20">
+            <img src="{{ category.picture.url }}" alt="" height="300" width="400">
+            <div class="catagory-title">
+                <a href="{% url 'blog:category_detail' category.id %}" class="btn btn-link-category">
+                    <h5> {{ category.name }} </h5>
+                </a>
+            </div>
+        </div>
+            
+        {% endfor %}
+    </div>
+        
+</div>
+
+{% endblock body %}
+

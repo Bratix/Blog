@@ -5,7 +5,7 @@
 {% include "partials/blog_breadcumb.html" %}
 
 <div class="row">
-    <section class="col-md-4 col-md-offset-1">   
+    <section class="col-md-5 col-md-offset-1">   
 
         {% for post in blog.blogpost_set.all %}
     
@@ -20,6 +20,7 @@
         {% include "partials/about_me.html" %}
         {% if user.id == blog.user.id %}
             {% include "partials/blog_action_buttons.html" %}
+            
         {% endif %}
     </section>
 </div>
