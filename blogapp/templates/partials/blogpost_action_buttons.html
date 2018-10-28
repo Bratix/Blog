@@ -1,0 +1,25 @@
+<div class="post-thumb">
+
+<!-- Post Update -->
+    <div >
+        <form action="{% url 'blog:post_update' blogpost.id %}" method="post" visible = "off">
+            {% csrf_token %}
+            <div class="text-center">
+                <button type="submit" class="btn-link">Update post</button>
+            </div>
+        </form>
+    </div>
+
+    <br>
+<!-- Post Delete -->
+    <div>
+        <form action="{% url 'blog:post_delete' blogpost.id %}" method="post" visible = "off">
+            {% csrf_token %}
+            <div class="text-center">
+                <button type="submit" class="btn-link">Delete post</button>
+            </div>
+        </form>
+    </div>
+    
+</div>
+    
