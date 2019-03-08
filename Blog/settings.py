@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'blogapp.apps.BlogappConfig',
     'taggit',
     'widget_tweaks',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'Blog.urls'
@@ -65,6 +67,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -82,6 +86,7 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
 
 
 # Password validation
@@ -133,3 +138,18 @@ LOGOUT_REDIRECT_URL = 'login'
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
+
+#Auth backends for social login
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_GITHUB_KEY = '2ad550bca233a4bab8b2'
+SOCIAL_AUTH_GITHUB_SECRET = '92e02cd18fb6da632c15f75ee965a7a0914c4269'
+
+SOCIAL_AUTH_TWITTER_KEY = 'raFMhANhBaoLGr73wz9M3JMD4 '
+SOCIAL_AUTH_TWITTER_SECRET = '5BXxd2fn8VGksxtQhC8ODW66uGqjJ7gSJjwKVsD9g35CloB1sF '

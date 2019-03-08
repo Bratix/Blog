@@ -13,12 +13,15 @@
                 {% include "partials/basic_form.html" %}
                 <div class = "form-horizontal">
                     <div class="text-center">
-                        <button type="submit" class="btn btn-link">Submit</button>
+                        <button type="submit" class="btn btn-link">Submit</button> <br><br>
+
+                        <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>
+                        <a href="{% url 'social:begin' 'twitter' %}">Login with Twitter</a><br>
                     </div>
                 </div>
             </form>
         </div>
-
+    
     </div>
 
 </div>

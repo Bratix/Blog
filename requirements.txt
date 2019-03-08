@@ -2,3 +2,4 @@ Django
 uwsgi
 django-taggit
 django_widget_tweaks
+social-auth-app-django
