@@ -26,6 +26,8 @@ urlpatterns = [
     path('register/', views.UserFormView.as_view(), name = "register"),
     path('',include('blogapp.urls')),
     path('oauth/', include('social_django.urls', namespace='social')),
+    path('settings/', views.settings, name='settings'),
+    path('settings/password/', views.password, name='password'),
 ]
 
 if settings.DEBUG:
