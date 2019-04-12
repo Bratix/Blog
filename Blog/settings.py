@@ -67,8 +67,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
+                'social_django.context_processors.backends',  # <--
+                'social_django.context_processors.login_redirect', # <--
             ],
         },
     },
@@ -86,7 +86,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 
 # Password validation
@@ -139,7 +138,6 @@ LOGOUT_REDIRECT_URL = 'login'
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
 
-#Auth backends for social login
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.github.GithubOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
@@ -148,15 +146,12 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_GITHUB_KEY = '2ad550bca233a4bab8b2'
-SOCIAL_AUTH_GITHUB_SECRET = '92e02cd18fb6da632c15f75ee965a7a0914c4269'
-
-SOCIAL_AUTH_TWITTER_KEY = 'raFMhANhBaoLGr73wz9M3JMD4'
-SOCIAL_AUTH_TWITTER_SECRET = '5BXxd2fn8VGksxtQhC8ODW66uGqjJ7gSJjwKVsD9g35CloB1sF'
-
-SOCIAL_AUTH_FACEBOOK_KEY = '735729700154964'
-SOCIAL_AUTH_FACEBOOK_SECRET = 'e3ef7ec802419914361604d7d3afaa57'
+SOCIAL_AUTH_FACEBOOK_KEY = '735729700154964'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = 'e3ef7ec802419914361604d7d3afaa57'  # App Secret
 
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
+
+FB_KEY = '319208875459051'
+FB_SECRET = 'c173ab36c19ae0b8832bd4f775f1fe4c'

@@ -47,5 +47,7 @@ urlpatterns = [
     #update/blog/1
     path('update/<pk>/comment', views.CommentUpdate.as_view(), name = "comment_update"),
 
+    #fb try
+    path('fbtry/', views.fbtry, name = "fbtry")
 ]
 

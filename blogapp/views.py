@@ -6,12 +6,55 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from .models import Blog, BlogPost, Comment, Category
 from django.contrib.auth.models import User
-import json
 from django.core import serializers
 from django.http import JsonResponse
+import facebook
+import requests
+import urllib
+from optparse import OptionParser
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
+from social_django.models import UserSocialAuth
 # from operator import and_, or_
 # import functools
 # from django.db.models import Q
+
+def fbtry(request):
+    app_id = '319208875459051'
+    app_secret = 'c173ab36c19ae0b8832bd4f775f1fe4c'
+    
+    resp = urllib.request.urlopen(
+    'https://graph.facebook.com/oauth/access_token?client_id=' +
+    app_id + '&client_secret=' + app_secret +
+    '&grant_type=client_credentials')
+    if resp.getcode() == 200:
+        token = resp.read().decode("utf-8").split("\"")[3]
+    print(token)
+    user = request.user
+    try:
+        facebook_login = user.social_auth.get(provider='facebook')
+    except UserSocialAuth.DoesNotExist:
+        return redirect ('blog:index')
+
+
+    print(facebook_login.extra_data["id"])
+    print('https://graph.facebook.com/'+facebook_login.extra_data["id"] +'/feed?access_token='+token)
+    feed = urllib.request.urlopen(
+    'https://graph.facebook.com/'+facebook_login.extra_data["id"] +'/feed'
+    )
+
+    print(feed.read())
+    
+
+    
+
+    
+    #graph = facebook.GraphAPI(access_token=access_token, version="3.1")
+    #print(graph.get_object(id="me/?fields=feed"))
+
+    return redirect('blog:index')
 
 class IndexView(View):
     def get(self, request):

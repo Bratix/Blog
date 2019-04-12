@@ -5,15 +5,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.views.generic import View
 from .forms import UserForm
-#social auth
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from social_django.models import UserSocialAuth
-
-
 
 class UserFormView(View):
     form_class = UserForm
@@ -49,9 +45,7 @@ class UserFormView(View):
 
 
 
-@login_required
-def home(request):
-    return render(request, '')
+
 
 @login_required
 def settings(request):

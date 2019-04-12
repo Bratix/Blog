@@ -3,7 +3,6 @@ from django.urls import reverse
 from datetime import datetime
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.conf import settings
 from taggit.managers import TaggableManager
 
 class Category(models.Model):
