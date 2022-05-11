@@ -7,8 +7,13 @@ app_name = "blog"
 urlpatterns = [
     #home page
     path('', views.IndexView.as_view(), name = "index"),
-    #blog details page
-    path('<pk>', views.BlogDetailView.as_view(), name = "detail"),
+
+    #Blog
+    path('blog/create', views.BlogCreate.as_view(), name = "blog_create"),
+    path('blog/<pk>', views.BlogDetailView.as_view(), name = "blog_detail"),
+    path('blog/<pk>/delete', views.BlogDelete.as_view(), name = "blog_delete"),
+    path('blog/<pk>/update', views.BlogUpdate.as_view(), name = "blog_update"),
+
     #blog post detail page
     path('posts/<pk>', views.BlogPostDetailView.as_view(), name = "blogpost_detail"),
     #like url
@@ -26,12 +31,8 @@ urlpatterns = [
 
 
     #Create/Delete/Update views
-    #create/blog
-    path('create/blog', views.BlogCreate.as_view(), name = "blog_create"),
-    #delete/blog/1
-    path('delete/blog/<pk>', views.BlogDelete.as_view(), name = "blog_delete"),
-    #update/blog/1
-    path('update/blog/<pk>', views.BlogUpdate.as_view(), name = "blog_update"),
+    
+    
 
     #create/post
     path('create/<pk>/post', views.BlogPostCreate.as_view(), name = "post_create"),

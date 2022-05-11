@@ -15,6 +15,7 @@ class Category(models.Model):
 
 class Blog(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
+    description = models.TextField(default="")
     category = models.ForeignKey(Category, on_delete = models.CASCADE)
     blog_title = models.CharField(max_length = 50)
     picture = models.FileField(null = True, blank = True)

@@ -1,0 +1,28 @@
+<!-- BEGIN: Account Menu -->
+{% if user.is_authenticated %}
+<div class="intro-x dropdown w-8 h-8">
+    <div class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in scale-110" role="button" aria-expanded="false">
+        <img alt="Icewall Tailwind HTML Admin Template" src="dist/images/profile-2.jpg">
+    </div>
+    <div class="dropdown-menu w-56">
+        <div class="dropdown-menu__content box bg-theme-11 dark:bg-dark-6 text-white">
+            <div class="p-4 border-b border-theme-12 dark:border-dark-3">
+                <div class="font-medium">{{user.username}}</div>
+            </div>
+            <div class="p-2">
+                <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="user" class="w-4 h-4 mr-2"></i> Profile </a>
+            </div>
+            <div class="p-2 border-t border-theme-12 dark:border-dark-3">
+                <a href="{% url 'logout' %}" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="toggle-right" class="w-4 h-4 mr-2"></i> Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+    <div>
+        <a href="{% url 'login' %}" class="text-white block font-medium" style="display: inline;">Sign in</a> <div class="text-white block font-medium" style="display: inline;"> | </div>
+        <a href="{% url 'register' %}" class="text-white block font-medium" style="display: inline;">Sign up</a>
+    </div>
+{% endif %}
+
+<!-- END: Account Menu -->

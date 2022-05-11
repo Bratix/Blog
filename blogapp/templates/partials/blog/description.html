@@ -1,0 +1,26 @@
+
+<div class="2xl:border-l border-theme-25 -mb-10 pb-10">
+    <div class="2xl:pl-6 grid grid-cols-12 gap-6">
+        <!-- BEGIN: Important Notes -->
+        <div class="col-span-12 md:col-span-6 xl:col-span-12 mt-3 2xl:mt-8">
+            <div class="intro-x flex items-center h-10">
+                <h2 class="text-lg font-medium truncate mr-auto">
+                    About this blog
+                </h2>
+            </div>
+            <div class="mt-5 intro-x">
+                <div class="box zoom-in">
+                    <div class="tiny-slider" id="important-notes">
+                        <div class="p-5">
+                            <div class="text-base font-medium truncate">{{blog.blog_title}}</div>
+                            <div class="text-gray-500 mt-1">123k Subscribers</div>
+                            <div class="text-gray-600 text-justify mt-1">{{blog.description}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END: Important Notes -->      
+        {% include 'partials/blog/moderator_list.html' %}
+    </div>
+</div>

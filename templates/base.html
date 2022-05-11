@@ -1,166 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-    
-    <!-- Title -->
-    <title>Home</title>
-
-    
-    {% load staticfiles %}
-    <!-- Favicon -->
-    <link rel="icon" href="{% static 'img/core-img/favicon.ico' %}">
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <!-- Core Stylesheet -->
-    <link href="{% static 'style.css' %}" rel="stylesheet">
-
-    <!-- Responsive CSS -->
-    <link href="{% static 'css/responsive/responsive.css' %}" rel="stylesheet">
-
-    
-    
-
-</head>
-
-<body>
-    <!-- Preloader Start -->
-    <div id="preloader">
-        <div class="yummy-load"></div>
-    </div>
-
-    <!-- ****** Top Header Area Start ****** -->
-    <div class="top_header_area">
-        <div class="container">
-            <div class="row">
-                <div class="col-2 col-sm-3">
-                        <div class="signup-search-area d-flex align-items-center justify-content-end">
-                        {% if user.is_authenticated %}
-                        <div class="login_register_area d-flex">
-                                <div class="login">
-                                    <a href="">{{user.username}}</a>        
-                                </div>
-                                <div class="register">
-                                    <a href="{% url 'logout' %}">Logout</a>
-                                </div>
-                                <div>
-                                    
-                                </div>
-                        </div>
-                        {% else %}
-                        <div class="login_register_area d-flex">
-                                <div class="login">
-                                    <a href="{% url 'login' %}">Sing in</a>
-                                    
-                                </div>
-                                <div class="register">
-                                    <a href="{% url 'register' %}">Sing up</a>
-                                </div>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-                <!--  Login Register Area -->
-                <div class="col-md-3 col-md-offset-6 ">
-                    <div class="signup-search-area d-flex align-items-center justify-content-end">
-                        
-                        
-                        <!-- Search Button Area -->
-                        <div class="search_button">
-                            <a class="searchBtn" href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
-                        </div>
-                        <!-- Search Form -->
-                        <div class="search-hidden-form">
-                            <form action="{% url 'blog:search_tag' %}" method="get">
-                                <input type="text" name="search" id="search-anything" placeholder="Search posts by tags ">
-                                <input type="submit" value="" class="d-none">
-                                <span class="searchBtn"><i class="fa fa-times" aria-hidden="true"></i></span>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ****** Top Header Area End ****** -->
-
-    <!-- ****** Header Area Start ****** -->
-    <header class="header_area">
-        <div class="container">
-            <div class="row">
-                <!-- Logo Area Start -->
-                <div class="col-12">
-                    <div class="logo_area text-center">
-                        <a href="{% url 'blog:index' %}" class="yummy-logo"> {% block title %}Blogo{% endblock title %}</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <nav class="navbar navbar-expand-lg">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#yummyfood-nav" aria-controls="yummyfood-nav" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars" aria-hidden="true"></i> Menu</button>
-                        <!-- Menu Area Start -->
-                        <div class="collapse navbar-collapse justify-content-center" id="yummyfood-nav">
-                            <ul class="navbar-nav" id="yummy-nav">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'blog:index' %}">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'blog:category' %}">Categories</a>
-                                </li>
+<!--
+Template Name: Icewall - HTML Admin Dashboard Template
+Author: Left4code
+Website: http://www.left4code.com/
+Contact: muhammadrizki@left4code.com
+Purchase: https://themeforest.net/user/left4code/portfolio
+Renew Support: https://themeforest.net/user/left4code/portfolio
+License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+-->
+<html lang="en" class="light">
+    <!-- BEGIN: Head -->
+    <head>
+        {% load static %}
+        
+        <meta charset="utf-8">
+        <link href="dist/images/logo.svg" rel="shortcut icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Icewall admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
+        <meta name="keywords" content="admin template, Icewall Admin Template, dashboard template, flat admin template, responsive admin template, web app">
+        <meta name="author" content="LEFT4CODE">
+        <title>Blogo</title>
+        <!-- BEGIN: CSS Assets-->
+        <link rel="stylesheet" href="{% static 'dist/css/app.css' %}" />
+        <!-- END: CSS Assets-->
+    </head>
+    <!-- END: Head -->
+    <body class="main">
+        
+        {% include "partials/top_bar.html" %}
+        <div class="wrapper">
+            <div class="wrapper-box">
+                {% if user.is_authenticated %}
+                {% include "partials/sidebar.html" %}
+                {% endif %}
+                <!-- BEGIN: Content -->
+                <div class="content">
+                    
+                    <div class="grid grid-cols-12 gap-6">
+                        <div class="col-span-12">
                                 
-                            </ul>
+                                {% block content %}
+                                {% endblock content %}
+                                
                         </div>
-                    </nav>
+                    </div>
                 </div>
+                <!-- END: Content -->
             </div>
         </div>
-    </header>
-    <!-- ****** Header Area End ****** -->
 
-    {% block body %}
-    {% endblock body %}
-
-<footer>
-    <div class="container">
-        <div class = "row">
-                <div class="col-12">
-                <!-- Copywrite Text -->
-                <div class="copy_right_text text-center">
-                    <p>Copyright @2018 All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
-                </div>
-            </div>
-
-        </div>
+        <div class="hidden" id="active_tab">{{ active_tab }}</div>
         
-    </div>
-</footer>
-        
+        <!-- END: Dark Mode Switcher-->
+        <!-- BEGIN: JS Assets-->
+        <script src="{% static 'dist/js/app.js' %}"></script>
+        <!-- END: JS Assets-->
+    </body>
+</html>
 
-    <!-- ****** Footer Menu Area End ****** -->
-
-    <!-- Jquery-2.2.4 js -->
-    <script src="{% static 'js/jquery/jquery-2.2.4.min.js' %}"></script>
-    <!-- Popper js -->
-    <script src="{% static 'js/bootstrap/popper.min.js' %}"></script>
-    <!-- Bootstrap-4 js -->
-    <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
-    <!-- All Plugins JS -->
-    <script src="{% static 'js/others/plugins.js' %}"></script>
-    <!-- Active JS -->
-    <script src="{% static 'js/active.js' %}"></script>
-
-    {% block script %}
-    {% endblock script %}
-
-</body>

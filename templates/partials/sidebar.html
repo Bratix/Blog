@@ -1,0 +1,45 @@
+<!-- BEGIN: Side Menu -->
+<nav class="side-nav">
+    <ul>
+
+        <li>
+            <a href="{% url 'blog:index'  %}" class="side-menu-main side-menu" id="browse" >
+                <div class="side-menu__icon"> <i data-feather="home"></i> </div>
+                <div class="side-menu__title"> Browse </div>
+            </a>
+        </li>
+
+        <li>
+            <a href="javascript:;" class="side-menu-main side-menu">
+                <div class="side-menu__icon"> <i data-feather="credit-card"></i> </div>
+                <div class="side-menu__title">
+                    Your blogs 
+                    <div class="side-menu__sub-icon transform"> <i data-feather="chevron-down"></i> </div>
+                </div>
+            </a>
+            <ul class="side-menu__sub">
+                {% for blog in user.blog_set.all %}
+                    <li>
+                        <a href="{% url 'blog:blog_detail' blog.id %}" class="side-menu" id="blog{{blog.id}}" >
+                            <div class="w-6 h-6 flex-none image-fit side-menu__icon">
+                                <img src="{{ blog.picture.url }}" alt="" class="rounded-full">
+                            </div>
+                            <div class="side-menu__title"> {{ blog.blog_title }} </div>
+                        </a>
+                    </li>
+                {% endfor %}
+
+                <li>
+                    <a href="{% url 'blog:blog_create'  %}" class="side-menu" id="new_blog" >
+                        <div class="side-menu__icon"> <i data-feather="edit"></i> </div>
+                        <div class="side-menu__title"> Create new blog </div>
+                    </a>
+                </li>
+                
+            </ul>
+        </li>
+
+
+    </ul>
+</nav>
+<!-- END: Side Menu -->

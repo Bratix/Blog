@@ -15,8 +15,12 @@ from django.http import JsonResponse
 
 class IndexView(View):
     def get(self, request):
-        context = { 'all_blogs' : Blog.objects.all, 'all_categories': Category.objects.order_by('?')[:3], 'all_posts': BlogPost.objects.order_by('?') }
-        return render(request, 'blogapp/index.html', context )
+        context = { 
+        'all_categories': Category.objects.all , 
+        'all_posts': BlogPost.objects.order_by('?'), 
+        'active_tab': 'browse' 
+        }
+        return render(request, 'index/index.html', context )
        
 
 class CategoryView(generic.ListView):
@@ -35,7 +39,14 @@ class BlogsbyCategoryView(generic.ListView):
 
 class BlogDetailView(generic.DetailView):
     model = Blog
-    template_name = 'blogapp/detail.html'
+    template_name = 'blog/detail.html'
+    
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['active_tab'] = 'blog' + str(BlogDetailView.get_object(self).id)
+        return context
 
 class BlogPostDetailView(generic.DetailView):
     model = BlogPost
@@ -76,10 +87,18 @@ def PostLike(request, **kwargs):
 class BlogCreate(CreateView):
     model = Blog
     fields = ['blog_title','category','picture',"tags"]
+    template_name = "blog/add.html"
     
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(BlogCreate, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['active_tab'] = "new_blog"
+        return context
 
 class BlogUpdate(UpdateView):
     model = Blog
