@@ -1,7 +1,7 @@
 $(document).ready(function(){
-    $(".delete_modal").on("click", function () { 
-        let deleteModalID = $(this).attr("data-modal")
-        cash("#"+deleteModalID).modal("show");
+    $(".delete_blog_trigger").on("click", function () { 
+        let deleteModalID = $(this).attr("data-tw-target")
+        cash(deleteModalID).modal("show");
     });
 
     $("#cancel_action_trigger").on("click", function () { 

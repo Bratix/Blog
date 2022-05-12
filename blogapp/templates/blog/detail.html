@@ -2,7 +2,7 @@
 {% block title %}Welcome to Blogo{% endblock title %}
 
 {% block content %}
-
+{% include 'partials/blog/delete_modal.html' %}
 <div class="intro-y flex flex-col grid-cols-12 col-span-12 sm:flex-row items-center mt-8">
     <h2 class="text-lg font-medium mr-auto">
 
@@ -15,8 +15,9 @@
             </button>
             <div class="dropdown-menu w-40">
                 <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                    <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="share-2" class="w-4 h-4 mr-2"></i> Share Post </a>
-                    <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="download" class="w-4 h-4 mr-2"></i> Download Post </a>
+                    <a href="{% url 'blog:blog_update' blog.id %}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i class="bi bi-pencil-square mr-2"></i> Edit blog </a>
+                    <a href="javascript:;" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md delete_blog_trigger" data-tw-toggle="modal" data-tw-target="#blog_delete"> <i class="bi bi-x-circle mr-2"></i> Delete blog </a>
+                    
                 </div>
             </div>
         </div>

@@ -26,6 +26,7 @@
         "@fullcalendar/timegrid": "^5.5.1",
         "@left4code/tw-starter": "^1.1.0",
         "@popperjs/core": "^2.4.4",
+        "bootstrap-icons": "^1.8.1",
         "cash-dom": "^8.0.0",
         "chart.js": "^2.9.3",
         "dayjs": "^1.8.33",
@@ -42,6 +43,7 @@
         "toastify-js": "^1.9.0",
         "tom-select": "^1.7.5",
         "velocity-animate": "^1.5.2",
+        "waypoints": "^4.0.1",
         "xlsx": "^0.16.6",
         "zoom-vanilla.js": "^2.0.6"
     },

@@ -22,9 +22,9 @@
                     <li>
                         <a href="{% url 'blog:blog_detail' blog.id %}" class="side-menu" id="blog{{blog.id}}" >
                             <div class="w-6 h-6 flex-none image-fit side-menu__icon">
-                                <img src="{{ blog.picture.url }}" alt="" class="rounded-full">
+                                <img src="{{ blog.image.url }}" alt="" class="rounded-full">
                             </div>
-                            <div class="side-menu__title"> {{ blog.blog_title }} </div>
+                            <div class="side-menu__title"> {{ blog.title }} </div>
                         </a>
                     </li>
                 {% endfor %}

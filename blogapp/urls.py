@@ -15,7 +15,7 @@ urlpatterns = [
     path('blog/<pk>/update', views.BlogUpdate.as_view(), name = "blog_update"),
 
     #blog post detail page
-    path('posts/<pk>', views.BlogPostDetailView.as_view(), name = "blogpost_detail"),
+    path('posts/<pk>', views.PostDetailView.as_view(), name = "post_detail"),
     #like url
     path('posts/<pk>/like', views.PostLike, name = "post_like"),
 
@@ -27,7 +27,7 @@ urlpatterns = [
     path('view/categories/<pk>', views.BlogsbyCategoryView.as_view(), name = "category_detail"),
 
     #view/search/tags
-    path('view/search/tags', views.BlogsPostSearchByTag.as_view(), name = 'search_tag'),
+    path('view/search/tags', views.PostSearchByTag.as_view(), name = 'search_tag'),
 
 
     #Create/Delete/Update views
@@ -35,11 +35,11 @@ urlpatterns = [
     
 
     #create/post
-    path('create/<pk>/post', views.BlogPostCreate.as_view(), name = "post_create"),
+    path('create/<pk>/post', views.PostCreate.as_view(), name = "post_create"),
     #delete/post/1
-    path('delete/post/<pk>', views.BlogPostDelete.as_view(), name = "post_delete"),
+    path('delete/post/<pk>', views.PostDelete.as_view(), name = "post_delete"),
     #update/post/1
-    path('update/<pk>/post', views.BlogPostUpdate.as_view(), name = "post_update"),
+    path('update/<pk>/post', views.PostUpdate.as_view(), name = "post_update"),
 
     #create/1/comment
     path('create/<pk>/comment', views.CommentCreate.as_view(), name = "comment_create"),

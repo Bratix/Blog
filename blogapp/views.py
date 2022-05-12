@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
-from .models import Blog, BlogPost, Comment, Category
+from .models import Blog, Post, Comment, Category
 from django.contrib.auth.models import User
 import json
 from django.core import serializers
@@ -13,15 +13,20 @@ from django.http import JsonResponse
 # import functools
 # from django.db.models import Q
 
-class IndexView(View):
-    def get(self, request):
-        context = { 
-        'all_categories': Category.objects.all , 
-        'all_posts': BlogPost.objects.order_by('?'), 
-        'active_tab': 'browse' 
-        }
-        return render(request, 'index/index.html', context )
-       
+class IndexView(generic.ListView):
+    model = Post 
+    paginate_by = 4
+    context_object_name = 'all_posts'
+    template_name = 'index/index.html'
+    ordering = ['-likes']
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['active_tab'] = 'browse'
+        context['all_categories'] = Category.objects.all
+        return context
 
 class CategoryView(generic.ListView):
     template_name = 'blogapp/category.html'
@@ -48,22 +53,22 @@ class BlogDetailView(generic.DetailView):
         context['active_tab'] = 'blog' + str(BlogDetailView.get_object(self).id)
         return context
 
-class BlogPostDetailView(generic.DetailView):
-    model = BlogPost
-    template_name = 'blogapp/blogpost_detail.html'
+class PostDetailView(generic.DetailView):
+    model = Post
+    template_name = 'blogapp/post_detail.html'
 
-class BlogsPostSearchByTag(generic.ListView):
+class PostSearchByTag(generic.ListView):
     template_name = 'blogapp/search.html'
 
     def get_queryset(self):
         wanted_tag = self.request.GET.get('search').split(",")
-        return BlogPost.objects.filter(tags__name__in = wanted_tag ).distinct()
-        #return BlogPost.objects.filter(functools.reduce(or_, [Q(tags__name__icontains=q) for q in wanted_tag]))
+        return Post.objects.filter(tags__name__in = wanted_tag ).distinct()
+        #return Post.objects.filter(functools.reduce(or_, [Q(tags__name__icontains=q) for q in wanted_tag]))
 
 def PostLike(request, **kwargs):
 
     tab_kw = kwargs.get('pk')
-    post = BlogPost.objects.get(id = tab_kw)
+    post = Post.objects.get(id = tab_kw)
     user = request.user
     user_like = False
     if user.is_authenticated:
@@ -86,11 +91,11 @@ def PostLike(request, **kwargs):
 
 class BlogCreate(CreateView):
     model = Blog
-    fields = ['blog_title','category','picture',"tags"]
+    fields = ['title','category','image', 'description']
     template_name = "blog/add.html"
     
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        form.instance.author = self.request.user
         return super(BlogCreate, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -102,8 +107,8 @@ class BlogCreate(CreateView):
 
 class BlogUpdate(UpdateView):
     model = Blog
-    template_name = "blogapp/blog_update.html"
-    fields = ['blog_title', 'category', 'picture','tags']
+    template_name = "blog/edit.html"
+    fields = ['title', 'category', 'image', 'description']
 
 class BlogDelete(DeleteView):
     model = Blog
@@ -112,29 +117,29 @@ class BlogDelete(DeleteView):
 
 
 
-class BlogPostCreate(CreateView):
-    model = BlogPost
-    fields = ['post_title','post_text','picture','tags']
+class PostCreate(CreateView):
+    model = Post
+    fields = ['title','text','image','tags']
 
     def form_valid(self, form): 
         form.instance.user = self.request.user
         form.instance.blog = Blog.objects.get(id=self.kwargs['pk'])
-        return super(BlogPostCreate, self).form_valid(form)
+        return super(PostCreate, self).form_valid(form)
 
-class BlogPostUpdate(UpdateView):
-    model = BlogPost
-    fields = ['post_title','post_text','picture','tags']
-    template_name = "blogapp/blogpost_update.html"
+class PostUpdate(UpdateView):
+    model = Post
+    fields = ['title','text','image','tags']
+    template_name = "blogapp/update.html"
 
-class BlogPostDelete(DeleteView):
-    model = BlogPost
+class PostDelete(DeleteView):
+    model = Post
     def get_success_url(self):
-        return reverse_lazy('blog:detail',kwargs = {'pk': BlogPost.objects.get(id=self.kwargs['pk']).blog.id})
+        return reverse_lazy('blog:detail',kwargs = {'pk': Post.objects.get(id=self.kwargs['pk']).blog.id})
 
 
 class CommentCreate(CreateView):
     model = Comment
-    fields = ['comment_text']
+    fields = ['text']
 
     def form_invalid(self, form):
         response = super().form_invalid(form)
@@ -145,7 +150,7 @@ class CommentCreate(CreateView):
         
     def form_valid(self, form): 
         form.instance.user = self.request.user
-        form.instance.post = BlogPost.objects.get(id=self.kwargs['pk'])
+        form.instance.post = Post.objects.get(id=self.kwargs['pk'])
         response = super(CommentCreate, self).form_valid(form)
 
         if self.request.is_ajax():
@@ -164,12 +169,12 @@ class CommentCreate(CreateView):
 
 class CommentUpdate(UpdateView):
     model = Comment
-    fields = ['comment_text']
+    fields = ['text']
     template_name = "blogapp/comment_update.html"
 
 class CommentDelete(DeleteView):
     model = Comment
 
     def get_success_url(self):
-        return reverse_lazy('blog:blogpost_detail',kwargs = {'pk': Comment.objects.get(id=self.kwargs['pk']).post.id})
+        return reverse_lazy('blog:Post_detail',kwargs = {'pk': Comment.objects.get(id=self.kwargs['pk']).post.id})
     

@@ -46,3 +46,4 @@ import "./dark-mode-switcher";
 //custom imports
 import "./custom/active_tab.js"
 import "./custom/modals.js"
+import "./custom/infinite_scroll.js"

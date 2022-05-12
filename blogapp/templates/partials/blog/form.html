@@ -1,0 +1,47 @@
+{% load widget_tweaks %}
+
+<form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    <!-- BEGIN: Form Layout -->
+    <div class="intro-y box p-5">
+
+        {% with WIDGET_ERROR_CLASS='has-error' WIDGET_REQUIRED_CLASS='my_required' %}
+            <div>
+                <label class="form-label">Title</label>
+                {% render_field form.title class="form-control"  placeholder="Title" value=blog.title %}
+            </div>
+            <div class="text-red-500 hover:p-1">{{form.title.errors}}</div>
+            
+            <div class="mt-3">
+                <label class="form-label">Select a category:</label>
+                <div class="form-group">
+                    {% render_field form.category class="tom-select w-full" data-placeholder="Category" value=blog.category%}
+                </div>
+                <div class="text-red-500 hover:p-1">{{form.category.errors}}</div>
+            </div>
+
+            <div class="mt-3">
+                <label class="form-label">Description:</label>
+                <div class="form-group">
+                    {% render_field form.description class="form-control" data-placeholder="Description" value=blog.description%}
+                </div>
+                <div class="text-red-500 hover:p-1">{{form.category.errors}}</div>
+            </div>
+
+            <div class="mt-3">
+                <label class="form-label">Upload an image:</label>
+                <div class="form-group">
+                    {% render_field form.image class="form-control"%}
+                </div>
+                <div class="text-red-500 hover:p-1">{{form.image.errors}}</div>
+            </div>
+        {% endwith %}
+        <div class="text-right mt-5">
+            <!-- BEGIN: Modal Toggle -->
+            <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#cancel_action" class="btn btn-outline-secondary w-24 mr-1" id="cancel_action_trigger">Cancel</a>
+            <!-- END: Modal Toggle -->
+            <button type="submit" class="btn btn-primary w-24">Submit</button>
+        </div>
+    </div>
+    <!-- END: Form Layout -->
+</form>
