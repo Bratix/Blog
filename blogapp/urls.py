@@ -10,43 +10,33 @@ urlpatterns = [
 
     #Blog
     path('blog/create', views.BlogCreate.as_view(), name = "blog_create"),
-    path('blog/<pk>', views.BlogDetailView.as_view(), name = "blog_detail"),
+    path('blog/<pk>', views.BlogDetail.as_view(), name = "blog_detail"),
     path('blog/<pk>/delete', views.BlogDelete.as_view(), name = "blog_delete"),
     path('blog/<pk>/update', views.BlogUpdate.as_view(), name = "blog_update"),
 
-    #blog post detail page
-    path('posts/<pk>', views.PostDetailView.as_view(), name = "post_detail"),
+    #Post
+    path('blog/<blog_pk>/post/create', views.PostCreate.as_view(), name = "post_create"),
+    path('post/<pk>', views.PostDetailView.as_view(), name = "post_detail"),
+    path('post/<pk>/delete', views.PostDelete.as_view(), name = "post_delete"),
+    path('post/<pk>/update', views.PostUpdate.as_view(), name = "post_update"),
     #like url
-    path('posts/<pk>/like', views.PostLike, name = "post_like"),
+    path('posts/<pk>/like', views.PostLike.as_view(), name = "post_like"),
 
 
+    # #view/categories
+    # path('view/categories', views.CategoryView.as_view(), name = "category"),
+    # #view/categories/1
+    # path('view/categories/<pk>', views.BlogsbyCategoryView.as_view(), name = "category_detail"),
 
-    #view/categories
-    path('view/categories', views.CategoryView.as_view(), name = "category"),
-    #view/categories/1
-    path('view/categories/<pk>', views.BlogsbyCategoryView.as_view(), name = "category_detail"),
-
-    #view/search/tags
-    path('view/search/tags', views.PostSearchByTag.as_view(), name = 'search_tag'),
-
-
-    #Create/Delete/Update views
-    
-    
-
-    #create/post
-    path('create/<pk>/post', views.PostCreate.as_view(), name = "post_create"),
-    #delete/post/1
-    path('delete/post/<pk>', views.PostDelete.as_view(), name = "post_delete"),
-    #update/post/1
-    path('update/<pk>/post', views.PostUpdate.as_view(), name = "post_update"),
-
-    #create/1/comment
-    path('create/<pk>/comment', views.CommentCreate.as_view(), name = "comment_create"),
-    #delete/blog/1
-    path('delete/comment/<pk>', views.CommentDelete.as_view(), name = "comment_delete"),
-    #update/blog/1
-    path('update/<pk>/comment', views.CommentUpdate.as_view(), name = "comment_update"),
+    # #view/search/tags
+    # path('view/search/tags', views.PostSearchByTag.as_view(), name = 'search_tag'),
+ 
+    # #create/1/comment
+    # path('create/<pk>/comment', views.CommentCreate.as_view(), name = "comment_create"),
+    # #delete/blog/1
+    # path('delete/comment/<pk>', views.CommentDelete.as_view(), name = "comment_delete"),
+    # #update/blog/1
+    # path('update/<pk>/comment', views.CommentUpdate.as_view(), name = "comment_update"),
 
 ]
 

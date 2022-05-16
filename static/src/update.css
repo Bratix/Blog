@@ -1,0 +1,35 @@
+.has-error{
+    --tw-border-opacity: 1;
+    border-color: rgba(211, 41, 41, var(--tw-border-opacity)) !important;
+}
+
+.has-error  .ts-input{
+    --tw-border-opacity: 1;
+    border-color: rgba(211, 41, 41, var(--tw-border-opacity)) !important;
+}
+
+
+.text-gray-600{
+	--tw-text-opacity: 1;
+	color: rgba(113, 128, 150, var(--tw-text-opacity));
+}
+.text-theme-9{
+	--tw-text-opacity: 1;
+	color: rgba(145, 199, 20, var(--tw-text-opacity));
+}
+.text-theme-6{
+	--tw-text-opacity: 1;
+	color: rgba(211, 41, 41, var(--tw-text-opacity));
+}
+.text-primary{
+	--tw-text-opacity: 1;
+	color: rgba(59, 130, 246,  var(--tw-text-opacity));
+
+}
+.text-red-500{
+  color: rgba(239,68,68);
+}
+
+.ml-47percent{
+	margin-left: 47%;
+}

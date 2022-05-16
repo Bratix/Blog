@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(function(){
     let activeTab = $("#active_tab").text()
     if ($(("#" + activeTab)).hasClass("side-menu-main")) {
         $(("#" + activeTab)).addClass("side-menu--active")

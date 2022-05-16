@@ -25,18 +25,35 @@
 </div>
 <div class="intro-y grid-cols-12 col-span-12 grid gap-6 mt-5">
     <!-- BEGIN: Blog Layout -->
-    <div class="col-span-12 2xl:col-span-9 ">
-        <div class="grid-cols-12 grid">
-            {% for post in blog.blogpost_set.all %}
-                <div class="intro-y blog col-span-6 2xl:col-span-6 box m-10">
+    
+    <div class="2xl:col-span-9 col-span-8">
+        <div class="grid-cols-12 grid infinite-container" style="overflow: visible;">
+            {% for post in posts %}
+                <div class="intro-y blog col-span-6 2xl:col-span-6 box m-10 infinite-item">
                     {% include 'partials/post/thumb.html' with post=post %}
                 </div>
             {% endfor %}
+            
         </div>
     </div> 
 
-    <div class="col-span-12 2xl:col-span-3">
+    
+
+    <div class="col-span-3">
         {% include 'partials/blog/description.html' %}
     </div> 
+    
+    <div class="2xl:col-span-9 col-span-8">
+        {% include 'partials/common/loader.html' %}
+    </div> 
+    <!-- End: Blog Layout -->
+    
+
+    {% if page_obj.has_next %}
+        <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
+    {% endif %}
 </div> 
+
+
+
 {% endblock content %}

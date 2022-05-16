@@ -17,7 +17,7 @@ import "./datepicker";
 import "./tom-select";
 import "./dropzone";
 import "./validation";
-import "./zoom";
+//import "./zoom";
 import "./notification";
 import "./tabulator";
 import "./calendar";

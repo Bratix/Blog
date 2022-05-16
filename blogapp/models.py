@@ -10,7 +10,7 @@ from django.core.validators import FileExtensionValidator
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
-    image = models.FileField(validators=[FileExtensionValidator(allowed_extensions=["jpg", "png"])])
+    image = models.FileField(validators=[FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png"])])
     first_name = models.CharField(max_length = 15)
     last_name = models.CharField(max_length = 15)
     friends = models.ManyToManyField(User, related_name="friends", blank=True)
@@ -36,24 +36,24 @@ class Blog(models.Model):
     category = models.ForeignKey(Category, on_delete = models.CASCADE)
     title = models.CharField(max_length = 50, unique=True, default="")
     description = models.TextField()
-    image = models.FileField(validators=[FileExtensionValidator(allowed_extensions=["jpg", "png"])])
+    image = models.FileField(validators=[FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png"])])
     creation_date = models.DateTimeField(auto_now_add = True)
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("blog:detail", kwargs={"pk": self.pk}) 
+        return reverse("blog:blog_detail", kwargs={"pk": self.pk}) 
 
 
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete = models.CASCADE) 
     blog = models.ForeignKey(Blog, on_delete = models.CASCADE)
-    likes = models.ManyToManyField(User, related_name="post_likes")
+    likes = models.ManyToManyField(User, related_name="post_likes", blank=True)
     title = models.CharField(max_length = 50)
     text = models.TextField()
     tags = TaggableManager()
-    image = models.FileField(validators=[FileExtensionValidator(allowed_extensions=["jpg", "png"])])
+    image = models.FileField(validators=[FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png"])])
     creation_date = models.DateTimeField(auto_now_add = True)
     
    
