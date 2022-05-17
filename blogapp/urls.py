@@ -16,7 +16,7 @@ urlpatterns = [
 
     #Post
     path('blog/<blog_pk>/post/create', views.PostCreate.as_view(), name = "post_create"),
-    path('post/<pk>', views.PostDetailView.as_view(), name = "post_detail"),
+    path('post/<pk>', views.PostDetail.as_view(), name = "post_detail"),
     path('post/<pk>/delete', views.PostDelete.as_view(), name = "post_delete"),
     path('post/<pk>/update', views.PostUpdate.as_view(), name = "post_update"),
     #like url

@@ -1,0 +1,51 @@
+
+<div class="border-l border-theme-25 -mb-10 pb-10">
+    <div class="pl-6 grid grid-cols-12 gap-6">
+        <!-- BEGIN: Important Notes -->
+        <div class="col-span-12 md:col-span-6 xl:col-span-12 mt-3 2xl:mt-8">
+            <div class="intro-x flex items-center h-10">
+                <h2 class="text-lg font-medium truncate mr-auto">
+                    Author
+                </h2>
+            </div>
+            <a href="#">
+                <div class="mt-5 intro-x">
+                    <div class="box zoom-in">
+                        <div class="tiny-slider" id="important-notes">
+                            <div class="p-5">
+                                <div class="text-base font-medium truncate">{{post.author}}</div>
+                                <div class="text-gray-500 mt-1"></div>
+                                <div class="text-gray-600 text-justify mt-1"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="border-l border-theme-25 -mb-10 pb-10">
+    <div class="pl-6 grid grid-cols-12 gap-6">
+        <!-- BEGIN: Important Notes -->
+        <div class="col-span-12 md:col-span-6 xl:col-span-12 mt-3 2xl:mt-8">
+            <div class="intro-x flex items-center h-10">
+                <h2 class="text-lg font-medium truncate mr-auto">
+                    {{post.blog.title}}
+                </h2>
+            </div>
+            <a href="{% url 'blog:blog_detail' post.blog.id %}">
+                <div class="mt-5 intro-x">
+                    <div class="box zoom-in">
+                        <div class="tiny-slider" id="important-notes">
+                            <div class="p-5">
+                                <div class="text-gray-500 mt-1">123k Subscribers</div>
+                                <div class="text-gray-600 text-justify mt-1">{{post.blog.description}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

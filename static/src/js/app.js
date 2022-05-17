@@ -47,3 +47,5 @@ import "./dark-mode-switcher";
 import "./custom/active_tab.js"
 import "./custom/modals.js"
 import "./custom/infinite_scroll.js"
+import "./custom/wysiwyg.js"
+import "./custom/post_form.js"

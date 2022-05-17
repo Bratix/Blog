@@ -1,0 +1,67 @@
+{% extends 'base.html' %}   
+{% block title %}Welcome to Blogo{% endblock title %}
+
+{% block content %}
+{% load humanize %}
+<div class="grid grid-cols-12">
+    <div class="intro-y news p-5 box mt-8 col-span-8 flex flex-col">
+        <!-- BEGIN: Blog Layout -->
+        <div class="intro-y flex flex-col grid-cols-12 col-span-12 sm:flex-row items-center">
+            <h2 class="intro-y font-medium text-xl sm:text-2xl mr-auto">
+                {{post.title}}
+            </h2>
+            <div class="w-full sm:w-auto flex mt-4 sm:mt-0 ml-auto content-end	">
+                <div class="dropdown ml-auto sm:ml-0">
+                    <button class="dropdown-toggle " aria-expanded="false">
+                        <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4 bi bi-three-dots-vertical" ></i> </span>
+                    </button>
+                    <div class="dropdown-menu w-40">
+                        <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
+                            <a href="{% url 'blog:post_update' post.id %}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i  class="bi bi-pencil-square mr-2"></i> Edit </a>
+                            <a href="javascript:;" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md post_delete_modal" data-tw-target="#post_delete_{{post.id}}"> <i  class="bi bi-x-circle mr-2"></i> Delete </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="intro-y text-gray-700 dark:text-gray-600 mt-3 text-xs sm:text-sm"> {{post.creation_date|naturalday|title}} at {{post.creation_date|date:'H:i'}} 
+            {% for tag in post.tags.names %}
+                <span class="mx-1">•</span> <a class="text-theme-17 dark:text-gray-500" href="">{{tag}}</a> 
+            {% endfor %}
+            
+        </div>
+        <div class="intro-y mt-6">
+            <div class="news__preview image-fit">
+                <img alt="Icewall Tailwind HTML Admin Template" class="rounded-md" src="{{post.image.url}}">
+            </div>
+        </div>
+        <div class="intro-y flex relative pt-16 sm:pt-6 items-center pb-6">
+            <div class="absolute sm:relative -mt-12 sm:mt-0 w-full flex text-gray-700 dark:text-gray-600 text-xs sm:text-sm">
+                <div class="intro-x sm:mr-3 ml-auto"> </div>
+                <div class="intro-x sm:mr-3 ml-auto"> 
+                    {%if user in post.likes.all%}
+                        <i class="bi bi-heart-fill"></i> 
+                    {%else%}
+                        <i class="bi bi-heart"></i> 
+                    {%endif%}
+                    <span class="font-medium">{{post.likes.count|intword|intcomma}}</span> &nbsp
+                    <i class="bi bi-chat-right"></i> <span class="font-medium">{{post.comment_set.all | length}}</span> 
+                </div>
+            </div>
+        </div>
+        <div class="intro-y text-justify leading-relaxed">
+            <p class="mb-5">{{post.text}}</p>
+        </div>
+        {% include 'partials/post/delete_modal.html' with post=post %}
+        <!-- END: Blog Layout -->
+        {% include 'partials/comment/area.html' %}
+    </div>
+
+    <div class="col-span-3 col-start-9 ml-10">
+        {% include 'partials/post/about.html' %}
+    </div> 
+</div> 
+<!-- END: Content -->
+
+{% endblock content %}

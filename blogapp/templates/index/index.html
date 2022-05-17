@@ -32,10 +32,9 @@
     <!-- End infinite scroll for posts -->
 </div> 
 {% include 'partials/common/loader.html' %}  
-{% comment %} {% if page_obj.has_next %}
+{% if page_obj.has_next %}
     <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
-{% endif %} {% endcomment %}
-
+{% endif %} 
 
     
 {% endblock content %}

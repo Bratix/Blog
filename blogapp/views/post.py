@@ -5,9 +5,9 @@ from django.urls import reverse_lazy
 from django.http import JsonResponse
 
 
-class PostDetailView(generic.DetailView):
+class PostDetail(generic.DetailView):
     model = Post
-    template_name = 'blogapp/post_detail.html'
+    template_name = 'post/detail.html'
 
 class PostSearchByTag(generic.ListView):
     template_name = 'blogapp/search.html'
@@ -41,16 +41,18 @@ class PostLike(View):
 class PostCreate(CreateView):
     model = Post
     fields = ['title','text','image','tags']
+    template_name = "post/add.html"
 
     def form_valid(self, form): 
         self.object = form.save(commit=False)
         self.object.blog = Blog.objects.get(id=self.kwargs['blog_pk'])
+        self.object.author = self.request.user
         return super(PostCreate, self).form_valid(form)
 
 class PostUpdate(UpdateView):
     model = Post
     fields = ['title','text','image','tags']
-    template_name = "blogapp/update.html"
+    template_name = "post/edit.html"
 
 class PostDelete(DeleteView):
     model = Post

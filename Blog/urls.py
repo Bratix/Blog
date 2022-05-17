@@ -24,7 +24,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls'), name = "login"),
     path('register/', views.UserFormView.as_view(), name = "register"),
-    path('',include('blogapp.urls'))
+    path('',include('blogapp.urls')),
+    path('djrichtextfield/', include('djrichtextfield.urls'))
+
 ]
 
 if settings.DEBUG:

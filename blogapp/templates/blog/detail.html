@@ -5,7 +5,7 @@
 {% include 'partials/blog/delete_modal.html' %}
 <div class="intro-y flex flex-col grid-cols-12 col-span-12 sm:flex-row items-center mt-8">
     <h2 class="text-lg font-medium mr-auto">
-
+        {{blog.title}}
     </h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0 ml-auto content-end	">
         <a class="btn btn-primary shadow-md mr-2" href="{% url 'blog:post_create' blog.id %}">Add post</a>
@@ -26,7 +26,7 @@
 <div class="intro-y grid-cols-12 col-span-12 grid gap-6 mt-5">
     <!-- BEGIN: Blog Layout -->
     
-    <div class="2xl:col-span-9 col-span-8">
+    <div class="2xl:col-span-9 col-span-8 ">
         <div class="grid-cols-12 grid infinite-container" style="overflow: visible;">
             {% for post in posts %}
                 <div class="intro-y blog col-span-6 2xl:col-span-6 box m-10 infinite-item">
