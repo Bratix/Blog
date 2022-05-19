@@ -4,6 +4,7 @@ from djrichtextfield.models import RichTextField
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 from django.core.validators import FileExtensionValidator
+from django.utils.timezone import now
 
 
 class Profile(models.Model):
@@ -66,12 +67,14 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete = models.CASCADE)
     post = models.ForeignKey(Post, on_delete = models.CASCADE)
     text = models.CharField(max_length = 3000, default="")
+    edited = models.BooleanField(default=False)
     creation_date = models.DateTimeField(auto_now_add=True)
+    edit_date = models.DateTimeField(default=now)
 
     def __str__(self):
         return self.text
 
     def get_absolute_url(self):
-        return reverse("blog:Post_detail", kwargs={"pk": self.post.id})
+        return reverse("blog:post_detail", kwargs={"pk": self.post.id})
     
 

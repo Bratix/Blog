@@ -8,13 +8,17 @@ $(function(){
             element: $('.infinite-container')[0],
             onBeforePageLoad: function () {
             $('.spinner-border').show();
+                setTimeout(() => {
+                    $('.spinner-border').hide();
+                }, 2000)
             },
     
             onAfterPageLoad: function () {
             $('.spinner-border').hide();
             }
     
-        });
+        })
         Waypoint.refreshAll();
+        
     }, 500)
 })

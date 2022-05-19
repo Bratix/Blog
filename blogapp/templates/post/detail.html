@@ -10,6 +10,7 @@
             <h2 class="intro-y font-medium text-xl sm:text-2xl mr-auto">
                 {{post.title}}
             </h2>
+            {% if post.author == user %}
             <div class="w-full sm:w-auto flex mt-4 sm:mt-0 ml-auto content-end	">
                 <div class="dropdown ml-auto sm:ml-0">
                     <button class="dropdown-toggle " aria-expanded="false">
@@ -23,6 +24,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
         </div>
         
         <div class="intro-y text-gray-700 dark:text-gray-600 mt-3 text-xs sm:text-sm"> {{post.creation_date|naturalday|title}} at {{post.creation_date|date:'H:i'}} 
@@ -40,13 +42,16 @@
             <div class="absolute sm:relative -mt-12 sm:mt-0 w-full flex text-gray-700 dark:text-gray-600 text-xs sm:text-sm">
                 <div class="intro-x sm:mr-3 ml-auto"> </div>
                 <div class="intro-x sm:mr-3 ml-auto"> 
+  
                     {%if user in post.likes.all%}
-                        <i class="bi bi-heart-fill"></i> 
+                    <a href="javascript:;" class="like_button" data-href="{% url 'blog:post_like' post.id %}" data-post_id = "{{post.id}}" ><i class="bi bi-heart-fill liked"></i> <span class="font-medium" id="like-counter">{{post.likes.count|intword|intcomma}}</span> &nbsp</a>
+                        
                     {%else%}
-                        <i class="bi bi-heart"></i> 
+                    <a href="javascript:;" class="like_button" data-href="{% url 'blog:post_like' post.id %}" data-post_id = "{{post.id}}" ><i class="bi bi-heart liked"></i> <span class="font-medium" id="like-counter">{{post.likes.count|intword|intcomma}}</span> &nbsp</a>
+                        
                     {%endif%}
-                    <span class="font-medium">{{post.likes.count|intword|intcomma}}</span> &nbsp
-                    <i class="bi bi-chat-right"></i> <span class="font-medium">{{post.comment_set.all | length}}</span> 
+                    
+                    <i class="bi bi-chat-right"></i> <span class="font-medium comment-count">{{post.comment_set.all | length}}</span> 
                 </div>
             </div>
         </div>
@@ -55,7 +60,7 @@
         </div>
         {% include 'partials/post/delete_modal.html' with post=post %}
         <!-- END: Blog Layout -->
-        {% include 'partials/comment/area.html' %}
+        {% include 'comment/area.html' with comments=comments post=post%}
     </div>
 
     <div class="col-span-3 col-start-9 ml-10">

@@ -10,9 +10,9 @@ $(function(){
         cash(modalId).modal("show");
     });
 
-    $(document).on("click", ".post_delete_modal", function () { 
+    $(document).on("click", ".post_delete_modal, .comment_delete_modal", function () { 
         let deleteModalID = $(this).attr("data-tw-target");
         console.log(deleteModalID);
-        cash(deleteModalID).modal("show");
+        cash("#" + deleteModalID).modal("show");
     });
 })

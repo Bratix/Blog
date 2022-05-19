@@ -15,7 +15,7 @@
             <div class="dropdown-menu w-40">
                 <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
                     <a href="{% url 'blog:post_update' post.id %}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i class="bi bi-pencil-square mr-2"></i> Edit </a>
-                    <a href="javascript:;" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md post_delete_modal" data-tw-target="#post_delete_{{post.id}}"> <i class="bi bi-x-circle mr-2"></i> Delete </a>
+                    <a href="javascript:;" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md post_delete_modal" data-tw-target="post_delete_{{post.id}}"> <i class="bi bi-x-circle mr-2"></i> Delete </a>
                 </div>
             </div>
         </div>

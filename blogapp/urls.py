@@ -22,7 +22,10 @@ urlpatterns = [
     #like url
     path('posts/<pk>/like', views.PostLike.as_view(), name = "post_like"),
 
-
+    #Comment
+    path('post/<pk>/comment/create', views.CommentCreate.as_view(), name = "comment_create"),
+    path('comment/<pk>/delete', views.CommentDelete.as_view(), name = "comment_delete"),
+    path('comment/<pk>/update', views.CommentUpdate.as_view(), name = "comment_update"),
     # #view/categories
     # path('view/categories', views.CategoryView.as_view(), name = "category"),
     # #view/categories/1
@@ -30,13 +33,6 @@ urlpatterns = [
 
     # #view/search/tags
     # path('view/search/tags', views.PostSearchByTag.as_view(), name = 'search_tag'),
- 
-    # #create/1/comment
-    # path('create/<pk>/comment', views.CommentCreate.as_view(), name = "comment_create"),
-    # #delete/blog/1
-    # path('delete/comment/<pk>', views.CommentDelete.as_view(), name = "comment_delete"),
-    # #update/blog/1
-    # path('update/<pk>/comment', views.CommentUpdate.as_view(), name = "comment_update"),
 
 ]
 

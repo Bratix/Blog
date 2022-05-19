@@ -1,0 +1,12 @@
+<form id="comment-update-form-{{comment.id}}" data-action="{% url 'blog:comment_update' comment.id %}" class="hidden comment-update-form" data-show="comment-main-{{comment.id}}">
+    {% csrf_token %}
+    <div class="news__input relative mt-5">
+        <i data-feather="message-circle" class="w-5 h-5 absolute my-auto inset-y-0 ml-6 left-0 text-gray-600"></i> 
+        <textarea class="form-control border-transparent bg-gray-200 pl-16 py-6 placeholder-theme-8 resize-none" rows="1" placeholder="Post a comment..." id="comment_text">{{comment.text}}</textarea>
+    </div>
+    <div class="text-right mt-5">
+        <!-- END: Modal Toggle -->
+        <button type="submit" class="btn btn-primary w-24">Edit</button>
+    </div>
+</form>
+

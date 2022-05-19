@@ -1,0 +1,73 @@
+<div class="pt-5 infinite-item hidden" id="empty-comment">
+    <div class="flex" id="comment_main">
+        <div class="w-10 h-10 sm:w-12 sm:h-12 flex-none image-fit">
+            <img alt="Default" class="rounded-full" src="{{post.image.url}}" id="image">
+        </div>
+        <div class="ml-3 flex-1 ">
+            <div class="flex flex-col grid-cols-12 col-span-12 sm:flex-row items-center">
+                <div class="" style="display:inline;"> <a href="#" class="font-medium" id="user">{{comment.author}}</a>
+                </div>
+                <div class=" flex mt-4 sm:mt-0 ml-auto content-end" style="display:inline;">
+                    <div class="dropdown ml-auto sm:ml-0">
+                        <button class="dropdown-toggle " aria-expanded="false">
+                            <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4 bi bi-three-dots-vertical" ></i> </span>
+                        </button>
+                        <div class="dropdown-menu w-40">
+                            <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
+                                <a href="javascript:;" id="edit_toggle" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md comment_edit_link" data-update-form="comment-update-form-{{comment.id}}" data-hide="comment-main-{{comment.id}}"> <i  class="bi bi-pencil-square mr-2"></i> Edit </a>
+                                <a href="javascript:;" id="delete_toggle" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md comment_delete_modal" data-tw-target="comment_delete"> <i  class="bi bi-x-circle mr-2"></i> Delete </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-gray-600 text-xs sm:text-sm" id="date">
+                
+            </div>
+            <div class="mt-2" id="text"></div>
+        </div>
+    </div>
+    
+
+    <form id="comment-update-form-{{comment.id}}" data-action="" class="hidden comment-update-form" data-show="#comment-main-{{comment.id}}">
+        {% csrf_token %}
+        <div class="news__input relative mt-5">
+            <i data-feather="message-circle" class="w-5 h-5 absolute my-auto inset-y-0 ml-6 left-0 text-gray-600"></i> 
+            <textarea class="form-control border-transparent bg-gray-200 pl-16 py-6 placeholder-theme-8 resize-none" rows="1" placeholder="Post a comment..." id="comment_text">{{comment.text}}</textarea>
+        </div>
+        <div class="text-right mt-5">
+            <!-- END: Modal Toggle -->
+            <button type="submit" href="" class="btn btn-primary w-24">Edit</button>
+        </div>
+    </form>
+    
+    <div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
+        <div class="font-medium ">Comments can't be empty</div>
+    </div>
+    <!-- END: Notification Content -->
+    <!-- BEGIN: Notification Toggle -->
+    <button id="comment_form_notification" class="btn btn-primary mr-1 hidden"></button>
+    
+    <!-- BEGIN: Modal Content -->
+    <div id="comment_delete" class="modal" tabindex="-1" aria-hidden="true" class="delete_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <div class="p-5 text-center"> <i data-feather="x-circle" class="w-16 h-16 text-theme-6 mx-auto mt-3"></i>
+                        <div class="text-3xl mt-5">Are you sure you want to delete this comment?</div>
+                        <div class="text-gray-600 mt-2">This process cannot be undone.</div>
+                    </div>
+                    <div class="px-5 pb-8 text-center"> 
+                        <form method="POST" action="" class="comment_delete_form" data-div="">
+                            {% csrf_token %}
+                            <button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-24 dark:border-dark-5 dark:text-gray-300 mr-1">Cancel</button>
+                            <button type="submit" data-dismiss="modal" class="btn btn-danger w-24">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+

@@ -1,0 +1,45 @@
+{% load humanize %}
+<div class="pt-5 infinite-item" id="comment-{{comment.id}}">
+    <div class="flex" id="comment-main-{{comment.id}}">
+        <div class="w-10 h-10 sm:w-12 sm:h-12 flex-none image-fit">
+            <img alt="Icewall Tailwind HTML Admin Template" class="rounded-full" src="{{post.image.url}}">
+        </div>
+        <div class="ml-3 flex-1 ">
+            <div class="flex flex-col grid-cols-12 col-span-12 sm:flex-row items-center">
+                <div class="" style="display:inline;"> <a href="#" class="font-medium">{{comment.author}}</a>
+                    <div class="text-gray-600 text-xs sm:text-sm ml-1" id="edited" style="display:inline;">
+                        {% if comment.edited %}
+                            edited
+                        {% endif %} 
+                    </div>
+                </div>
+                {% if comment.author == user %}
+                <div class=" flex mt-4 sm:mt-0 ml-auto content-end" style="display:inline;">
+                    <div class="dropdown ml-auto sm:ml-0">
+                        <button class="dropdown-toggle " aria-expanded="false">
+                            <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4 bi bi-three-dots-vertical" ></i> </span>
+                        </button>
+                        <div class="dropdown-menu w-40">
+                            <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
+                                <a href="javascript:;" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md comment_edit_link" data-update-form="comment-update-form-{{comment.id}}" data-hide="comment-main-{{comment.id}}"> <i  class="bi bi-pencil-square mr-2"></i> Edit </a>
+                                <a href="javascript:;" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md comment_delete_modal" data-tw-target="comment_delete_{{comment.id}}"> <i  class="bi bi-x-circle mr-2"></i> Delete </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="text-gray-600 text-xs sm:text-sm" id="date">
+                {% if comment.edited %}
+                    {{comment.edit_date|naturaltime}}
+                {% else %}
+                     {{comment.creation_date|naturaltime}}
+                {% endif %} 
+            </div>
+            <div class="mt-2" id="text">{{comment.text}}</div>
+        </div>
+    </div>
+    {% include 'partials/comment/update_form.html' with comment=comment %}
+    {% include 'partials/comment/delete_modal.html' with comment=comment %}
+</div>

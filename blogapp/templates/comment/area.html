@@ -1,0 +1,18 @@
+<!-- BEGIN: Comments -->
+<div class="intro-y mt-5 pt-5 border-t border-gray-200 dark:border-dark-5">
+    <div class="text-base sm:text-lg font-medium"> <span class="comment-count">{{post.comment_set.all|length}}</span>  Responses</div>
+    {% include 'partials/comment/form.html' %}
+</div>
+<div class="intro-y mt-5 pb-10 " >
+    <div class="infinite-container " id="comment-list">
+    {% for comment in comments %}
+            {% include 'partials/comment/detail.html' with comment=comment post=post %}
+    {% endfor %}
+    </div>
+</div>
+{% if page_obj.has_next %}
+    {% include 'partials/common/loader.html' %}
+    <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
+{% endif %}
+{% include 'partials/comment/hidden_comment.html' %}
+<!-- END: Comments -->
