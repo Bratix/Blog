@@ -31,8 +31,9 @@
     {% endfor %}
     <!-- End infinite scroll for posts -->
 </div> 
-{% include 'partials/common/loader.html' %}  
+
 {% if page_obj.has_next %}
+    {% include 'partials/common/loader.html' %}  
     <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
 {% endif %} 
 

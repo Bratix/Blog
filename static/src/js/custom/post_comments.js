@@ -40,7 +40,6 @@ $(function(){
             comment.find("#date").html(data.creation_date);
             comment.find("#user").html(data.user);
             comment.find("#text").html(data.text);
-            comment.find("#image").attr('src', data.image);
 
             let new_id = "comment_delete_" + data.pk;
             comment.find("#delete_toggle").attr('data-tw-target', new_id);

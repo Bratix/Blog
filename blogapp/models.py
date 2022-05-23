@@ -9,10 +9,13 @@ from django.utils.timezone import now
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
-    image = models.FileField(validators=[FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png"])])
+    image = models.FileField(validators=[FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png"])], default='default_user.jpg')
     first_name = models.CharField(max_length = 15)
     last_name = models.CharField(max_length = 15)
     friends = models.ManyToManyField(User, related_name="friends", blank=True)
+
+    def get_absolute_url(self):
+        return reverse("blog:profile_detail", kwargs={"pk": self.pk}) 
 
 
 class Friend_Request(models.Model):
@@ -61,6 +64,7 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse("blog:post_detail", kwargs={"pk": self.id}) 
+    
 
 
 class Comment(models.Model):

@@ -1,8 +1,10 @@
 <!-- BEGIN: Search -->
 <div class="intro-x relative mr-3 sm:mr-6">
     <div class="search sm:block">
-        <input type="text" class="search__input form-control dark:bg-dark-1 border-transparent placeholder-theme-8" placeholder="Search...">
-        <i data-feather="search" class="search__icon dark:text-gray-300"></i> 
+        <form action="{% url 'blog:search_index' %}" method="GET" class="search-form">        
+            <input type="text" name="param" class="search__input form-control dark:bg-dark-1 border-transparent placeholder-theme-8" placeholder="Search...">
+            <i data-feather="search" class="search__icon dark:text-gray-300"></i>
+        </form>
     </div>
 </div>
 <!-- END: Search -->

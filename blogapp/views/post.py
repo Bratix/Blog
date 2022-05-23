@@ -87,7 +87,7 @@ class PostUpdate(UpdateView):
 class PostDelete(DeleteView):
     model = Post
     def get_success_url(self):
-        return reverse_lazy('blog:detail',kwargs = {'pk': Post.objects.get(id=self.kwargs['pk']).blog.id})
+        return reverse_lazy('blog:blog_detail',kwargs = {'pk': Post.objects.get(id=self.kwargs['pk']).blog.id})
 
     def post(self, request, *args, **kwargs):
         blog = self.get_object()

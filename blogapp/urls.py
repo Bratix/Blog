@@ -26,6 +26,18 @@ urlpatterns = [
     path('post/<pk>/comment/create', views.CommentCreate.as_view(), name = "comment_create"),
     path('comment/<pk>/delete', views.CommentDelete.as_view(), name = "comment_delete"),
     path('comment/<pk>/update', views.CommentUpdate.as_view(), name = "comment_update"),
+
+    #Profile
+    path('profile/<pk>', views.ProfileDetail.as_view(), name = "profile_detail"),
+    path('profile/<pk>/update', views.ProfileEdit.as_view(), name = "profile_update"),
+
+    #Category
+    path('view/categories/<pk>', views.CategoryDetail.as_view(), name = "category_detail"),
+
+    #Search
+    path('search', views.IndexSearch.as_view(), name="search_index"),
+    path('search/blog', views.BlogSearch.as_view(), name="search_blog"),
+    path('search/post', views.PostSearch.as_view(), name="search_post"),
     # #view/categories
     # path('view/categories', views.CategoryView.as_view(), name = "category"),
     # #view/categories/1

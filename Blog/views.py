@@ -6,7 +6,12 @@ from django.contrib.auth import authenticate, login
 from django.views.generic import View
 from .forms import UserForm
 
-class UserFormView(View):
+import sys
+sys.path.append("..")
+
+from blogapp.models import Profile
+
+class Registration(View):
     form_class = UserForm
     template_name = 'registration/registration_form.html'
 
@@ -25,10 +30,12 @@ class UserFormView(View):
             password = form.cleaned_data['password']
             user.set_password(password)
             user.save()
+            profile = Profile(user=user)
+            profile.save()
 
             #returns User objects if credentials are correct
             user = authenticate(username = username, password = password)
-
+            
             if user is not None:
 
                 if user.is_active:

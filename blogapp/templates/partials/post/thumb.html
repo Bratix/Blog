@@ -3,10 +3,10 @@
     <img alt="Icewall Tailwind HTML Admin Template" class="rounded-t-md" src="{{ post.image.url }}">
     <div class="absolute w-full flex items-center px-5 pt-6 z-10">
         <div class="w-10 h-10 flex-none image-fit">
-            <img alt="Icewall Tailwind HTML Admin Template" class="rounded-full" src="{{ post.image.url }}">
+            <img alt="Icewall Tailwind HTML Admin Template" class="rounded-full" src="{{ post.author.profile.image.url }}">
         </div>
         <div class="ml-3 text-white mr-auto">
-            <a href="#" class="font-medium">{{post.author.username}}</a> 
+            <a href="{% url 'blog:profile_detail' post.author.profile.id %}" class="font-medium">{{post.author.username}}</a> 
             <div class="text-xs mt-0.5">{{post.creation_date|naturalday}} at {{post.creation_date|date:'H:i'}}</div>
         </div>
         {% if user == post.author %}

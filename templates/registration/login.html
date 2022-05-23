@@ -66,8 +66,10 @@ License: You must have a valid license purchased only from themeforest(the above
                                 
                                 {% render_field form.password class="intro-x login__input form-control py-3 px-4 mt-4 block"  placeholder="Password"  %}
                                 
-                                <div class="flex items-center">
-                                    <button class="btn btn-outline-secondary py-3 px-4 w-full xl:w-32 mt-4" type="submit">Submit</button>
+
+                                <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
+                                    <button class="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top" type="submit">Login</button>
+                                    <a href="{% url 'register' %}" class="btn btn-outline-secondary py-3 px-4 w-full xl:w-32 mt-3 xl:mt-0 align-top">Sign up</a>
                                 </div>
                             </form>
                             

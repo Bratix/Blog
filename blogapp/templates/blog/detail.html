@@ -40,16 +40,20 @@
     
 
     <div class="col-span-3">
+        <div class="border-l border-theme-25 -mb-10 pb-10">
         {% include 'partials/blog/description.html' %}
+        {% include 'partials/blog/moderator_list.html' %}
+        </div>
     </div> 
     
-    <div class="2xl:col-span-9 col-span-8">
-        {% include 'partials/common/loader.html' %}
-    </div> 
+    
     <!-- End: Blog Layout -->
     
 
     {% if page_obj.has_next %}
+        <div class="2xl:col-span-9 col-span-8">
+            {% include 'partials/common/loader.html' %}
+        </div> 
         <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
     {% endif %}
 </div> 

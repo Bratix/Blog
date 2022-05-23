@@ -24,7 +24,7 @@ app_name = "base"
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls'), name = "login"),
-    path('register/', views.UserFormView.as_view(), name = "register"),
+    path('register/', views.Registration.as_view(), name = "register"),
     path('',include('blogapp.urls')),
     path('djrichtextfield/', include('djrichtextfield.urls'))
 

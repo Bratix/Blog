@@ -1,5 +1,5 @@
 <!-- BEGIN: Transactions -->
-<div class="col-span-12 md:col-span-6 xl:col-span-4 2xl:col-span-12 mt-3 2xl:mt-8 -mb-10 pb-10">
+<div class=" pl-6 col-span-12 md:col-span-6 xl:col-span-4 2xl:col-span-12 mt-3 2xl:mt-8 -mb-10 pb-10">
     <div class="intro-x flex items-center h-10">
         <h2 class="text-lg font-medium truncate mr-5">
             Moderators
@@ -7,10 +7,10 @@
     </div>
     <div class="mt-5">
         <div class="intro-x">
-            <a href="#">
+            <a href="{% url 'blog:profile_detail' blog.author.profile.id %}">
                 <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
                     <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                        <img alt="Icewall Tailwind HTML Admin Template" src="">
+                        <img alt="Icewall Tailwind HTML Admin Template" src="{{ user.profile.image.url }}">
                     </div>
                     <div class="ml-4 mr-auto">
                         <div class="font-medium">{{blog.author.username}}</div>
@@ -19,18 +19,20 @@
                 </div>
             </a >
         </div>
+        {% for user in blog.moderators %}
+            <a href="{% url 'blog:profile_detail' user.profile.id %}">
+                <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
+                    <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
+                        <img alt="Icewall Tailwind HTML Admin Template" src="{{ user.profile.image.url }}">
+                    </div>
+                    <div class="ml-4 mr-auto">
+                        <div class="font-medium">{{user.username}}</div>
+                        <div class="text-gray-600 text-xs mt-0.5">Moderator</div>
+                    </div>
+                </div>
+            </a >
+        {% endfor %}
         
-        <div class="intro-x">
-            <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
-                <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                    <img alt="Icewall Tailwind HTML Admin Template" src="">
-                </div>
-                <div class="ml-4 mr-auto">
-                    <div class="font-medium">Johnny Depp</div>
-                    <div class="text-gray-600 text-xs mt-0.5">Moderator</div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <!-- END: Transactions -->

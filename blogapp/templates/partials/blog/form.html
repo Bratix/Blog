@@ -5,7 +5,7 @@
     <!-- BEGIN: Form Layout -->
     <div class="intro-y box p-5">
 
-        {% with WIDGET_ERROR_CLASS='has-error' WIDGET_REQUIRED_CLASS='my_required' %}
+        {% with WIDGET_ERROR_CLASS='has-error' WIDGET_REQUIRED_CLASS='my_required' id="form"%}
             <div>
                 <label class="form-label">Title</label>
                 {% render_field form.title class="form-control"  placeholder="Title" value=blog.title %}
@@ -32,7 +32,7 @@
                 <div class="file-upload-border border-2 border-dashed dark:border-dark-5 rounded-md pt-4">
                     <div class="px-4 pb-4 flex items-center dark:text-gray-500">
                         
-                        <label for="post_image" class="cursor-pointer relative file-upload"><i data-feather="image" class="w-4 h-4 mr-2"></i> <span class="text-theme-1 dark:text-gray-300 mr-1">
+                        <label for="image_input" class="cursor-pointer relative file-upload"><i data-feather="image" class="w-4 h-4 mr-2"></i> <span class="text-theme-1 dark:text-gray-300 mr-1">
                             {% if blog.image.url != None %}
                             <div class="file-name flex" style="display:inline;">
                                 Currently: {{blog.image}}
@@ -44,7 +44,7 @@
                             {% endif %}
                         </span></label>
                         <div class="hidden">
-                            {% render_field form.image id="post_image" %}
+                            {% render_field form.image id="image_input" %}
                         </div>
                     </div>
                 </div>

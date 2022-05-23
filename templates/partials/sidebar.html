@@ -4,16 +4,16 @@
 
         <li>
             <a href="{% url 'blog:index'  %}" class="side-menu-main side-menu" id="browse" >
-                <div class="side-menu__icon"> <i data-feather="home"></i> </div>
+                <div class="side-menu__icon"> <i class="bi bi-house"></i> </div>
                 <div class="side-menu__title"> Browse </div>
             </a>
         </li>
 
         <li>
             <a href="javascript:;" class="side-menu-main side-menu">
-                <div class="side-menu__icon"> <i data-feather="credit-card"></i> </div>
+                <div class="side-menu__icon"> <i class="bi bi-layout-text-window-reverse"></i> </div>
                 <div class="side-menu__title">
-                    Your blogs 
+                    Moderated blogs 
                     <div class="side-menu__sub-icon transform"> <i data-feather="chevron-down"></i> </div>
                 </div>
             </a>
@@ -35,6 +35,26 @@
                         <div class="side-menu__title"> Create new blog </div>
                     </a>
                 </li>
+                
+            </ul>
+        </li>
+
+        <li>
+            <a href="javascript:;" class="side-menu-main side-menu">
+                <div class="side-menu__icon"> <i class="bi bi-ui-checks-grid"></i> </div>
+                <div class="side-menu__title">
+                    Browse categories
+                    <div class="side-menu__sub-icon transform"> <i data-feather="chevron-down"></i> </div>
+                </div>
+            </a>
+            <ul class="side-menu__sub">
+                {% for category in categories %}
+                    <li>
+                        <a href="{% url 'blog:category_detail' category.id  %}" class="side-menu" id="category{{category.id}}" >
+                            <div class="side-menu__title"> {{ category.name }} </div>
+                        </a>
+                    </li>
+                {% endfor %}
                 
             </ul>
         </li>
