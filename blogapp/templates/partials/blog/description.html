@@ -1,11 +1,14 @@
-
-
 <div class="pl-6 grid grid-cols-12 gap-6">
     <div class="col-span-12 md:col-span-6 xl:col-span-12 mt-3 2xl:mt-8">
         <div class="intro-x flex items-center h-10">
             <h2 class="text-lg font-medium truncate mr-auto">
                 About this blog
             </h2>
+            {% if user in blog.subscribers.all %}
+            <a class="btn btn-rounded-danger h-6 w-24 mr-1 mb-2" data-href="{% url 'blog:blog_subscribe' blog.id %}" id="subscription_toggle">Unsubscribe</a>
+            {% else %}
+            <a class="btn btn-rounded-primary h-6 w-24 mr-1 mb-2" data-href="{% url 'blog:blog_subscribe' blog.id %}" id="subscription_toggle">Subscribe</a>
+            {% endif %}
         </div>
         {% include 'partials/blog/thumb.html' %}
     </div>    

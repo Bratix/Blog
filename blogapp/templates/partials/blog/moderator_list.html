@@ -10,7 +10,7 @@
             <a href="{% url 'blog:profile_detail' blog.author.profile.id %}">
                 <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
                     <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                        <img alt="Icewall Tailwind HTML Admin Template" src="{{ user.profile.image.url }}">
+                        <img alt="Icewall Tailwind HTML Admin Template" src="{{ blog.author.profile.image.url }}">
                     </div>
                     <div class="ml-4 mr-auto">
                         <div class="font-medium">{{blog.author.username}}</div>
@@ -19,7 +19,7 @@
                 </div>
             </a >
         </div>
-        {% for user in blog.moderators %}
+        {% for user in blog.moderators.all %}
             <a href="{% url 'blog:profile_detail' user.profile.id %}">
                 <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
                     <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">

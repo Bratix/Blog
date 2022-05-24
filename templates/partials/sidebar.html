@@ -14,7 +14,11 @@
                 <div class="side-menu__icon"> <i class="bi bi-layout-text-window-reverse"></i> </div>
                 <div class="side-menu__title">
                     Moderated blogs 
+                    {% if "blog" in active_tab %}
+                    <div class="side-menu__sub-icon transform rotate-180"> <i data-feather="chevron-down"></i> </div>
+                    {% else %}
                     <div class="side-menu__sub-icon transform"> <i data-feather="chevron-down"></i> </div>
+                    {% endif %}
                 </div>
             </a>
             <ul class="side-menu__sub">
@@ -28,10 +32,22 @@
                         </a>
                     </li>
                 {% endfor %}
+                {% for blog in user.moderators.all %}
+                    {% if blog not in user.blog_set.all %}
+                        <li>
+                            <a href="{% url 'blog:blog_detail' blog.id %}" class="side-menu" id="blog{{blog.id}}" >
+                                <div class="w-6 h-6 flex-none image-fit side-menu__icon">
+                                    <img src="{{ blog.image.url }}" alt="" class="rounded-full">
+                                </div>
+                                <div class="side-menu__title"> {{ blog.title }} </div>
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
 
                 <li>
                     <a href="{% url 'blog:blog_create'  %}" class="side-menu" id="new_blog" >
-                        <div class="side-menu__icon"> <i data-feather="edit"></i> </div>
+                        <div class="side-menu__icon"> <i class="bi bi-pencil-square"></i> </div>
                         <div class="side-menu__title"> Create new blog </div>
                     </a>
                 </li>
@@ -41,10 +57,43 @@
 
         <li>
             <a href="javascript:;" class="side-menu-main side-menu">
+                <div class="side-menu__icon"> <i class="bi bi-layout-text-window-reverse"></i> </div>
+                <div class="side-menu__title">
+                    Subscribed blogs 
+                    {% if "subscribed" in active_tab %}
+                    <div class="side-menu__sub-icon transform rotate-180"> <i data-feather="chevron-down"></i> </div>
+                    {% else %}
+                    <div class="side-menu__sub-icon transform"> <i data-feather="chevron-down"></i> </div>
+                    {% endif %}
+                </div>
+            </a>
+            <ul class="side-menu__sub">
+                {% for blog in user.blog_set.all%}
+                    {% if user in blog.subscribers.all and user != blog.author %}
+                    <li>
+                        <a href="{% url 'blog:blog_detail' blog.id %}" class="side-menu" id="blog{{blog.id}}" >
+                            <div class="w-6 h-6 flex-none image-fit side-menu__icon">
+                                <img src="{{ blog.image.url }}" alt="" class="rounded-full">
+                            </div>
+                            <div class="side-menu__title"> {{ blog.title }} </div>
+                        </a>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+
+            </ul>
+        </li>
+
+        <li>
+            <a href="javascript:;" class="side-menu-main side-menu">
                 <div class="side-menu__icon"> <i class="bi bi-ui-checks-grid"></i> </div>
                 <div class="side-menu__title">
                     Browse categories
+                    {% if "category" in active_tab %}
+                    <div class="side-menu__sub-icon transform rotate-180"> <i data-feather="chevron-down"></i> </div>
+                    {% else %}
                     <div class="side-menu__sub-icon transform"> <i data-feather="chevron-down"></i> </div>
+                    {% endif %}
                 </div>
             </a>
             <ul class="side-menu__sub">

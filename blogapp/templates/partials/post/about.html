@@ -8,20 +8,9 @@
                     Author
                 </h2>
             </div>
-            <a href="#">
+            <a href="{% url 'blog:profile_detail' post.author.profile.id %}">
                 <div class="mt-5 intro-x">
-                    <div class="box zoom-in">
-                        <div class="tiny-slider" id="important-notes">
-                            <div class="p-5">
-                                <div class="w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in scale-110">
-                                    <img alt="Icewall Tailwind HTML Admin Template" src="{{ user.profile.image.url }}">
-                                </div>
-                                <div class="text-base font-medium truncate">{{post.author}}</div>
-                                <div class="text-gray-500 mt-1"></div>
-                                <div class="text-gray-600 text-justify mt-1"></div>
-                            </div>
-                        </div>
-                    </div>
+                    {% include 'partials/common/user_thumb.html' with profile=post.author.profile %}
                 </div>
             </a>
         </div>

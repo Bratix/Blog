@@ -2,6 +2,7 @@
 {% block title %}Welcome to Blogo{% endblock title %}
 
 {% block content %}
+{% load static %}
 {% include 'partials/blog/delete_modal.html' %}
 <div class="intro-y flex flex-col grid-cols-12 col-span-12 sm:flex-row items-center mt-8">
     <h2 class="text-lg font-medium mr-auto">
@@ -11,13 +12,12 @@
         <a class="btn btn-primary shadow-md mr-2" href="{% url 'blog:post_create' blog.id %}">Add post</a>
         <div class="dropdown ml-auto sm:ml-0">
             <button class="dropdown-toggle btn px-2 box text-gray-700 dark:text-gray-300" aria-expanded="false">
-                <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4" data-feather="plus"></i> </span>
+                <span class="w-5 h-5 flex items-center justify-center"> <i class="bi bi-three-dots-vertical"></i> </span>
             </button>
             <div class="dropdown-menu w-40">
                 <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
                     <a href="{% url 'blog:blog_update' blog.id %}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i class="bi bi-pencil-square mr-2"></i> Edit blog </a>
                     <a href="javascript:;" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md delete_blog_trigger" data-tw-toggle="modal" data-tw-target="#blog_delete"> <i class="bi bi-x-circle mr-2"></i> Delete blog </a>
-                    
                 </div>
             </div>
         </div>
@@ -33,6 +33,15 @@
                     {% include 'partials/post/thumb.html' with post=post %}
                 </div>
             {% endfor %}
+
+            {% if posts|length == 0  %}
+            <div class="intro-y blog col-span-4 col-start-5 m-3 text-center"> 
+                <img src="{% static 'dist/images/no_result.png' %}">
+                <h2 class="text-lg font-medium mr-auto">
+                    No posts found
+                </h2>
+            </div>
+            {% endif %}
             
         </div>
     </div> 
@@ -41,8 +50,8 @@
 
     <div class="col-span-3">
         <div class="border-l border-theme-25 -mb-10 pb-10">
-        {% include 'partials/blog/description.html' %}
-        {% include 'partials/blog/moderator_list.html' %}
+        {% include 'partials/blog/description.html' with blog=blog %}
+        {% include 'partials/blog/moderator_list.html' with blog=blog %}
         </div>
     </div> 
     

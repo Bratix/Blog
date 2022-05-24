@@ -1,6 +1,11 @@
 const primaryColors = require("@left4code/tw-starter/dist/js/colors");
 
 module.exports = {
+  mode: "jit",
+  purge: [
+    '../blogapp/templates/**/*.html',
+    "../templates/**/*.html",
+  ],
   darkMode: "class",
   theme: {
     borderColor: (theme) => ({

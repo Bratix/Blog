@@ -34,6 +34,7 @@ class Category(models.Model):
 
 class Blog(models.Model):
     author = models.ForeignKey(User, on_delete = models.CASCADE)
+    moderators = models.ManyToManyField( User, related_name="moderators", blank=True)
     subscribers = models.ManyToManyField(User, related_name="subscribers")
     category = models.ForeignKey(Category, on_delete = models.CASCADE)
     title = models.CharField(max_length = 50, unique=True, default="")

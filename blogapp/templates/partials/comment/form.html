@@ -1,7 +1,7 @@
 <form id="comment-form" data-action="{% url 'blog:comment_create' post.id %}">
     {% csrf_token %}
     <div class="news__input relative mt-5">
-        <i data-feather="message-circle" class="w-5 h-5 absolute my-auto inset-y-0 ml-6 left-0 text-gray-600"></i> 
+        <i class="bi bi-chat-right w-5 h-5 absolute my-auto inset-y-0 ml-6 left-0 text-gray-600"></i> 
         <textarea class="form-control border-transparent bg-gray-200 pl-16 py-6 placeholder-theme-8 resize-none" rows="1" placeholder="Post a comment..." id="comment_text"></textarea>
     </div>
     <div class="text-right mt-5">

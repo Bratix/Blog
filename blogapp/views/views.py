@@ -15,24 +15,9 @@ from django.http import JsonResponse
 
 BROWSE = 'browse'
 BLOG = 'blog'
+SUBSCRIBED = 'subscribed'
 NEW_BLOG = 'new_blog'
 CATEGORY = "category"
-
-
-class CategoryView(generic.ListView):
-    template_name = 'blogapp/category.html'
-
-    def get_queryset(self):
-        return Category.objects.all()
-
-    
-class BlogsbyCategoryView(generic.ListView):
-    template_name = 'blogapp/category_detail.html'
-
-    def get_queryset(self):
-        search_param = self.request.GET.get('search')
-        current_category = Category.objects.get(id=self.kwargs['pk'])
-        return Blog.objects.filter(category = current_category)
 
 
 

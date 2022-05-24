@@ -1,3 +1,4 @@
+{% load humanize %}
 <div class="mt-5 intro-x">
     <div class="box zoom-in">
         <div class="px-5 py-3  flex items-center">
@@ -6,7 +7,7 @@
             </div>
             <div class="ml-4 mr-auto">
                 <div class="font-medium">{{blog.title}}</div>
-                <div class="text-gray-600 text-xs mt-0.5">123k Subscribers</div>
+                <div class="text-gray-600 text-xs mt-0.5" > <span id="subscribers"> {{ blog.subscribers.all|length|intcomma }} </span> Subscribers</div>
             </div>
         </div>        
         <div class="text-gray-600 px-5 py-3 text-justify">{{blog.description}}</div>        
