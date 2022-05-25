@@ -136,6 +136,8 @@ LOGOUT_REDIRECT_URL = 'login'
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://diplomski-tfb.herokuapp.com']
+
 
 CKEDITOR_CONFIGS = {
     'awesome_ckeditor': {
