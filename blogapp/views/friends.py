@@ -56,7 +56,7 @@ class SentFriendRequestList(LoginRequiredMixin, generic.ListView):
 class AcceptFriendRequest(LoginRequiredMixin, View):
     login_url = reverse_lazy('login')
     def post(self, request, *args, **kwargs):
-        if self.request.is_ajax():
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             friend_request_id = kwargs.get('pk')
             friend_request = Friend_Request.objects.get(id = friend_request_id)
 
@@ -75,7 +75,7 @@ class AcceptFriendRequest(LoginRequiredMixin, View):
 class CancelFriendRequest(LoginRequiredMixin, View):
     login_url = reverse_lazy('login')
     def post(self, request, *args, **kwargs):
-        if self.request.is_ajax():
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             friend_request_id = kwargs.get('pk')
             friend_request = Friend_Request.objects.get(id = friend_request_id)
 
@@ -92,7 +92,7 @@ class CancelFriendRequest(LoginRequiredMixin, View):
 class SendFriendRequest(LoginRequiredMixin, View):
     login_url = reverse_lazy('login')
     def post(self, request, *args, **kwargs):
-        if self.request.is_ajax():
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             reciever_id = kwargs.get('pk')
             reciever = Profile.objects.get(pk=reciever_id)
             reciever = reciever.user
@@ -124,7 +124,7 @@ class SendFriendRequest(LoginRequiredMixin, View):
 class DeleteFriend(LoginRequiredMixin, View):
     login_url = reverse_lazy('login')
     def post(self, request, *args, **kwargs):
-        if self.request.is_ajax():
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             reciever_id = kwargs.get('pk')
             reciever = Profile.objects.get(pk=reciever_id)
 
