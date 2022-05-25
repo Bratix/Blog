@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-from djrichtextfield.models import RichTextField
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 from django.core.validators import FileExtensionValidator
@@ -61,7 +60,7 @@ class Post(models.Model):
     blog = models.ForeignKey(Blog, on_delete = models.CASCADE)
     likes = models.ManyToManyField(User, related_name="post_likes", blank=True)
     title = models.CharField(max_length = 50)
-    text = RichTextField()
+    text = models.TextField()
     tags = TaggableManager()
     image = models.FileField(validators=[FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png"])])
     creation_date = models.DateTimeField(auto_now_add = True)

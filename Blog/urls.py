@@ -26,7 +26,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls'), name = "login"),
     path('register/', views.Registration.as_view(), name = "register"),
     path('',include('blogapp.urls')),
-    path('djrichtextfield/', include('djrichtextfield.urls'))
+    #path('djrichtextfield/', include('djrichtextfield.urls'))
 
 ]
 

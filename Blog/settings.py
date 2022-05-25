@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'taggit',
     'widget_tweaks',
     'django.contrib.humanize',
-    'djrichtextfield'
 ]
 
 MIDDLEWARE = [
@@ -142,7 +141,7 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'Basic',
     },
 }
-
+""" 
 DJRICHTEXTFIELD_CONFIG = {
     'js': ['//cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js'],
     'init_template': 'djrichtextfield/init/tinymce.js',
@@ -152,4 +151,4 @@ DJRICHTEXTFIELD_CONFIG = {
         'toolbar': 'bold italic | link image | removeformat',
         'width': 700
     }
-}
+} """
