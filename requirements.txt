@@ -2,4 +2,4 @@ Django
 uwsgi
 django-taggit
 django_widget_tweaks
-djrichtextfield
+djrichtextfield 1.6
