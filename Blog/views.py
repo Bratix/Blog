@@ -41,6 +41,6 @@ class Registration(View):
                 if user.is_active:
 
                     login(request, user)
-                    return redirect('blog:profile_update', user.id)
+                    return redirect('blog:profile_update', profile.id)
 
         return render(request, self.template_name, {'form':form})
