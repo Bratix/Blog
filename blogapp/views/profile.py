@@ -1,11 +1,11 @@
 from audioop import reverse
 from django.shortcuts import redirect
-from django.contrib.auth.models import User
-from ..models import Profile
+from ..models import Friend_Request, Profile
 from django.views.generic import DetailView, UpdateView
 from django.urls import reverse_lazy
 from .views import BROWSE, BLOG, NEW_BLOG
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 
 
 
@@ -17,6 +17,14 @@ class ProfileDetail(LoginRequiredMixin, DetailView):
     def get_object(self):
         profile_id = self.kwargs['pk']
         return Profile.objects.get(pk = profile_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        profile = self.get_object()
+        friend_request = Friend_Request.objects.filter( Q(reciever = self.request.user) &  Q(submitter = profile.user ) &  Q(active = True))
+        if len(friend_request) > 0:
+            context['friend_request_id'] = friend_request[0].id
+        return context
 
 class ProfileEdit(LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')

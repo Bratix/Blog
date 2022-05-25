@@ -1,0 +1,41 @@
+{% extends 'base.html' %}   
+{% block title %}Welcome to Blogo{% endblock title %}
+
+{% block content %}
+{% load static %}
+<div class="intro-y flex flex-col grid-cols-12 col-span-12 sm:flex-row items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+        Sent
+    </h2>
+    <div class="w-full sm:w-auto flex mt-4 sm:mt-0 ml-auto content-end	">
+        <a class="btn btn-primary shadow-md mr-2" href="{% url 'blog:recieved_friend_requests' %}">Recieved requests</a>
+    </div>
+</div>
+<div class="intro-y col-span-10 col-start-2 grid grid-cols-12 gap-6 mt-5 infinite-container">
+    <!-- Infinite scroll for posts -->
+    {% csrf_token %}
+    {% for friend_request in friend_requests %}
+        <div class="intro-y blog col-span-6 infinite-item">
+            {% include 'partials/friend_request/sent_request.html' with friend_request=friend_request %}
+        </div>
+    {% endfor %}
+    {% if friend_requests|length == 0  %}
+        <div class="intro-y blog col-span-4 col-start-5 m-3 text-center"> 
+            <h2 class="text-lg font-medium mr-auto">
+                No sent friend requests
+            </h2>
+        </div>
+        
+    {% endif %}
+    <!-- End infinite scroll for posts -->
+</div> 
+
+{% if page_obj.has_next %}
+    {% include 'partials/common/loader.html' %}  
+    <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
+{% endif %} 
+
+    
+{% endblock content %}
+
+

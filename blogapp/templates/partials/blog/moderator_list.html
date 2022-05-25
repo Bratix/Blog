@@ -19,18 +19,29 @@
                 </div>
             </a >
         </div>
-        {% for user in blog.moderators.all %}
-            <a href="{% url 'blog:profile_detail' user.profile.id %}">
+        
+        {% for moderator in blog.moderators.all %}
+            <div class="intro-x" id="moderator-{{moderator.id}}">
                 <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
-                    <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                        <img alt="Icewall Tailwind HTML Admin Template" src="{{ user.profile.image.url }}">
+                        <div class="w-10 h-10 image-fit rounded-full overflow-hidden" >
+                            <a href="{% url 'blog:profile_detail' user.profile.id %}" >
+                             <img alt="Icewall Tailwind HTML Admin Template" src="{{ moderator.profile.image.url }}">
+                            </a >   
+                        </div>
+                        <div class="ml-4">
+                            <a href="{% url 'blog:profile_detail' user.profile.id %}">
+                                <div class="font-medium">{{moderator.username}}</div>
+                                <div class="text-gray-600 text-xs mt-0.5">Moderator</div>
+                            </a >   
+                        </div>
+                    {% if user == blog.author %}
+                    <div class="ml-auto">
+                        <button href="javascript:;" class="items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md remove_moderator_trigger" data-tw-toggle="modal" data-tw-target="#moderator-remove-modal-{{moderator.id}}"> <i class="bi bi-person-dash mr-2"></i> Remove moderator  </button>
                     </div>
-                    <div class="ml-4 mr-auto">
-                        <div class="font-medium">{{user.username}}</div>
-                        <div class="text-gray-600 text-xs mt-0.5">Moderator</div>
-                    </div>
+                    {% include 'partials/blog/remove_moderator_modal.html' with blog=blog moderator=moderator %}
+                    {% endif %}
                 </div>
-            </a >
+            </div>
         {% endfor %}
         
     </div>

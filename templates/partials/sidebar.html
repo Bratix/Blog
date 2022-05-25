@@ -108,6 +108,20 @@
             </ul>
         </li>
 
+        <li>
+            <a href="{% url 'blog:friend_list'  %}" class="side-menu-main side-menu" id="friends" >
+                <div class="side-menu__icon"> <i class="bi bi-people"></i> </div>
+                <div class="side-menu__title"> Friends </div>
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'blog:recieved_friend_requests'  %}" class="side-menu-main side-menu" id="friend_request" >
+                <div class="side-menu__icon"> <i class="bi bi-person-plus"></i> </div>
+                <div class="side-menu__title"> Friend requests </div>
+            </a>
+        </li>
+
 
     </ul>
 </nav>

@@ -2,7 +2,7 @@
 {% block title %}Welcome to Blogo{% endblock title %}
 
 {% block content %}
-
+{% csrf_token %}
 <!-- BEGIN: Profile Info -->
 <div class="intro-y box px-5 pt-5 mt-5">
     <div class="flex flex-col lg:flex-row border-b border-gray-200 dark:border-dark-5 pb-5 -mx-5">
@@ -18,7 +18,8 @@
         <div class="mt-6 lg:mt-0 flex-1 dark:text-gray-300 px-5 border-l border-r border-gray-200 dark:border-dark-5 border-t lg:border-t-0 pt-5 lg:pt-0">
             <div class="font-medium text-center lg:text-left lg:mt-3">Contact Details</div>
             <div class="flex flex-col justify-center items-center lg:items-start mt-4">
-                <div class="truncate sm:whitespace-normal flex items-center"> <i class="bi bi-envelope w-4 h-4 mr-2"></i> {{profile.user.email}} </div>
+                <div class="truncate sm:whitespace-normal flex items-center"> <i class="bi bi-envelope w-5 h-5 mr-2"></i> {{profile.user.email}} </div>
+                <div class="truncate sm:whitespace-normal flex items-center mt-1"> <i class="bi bi-people w-5 h-5 mr-2"></i> {{profile.friends.all | length}} Friends</div>
             </div>
         </div>
         <div class="mt-6 lg:mt-0 flex-1 flex items-center justify-center px-5 border-t lg:border-0 border-gray-200 dark:border-dark-5 pt-5 lg:pt-0">
@@ -26,10 +27,38 @@
             <div class="flex mt-4 lg:mt-0">
                 <a href="{% url 'blog:profile_update' profile.id %}" class="btn btn-primary py-1 px-2 mr-2"> <i class="bi bi-pencil-square mr-2"></i> Edit profile</a>
             </div>
-            {% elif profile.user     in user.profile.friends %}
-                Remove friend link
+            {% elif profile.user in user.profile.friends.all %}
+                <div class="flex mt-4 lg:mt-0 request_options" >
+                    <a href="javascript:;" data-href="{% url 'blog:delete_friend' profile.id %}" class="btn btn-primary py-1 px-2 mr-2 add-remove-friend"> <i class="bi bi-person-dash mr-2"></i> Remove friend </a>
+                </div>
+                <div id="success_note" class="hidden text-gray-600 text-xs mt-0.5 text-center">
+                    Removed from friends
+                </div>
+            {% elif friend_request_id %}
+                <div class="request_options">
+                    <div class="text-gray-600 text-xs mb-3">Friend request: </div>
+                    <a href="javascript:;" class="btn btn-primary w-24 friend_request_action" data-show="accepted-{{friend_request_id}}" data-href="{% url 'blog:accept_friend_request' friend_request_id %}" >Accept</a>
+                    <a href="javascript:;" class="btn btn-outline-secondary w-24 mr-1 friend_request_action" data-show="declined-{{friend_request_id}}" data-href="{% url 'blog:cancel_friend_request' friend_request_id %}" >Decline</a>
+                </div>
+
+                <div id="accepted-{{friend_request_id}}" class="hidden">
+                    <div class="text-gray-600 text-xs mt-0.5">Friend request accepted</div>
+                </div>
+
+                <div id="declined-{{friend_request_id}}" class="hidden">
+                    <div class="text-gray-600 text-xs mt-0.5">Friend request declined</div>
+                </div>
+            {% elif profile.user in user.profile.pending_friends.all %}
+                <div id="success_note" class="text-gray-600 text-xs mt-0.5 text-center">
+                    Friend request sent
+                </div>
             {% else %}
-                Add friend link
+                <div class="flex mt-4 lg:mt-0 request_options" >
+                    <a href="javascript:;" data-href="{% url 'blog:send_friend_request' profile.id %}" class="btn btn-primary py-1 px-2 mr-2 add-remove-friend"> <i class="bi bi-person-plus mr-2"></i> Add friend </a>
+                </div>
+                <div id="success_note" class="hidden text-gray-600 text-xs mt-0.5 text-center">
+                    Friend request sent
+                </div>
             {% endif %}
         </div>
     </div>

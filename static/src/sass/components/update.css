@@ -69,3 +69,7 @@ label.file-upload{
 .rotate-180{
 	--tw-rotate: 180deg;
 }
+
+body { 
+	padding: 15px !important;
+}

@@ -1,0 +1,30 @@
+<div class="intro-x">
+    <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
+        <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
+            <img alt="Icewall Tailwind HTML Admin Template" src="{{ friend_request.submitter.profile.image.url }}">
+        </div>
+        <div class="ml-4">
+            <a href="{% url 'blog:profile_detail' friend_request.submitter.profile.id %}" >
+                <div class="font-medium">{{friend_request.submitter.profile.user.username}}</div>
+                <div class="text-gray-600 text-xs mt-0.5">{{friend_request.submitter.profile.first_name}} {{friend_request.submitter.profile.last_name}}</div>
+            </a>
+        </div>
+        <div class="ml-auto">
+            <div class="text-right">
+                <div class="request_options">
+                    <a href="javascript:;" class="btn btn-primary w-24 friend_request_action" data-show="accepted-{{friend_request.id}}" data-href="{% url 'blog:accept_friend_request' friend_request.id %}" >Accept</a>
+                    <a href="javascript:;" class="btn btn-outline-secondary w-24 mr-1 friend_request_action" data-show="declined-{{friend_request.id}}" data-href="{% url 'blog:cancel_friend_request' friend_request.id %}" >Decline</a>
+                </div>
+
+                <div id="accepted-{{friend_request.id}}" class="hidden">
+                    <div class="text-gray-600 text-xs mt-0.5">Friend request accepted</div>
+                </div>
+
+                <div id="declined-{{friend_request.id}}" class="hidden">
+                    <div class="text-gray-600 text-xs mt-0.5">Friend request declined</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  
+

@@ -18,6 +18,8 @@ BLOG = 'blog'
 SUBSCRIBED = 'subscribed'
 NEW_BLOG = 'new_blog'
 CATEGORY = "category"
+FRIEND_REQUEST = "friend_request"
+FRIENDS = "friends"
 
 
 

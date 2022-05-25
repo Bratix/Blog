@@ -1,0 +1,25 @@
+<div class="intro-x">
+    <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
+        <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
+            <img alt="Icewall Tailwind HTML Admin Template" src="{{ friend_request.reciever.profile.image.url }}">
+        </div>
+        <div class="ml-4">
+            <a href="{% url 'blog:profile_detail' friend_request.reciever.profile.id %}" >
+                <div class="font-medium">{{friend_request.reciever.profile.user.username}}</div>
+                <div class="text-gray-600 text-xs mt-0.5">{{friend_request.reciever.profile.first_name}} {{friend_request.reciever.profile.last_name}}</div>
+            </a>
+        </div>
+        <div class="ml-auto">
+            <div class="text-right">
+                <div class="request_options">
+                    <a href="javascript:;" class="btn btn-primary w-24 friend_request_action" data-show="cancel-{{friend_request.id}}" data-href="{% url 'blog:cancel_friend_request' friend_request.id %}" >Cancel</a>
+                </div>
+
+                <div id="cancel-{{friend_request.id}}" class="hidden">
+                    <div class="text-gray-600 text-xs mt-0.5">Request Canceled</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  
+

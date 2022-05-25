@@ -1,4 +1,3 @@
-from audioop import reverse
 from django.contrib.humanize.templatetags.humanize import  intcomma
 from django.shortcuts import redirect
 from django.views import generic
@@ -8,6 +7,8 @@ from django.urls import reverse_lazy
 from .views import BROWSE, BLOG, NEW_BLOG, SUBSCRIBED
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
+from django.shortcuts import render
+from django.contrib.auth.models import User
 
 
 class BlogDetail(generic.ListView):
@@ -39,7 +40,7 @@ class BlogDetail(generic.ListView):
 class BlogCreate(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
     model = Blog
-    fields = ['title','category','image', 'description']
+    fields = ['title','category','image', 'description', 'moderators']
     template_name = "blog/add.html"
     
     def form_valid(self, form):
@@ -88,7 +89,7 @@ class BlogDelete(LoginRequiredMixin ,DeleteView):
         return super(BlogDelete, self).post(self, request, *args, **kwargs)
 
 class BlogSubscribe(LoginRequiredMixin , generic.View):
-
+    login_url = reverse_lazy('login')
     def get(self, request, *args, **kwargs): 
         if self.request.is_ajax():
             blog_id =self.kwargs['pk']
@@ -108,3 +109,43 @@ class BlogSubscribe(LoginRequiredMixin , generic.View):
                 'status' : status
             }
             return JsonResponse(data)
+
+class AddModerators(LoginRequiredMixin , generic.View):
+
+    template_name = 'blog/add_moderators.html'
+
+    def get(self, request , *args, **kwargs):
+        blog_id =self.kwargs['pk']
+        blog = Blog.objects.get(pk=blog_id)
+        if blog.author != self.request.user:
+            return redirect("blog:index")
+        return render(request, self.template_name, {'blog': blog})
+
+    def post(self, request, *args, **kwargs):
+        blog = Blog.objects.get(id=self.kwargs['pk'])
+        if blog.author != self.request.user:
+            return redirect("blog:index")
+
+        moderators = request.POST.getlist("moderators")
+        if len(moderators) > 0 :
+            for id in moderators : 
+                user = User.objects.get(pk = id)
+                blog.moderators.add(user)
+
+        return redirect("blog:blog_detail", self.kwargs['pk'])
+
+class RemoveModerator(LoginRequiredMixin, generic.View): 
+    def post(self, request, *args, **kwargs):
+        if self.request.is_ajax():
+            blog = Blog.objects.get(id=self.kwargs['pk'])
+        
+            if blog.author != request.user:
+                return redirect("blog:index")
+            moderator = User.objects.get(id=self.kwargs['moderator_pk'])
+            
+            blog.moderators.remove(moderator)
+            data = {
+                'status' : 'success'
+            }
+            return JsonResponse(data)
+        

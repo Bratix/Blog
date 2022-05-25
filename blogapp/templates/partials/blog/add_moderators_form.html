@@ -1,0 +1,26 @@
+                                
+
+
+{% load widget_tweaks %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- BEGIN: Form Layout -->
+    <div class="intro-y box p-5">
+
+        <select name="moderators" data-placeholder="Select moderators" class="tom-select w-full" multiple required>
+            {% for friend in user.profile.friends.all %}
+                {% if friend not in blog.moderators.all %}
+                    <option value="{{friend.id}}">{{friend.username}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <div class="text-right mt-5">
+            <!-- BEGIN: Modal Toggle -->
+            <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#cancel_action" class="btn btn-outline-secondary w-24 mr-1" id="cancel_action_trigger">Cancel</a>
+            <!-- END: Modal Toggle -->
+            <button type="submit" class="btn btn-primary w-24">Submit</button>
+        </div>
+    </div>
+    <!-- END: Form Layout -->
+</form>

@@ -10,7 +10,7 @@ from .views import BROWSE, BLOG, NEW_BLOG
 
 class PostDetail(generic.ListView):
     model = Comment
-    paginate_by = 5
+    paginate_by = 6
     context_object_name = 'comments'
     template_name = 'post/detail.html'
 
@@ -60,6 +60,18 @@ class PostCreate(CreateView):
     model = Post
     fields = ['title','text','image','tags']
     template_name = "post/add.html"
+
+    def get(self, request, *args, **kwargs):
+        blog = Blog.objects.get(id=self.kwargs['blog_pk'])
+        if self.request.user == blog.author or self.request.user in blog.moderators.all :
+            return redirect("blog:index")
+        return super(PostCreate, self).get(self, request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        blog = Blog.objects.get(id=self.kwargs['blog_pk'])
+        if self.request.user == blog.author or self.request.user in blog.moderators.all :
+            return redirect("blog:index")
+        return super(PostCreate, self).post(self, request, *args, **kwargs)
 
     def form_valid(self, form): 
         self.object = form.save(commit=False)

@@ -13,9 +13,13 @@ class Profile(models.Model):
     first_name = models.CharField(max_length = 15)
     last_name = models.CharField(max_length = 15)
     friends = models.ManyToManyField(User, related_name="friends", blank=True)
+    pending_friends = models.ManyToManyField(User, related_name="pending_friends", blank=True)
 
     def get_absolute_url(self):
         return reverse("blog:profile_detail", kwargs={"pk": self.pk}) 
+    
+    def __str__(self):
+        return self.user.username
 
 
 class Friend_Request(models.Model):
@@ -23,6 +27,9 @@ class Friend_Request(models.Model):
     reciever = models.ForeignKey(User, related_name="reciever", on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
     send_date = models.DateTimeField(auto_now_add = True)
+
+    def __str__(self):
+        return "from " + self.submitter.username +" to " + self.reciever.username
 
 
 class Category(models.Model):
