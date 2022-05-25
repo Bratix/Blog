@@ -131,6 +131,7 @@ class AddModerators(LoginRequiredMixin , generic.View):
             for id in moderators : 
                 user = User.objects.get(pk = id)
                 blog.moderators.add(user)
+                blog.subscribers.add(user)
 
         return redirect("blog:blog_detail", self.kwargs['pk'])
 
@@ -144,6 +145,7 @@ class RemoveModerator(LoginRequiredMixin, generic.View):
             moderator = User.objects.get(id=self.kwargs['moderator_pk'])
             
             blog.moderators.remove(moderator)
+            blog.subscribers.remove(moderator)
             data = {
                 'status' : 'success'
             }

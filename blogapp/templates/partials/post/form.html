@@ -61,7 +61,7 @@
                 <div class="dropdown">
                     <div class=" btn w-full btn-outline-secondary dark:bg-dark-2 dark:border-dark-2 flex items-center justify-start" role="button" aria-expanded="false">
                         <div class="w-6 h-6 image-fit mr-3">
-                            <img class="rounded" alt="Icewall Tailwind HTML Admin Template" src="{% static 'dist/images/placeholders/200x200.jpg' %}">
+                            <img class="rounded" alt="Icewall Tailwind HTML Admin Template" src="{{ user.profile.image.url }}">
                         </div>
                         <div class="truncate">{{user.username}}</div>
                     </div>                         

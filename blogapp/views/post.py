@@ -63,13 +63,14 @@ class PostCreate(CreateView):
 
     def get(self, request, *args, **kwargs):
         blog = Blog.objects.get(id=self.kwargs['blog_pk'])
-        if self.request.user == blog.author or self.request.user in blog.moderators.all :
+        print(self.request.user != blog.author )
+        if self.request.user != blog.author and self.request.user not in blog.moderators.all() :
             return redirect("blog:index")
         return super(PostCreate, self).get(self, request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         blog = Blog.objects.get(id=self.kwargs['blog_pk'])
-        if self.request.user == blog.author or self.request.user in blog.moderators.all :
+        if self.request.user != blog.author and self.request.user not in blog.moderators.all() :
             return redirect("blog:index")
         return super(PostCreate, self).post(self, request, *args, **kwargs)
 
