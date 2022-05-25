@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'taggit',
     'widget_tweaks',
     'django.contrib.humanize',
+    'djrichtextfield'
 ]
 
 MIDDLEWARE = [
