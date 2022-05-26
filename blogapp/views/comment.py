@@ -15,7 +15,7 @@ class CommentCreate(CreateView):
 
     def form_invalid(self, form):
         response = super().form_invalid(form)
-        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse(form.errors, status=400)
         else:
             return response
@@ -25,7 +25,7 @@ class CommentCreate(CreateView):
         form.instance.post = Post.objects.get(pk=self.kwargs['pk'])
         response = super(CommentCreate, self).form_valid(form)
 
-        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
             data = {
                 'pk' : self.object.pk,
                 'text' : self.object.text,
@@ -57,7 +57,7 @@ class CommentUpdate(UpdateView):
         form.instance.edit_date = datetime.datetime.now()
         response = super(CommentUpdate, self).form_valid(form)
 
-        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
             data = {
                 'pk' : self.object.pk,
                 'text' : self.object.text,
