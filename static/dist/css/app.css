@@ -10053,6 +10053,11 @@ html body {
 	background-color: rgba(30, 37, 51, var(--tw-bg-opacity));
 }
 
+.side-menu__icon i{
+	font-size: 1.25rem;
+	line-height: 1.75rem;
+}
+
 @-webkit-keyframes intro-devider-animation {
   100%{
 		opacity: 1;
