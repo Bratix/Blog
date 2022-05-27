@@ -36,33 +36,8 @@ $(function(){
             $('.comment-count').text(data.comment_count).fadeIn(1000);
             console.log(data);
 
-            var comment = $("#empty-comment").clone().removeClass("hidden").attr('id','comment-'+data.pk);
-            comment.find("#date").html(data.creation_date);
-            comment.find("#user").html(data.user);
-            comment.find("#text").html(data.text);
-
-            let new_id = "comment_delete_" + data.pk;
-            comment.find("#delete_toggle").attr('data-tw-target', new_id);
-            comment.find("#delete_toggle").attr('id', '');
-            comment.find("#comment_delete").attr('id', 'comment_delete_' + data.pk);
-            comment.find(".comment_delete_form").attr('action', data.delete_link)
-
-            let div_id = 'comment-' + data.pk;
-            comment.find(".comment_delete_form").attr('data-div', div_id);
-
-            let comment_main = 'comment-main-' + data.pk
-            comment.find("#comment_main").attr('id', comment_main);
+            let comment = generate_comment(data)
             
-            let comment_update_form = 'comment-update-form-'+ data.pk;
-            comment.find("#edit_toggle").attr('data-update-form', comment_update_form)
-            
-            comment.find("#edit_toggle").attr('data-hide', comment_main)
-
-            comment.find(".comment-update-form").attr('id', comment_update_form);
-            comment.find(".comment-update-form").attr('data-action', data.update_link)
-            comment.find(".comment-update-form").attr('data-show', comment_main)
-            comment.find("#comment_text").html(data.text)
-            console.log($("#comment-list"));
             $("#comment-list").prepend(comment);
 
             Waypoint.refreshAll();
@@ -168,4 +143,33 @@ $(function(){
 })
 
     
+function generate_comment(data) { 
+    let comment = $("#empty-comment").clone().removeClass("hidden").attr('id','comment-'+data.pk);
+    comment.find("#date").html(data.creation_date);
+    comment.find("#user").html(data.user);
+    comment.find("#text").html(data.text);
 
+    let new_id = "comment_delete_" + data.pk;
+    comment.find("#delete_toggle").attr('data-tw-target', new_id);
+    comment.find("#delete_toggle").attr('id', '');
+    comment.find("#comment_delete").attr('id', 'comment_delete_' + data.pk);
+    comment.find(".comment_delete_form").attr('action', data.delete_link)
+
+    let div_id = 'comment-' + data.pk;
+    comment.find(".comment_delete_form").attr('data-div', div_id);
+
+    let comment_main = 'comment-main-' + data.pk
+    comment.find("#comment_main").attr('id', comment_main);
+    
+    let comment_update_form = 'comment-update-form-'+ data.pk;
+    comment.find("#edit_toggle").attr('data-update-form', comment_update_form)
+    
+    comment.find("#edit_toggle").attr('data-hide', comment_main)
+
+    comment.find(".comment-update-form").attr('id', comment_update_form);
+    comment.find(".comment-update-form").attr('data-action', data.update_link)
+    comment.find(".comment-update-form").attr('data-show', comment_main)
+    comment.find("#comment_text").html(data.text)
+    
+    return comment
+}

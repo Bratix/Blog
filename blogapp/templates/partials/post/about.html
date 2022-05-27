@@ -16,7 +16,7 @@
         </div>
     </div>
 </div>
-
+{% load humanize %}
 <div class="border-l border-theme-25 -mb-10 pb-10">
     <div class="pl-6 grid grid-cols-12 gap-6">
         <!-- BEGIN: Important Notes -->
@@ -31,7 +31,7 @@
                     <div class="box zoom-in">
                         <div class="tiny-slider" id="important-notes">
                             <div class="p-5">
-                                <div class="text-gray-500 mt-1">123k Subscribers</div>
+                                <div class="text-gray-500 mt-1">{{ post.blog.subscribers.all|length|intcomma }} Subscribers</div>
                                 <div class="text-gray-600 text-justify mt-1">{{post.blog.description}}</div>
                             </div>
                         </div>

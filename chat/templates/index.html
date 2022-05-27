@@ -7,18 +7,13 @@
         <div class="intro-y pr-1">
             <div class="box p-2">
                 <div class="chat__tabs nav nav-tabs justify-center" role="tablist"> 
-                    <a id="chats-tab" data-toggle="tab" data-target="#chats" href="javascript:;" class="flex-1 py-2 rounded-md text-center active" role="tab" aria-controls="chats" aria-selected="true">Chats</a> 
-                    <a id="friend-tab" data-toggle="tab" data-target="#friend" href="javascript:;" class="flex-1 py-2 rounded-md text-center" role="tab" aria-controls="friend" aria-selected="false">Friends</a> 
+                    <a id="friend-tab" data-toggle="tab" data-target="#friend" href="javascript:;" class="flex-1 py-2 rounded-md text-center active" role="tab" aria-controls="friend" aria-selected="true">Friends</a> 
                 </div>
             </div>
         </div>
         <div class="tab-content">
-            <div id="chats" class="tab-pane active" role="tabpanel" aria-labelledby="chats-tab">
-                <div class="chat__chat-list overflow-y-auto scrollbar-hidden pr-1 pt-1 mt-4">
-                    {% include "partials/chat_thumb.html" %}
-                </div>
-            </div>
-            <div id="friend" class="tab-pane" role="tabpanel" aria-labelledby="friend-tab">
+            
+            <div id="friend" class="tab-pane active" role="tabpanel" aria-labelledby="friend-tab">
                 <div class="pr-1">
                     <div class="box p-5 mt-5 w-auto">
                         <div class="font-medium py-3"> Message a friend: </div>
@@ -51,9 +46,12 @@
     <div class="intro-y col-span-12 lg:col-span-8 2xl:col-span-9">
         <div class="chat__box box">
             <!-- BEGIN: Chat Active -->
-            <div class="hidden h-full flex flex-col">
+            <div class="h-full flex flex-col">
+                
                 {% include 'partials/chat_header.html' %}
-                <div class="overflow-y-scroll  px-5 pt-5 flex-1 chat-content">
+                <div class="overflow-y-scroll  px-5 pt-5 flex-1 chat-content" id="chat-content">
+                    {% include 'partials/friend_hidden_message.html' %}
+                    {% include 'partials/user_hidden_message.html' %}
                     {% include 'partials/friend_message.html' %}
                     {% include 'partials/user_message.html' %}
                     {% include 'partials/friend_message.html' %}
@@ -74,19 +72,19 @@
                     {% include 'partials/user_message.html' %}
                     {% include 'partials/friend_message.html' %}
                     {% include 'partials/user_message.html' %}
+                    
                 </div>
                 <div class="pt-4 pb-10 sm:py-4 flex items-center border-t border-gray-200 dark:border-dark-5">
-                    <textarea class="chat__box__input form-control dark:bg-dark-3 h-16 resize-none border-transparent px-5 py-3 shadow-none focus:ring-0" rows="1" placeholder="Type your message..."></textarea>
-                    <a href="javascript:;" class="w-8 h-8 sm:w-10 sm:h-10 block bg-theme-1 text-white rounded-full flex-none flex items-center justify-center mr-5"> <i data-feather="send" class="w-4 h-4"></i> </a>
+                    <textarea id="chat-message-input" class="chat__box__input form-control dark:bg-dark-3 h-16 resize-none border-transparent px-5 py-3 shadow-none focus:ring-0" rows="1" placeholder="Type your message..."></textarea>
+                    <a href="javascript:;" id="chat-message-submit" class="w-8 h-8 sm:w-10 sm:h-10 block bg-theme-1 text-white rounded-full flex-none flex items-center justify-center mr-5"> <i data-feather="send" class="w-4 h-4"></i> </a>
                 </div>
             </div>
             <!-- END: Chat Active -->
-            <!-- BEGIN: Chat Default -->
-            {% include 'partials/chat_default.html' %}
-            <!-- END: Chat Default -->
         </div>
     </div>
     <!-- END: Chat Content -->
 </div>
 
+{{ chat.id|json_script:"chat_id" }}
+{{ user.id|json_script:"user_id" }}
 {% endblock %}

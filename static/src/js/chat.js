@@ -23,8 +23,7 @@ import Velocity from "velocity-animate";
                                         cash(el)
                                             .removeClass("hidden")
                                             .removeAttr("style");
-                                            
-                                            $(".chat-content").scrollTop($(".chat-content")[0].scrollHeight);
+                                            $("#chat-content").scrollTop($("#chat-content")[0].scrollHeight);
 
                                     },
                                 }

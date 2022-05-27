@@ -21,7 +21,7 @@
                 <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
                     <a href="{% url 'blog:add_moderators' blog.id %}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i class="bi bi-plus mr-2"></i> Add moderators </a>
                     <a href="{% url 'blog:blog_update' blog.id %}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i class="bi bi-pencil-square mr-2"></i> Edit blog </a>
-                    <a href="javascript:;" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md delete_blog_trigger" data-tw-toggle="modal" data-tw-target="#blog_delete"> <i class="bi bi-x-circle mr-2"></i> Delete blog </a>
+                    <a href="javascript:;" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md modal_trigger" data-tw-toggle="modal" data-tw-target="blog_delete"> <i class="bi bi-x-circle mr-2"></i> Delete blog </a>
                 </div>
             </div>
         </div>

@@ -36,7 +36,7 @@
                         </div>
                     {% if user == blog.author %}
                     <div class="ml-auto">
-                        <button href="javascript:;" class="items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md remove_moderator_trigger" data-tw-toggle="modal" data-tw-target="#moderator-remove-modal-{{moderator.id}}"> <i class="bi bi-person-dash mr-2"></i> Remove moderator  </button>
+                        <button href="javascript:;" class="items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md modal_trigger" data-tw-toggle="modal" data-tw-target="moderator-remove-modal-{{moderator.id}}"> <i class="bi bi-person-dash mr-2"></i> Remove moderator  </button>
                     </div>
                     {% include 'partials/blog/remove_moderator_modal.html' with blog=blog moderator=moderator %}
                     {% endif %}

@@ -1,5 +1,5 @@
 html {
-    @apply bg-theme-14;
+    @apply bg-theme-14 overflow-x-hidden;
     &.dark {
         @apply bg-dark-2;
         body {
