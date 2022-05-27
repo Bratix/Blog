@@ -56,7 +56,7 @@
             </div>
         </div>
         <div class="intro-y text-justify leading-relaxed">
-            <p class="mb-5">{{post.text}}</p>
+            <p class="mb-5">{{post.text|safe}}</p>
         </div>
         {% include 'partials/post/delete_modal.html' with post=post %}
         <!-- END: Blog Layout -->

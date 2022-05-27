@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 from django.core.validators import FileExtensionValidator
 from django.utils.timezone import now
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 class Profile(models.Model):
@@ -60,7 +61,8 @@ class Post(models.Model):
     blog = models.ForeignKey(Blog, on_delete = models.CASCADE)
     likes = models.ManyToManyField(User, related_name="post_likes", blank=True)
     title = models.CharField(max_length = 50)
-    text = models.TextField()
+    #text = models.TextField()
+    text = CKEditor5Field('Text', config_name='extends')
     tags = TaggableManager()
     image = models.FileField(validators=[FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png"])])
     creation_date = models.DateTimeField(auto_now_add = True)

@@ -1,5 +1,8 @@
 {% load widget_tweaks %}
 {% load static %}
+<div class="hidden">
+{{form.as_p}}
+</div>
 <form method="post" enctype="multipart/form-data" novalidate class="col-span-12 grid grid-cols-12 gap-6" id="form">
     {% csrf_token %}
     <div class="intro-y col-span-8 lg:col-span-8">
@@ -12,12 +15,10 @@
                     <div class="border border-gray-200 dark:border-dark-5 rounded-md p-5">
                         <div class="font-medium flex items-center border-b border-gray-200 dark:border-dark-5 pb-5">  Text Content </div>
                         <div class="mt-5">
-                            {% render_field form.text class="intro-y form-control py-3 px-4 box pr-10 placeholder-theme-8" id="post_text"  placeholder="Write your post here" value=post.text %}
+                            
+                            {{ form.text }}
+                            {{form.media}}
                             <div class="text-red-500 hover:p-1">{{form.text.errors}}</div>
-                            {% comment %} <div class="editor">
-                                
-                                <p>{{post.text}}</p>
-                            </div> {% endcomment %}
                         </div>
                     </div>
                     <div class="border border-gray-200 dark:border-dark-5 rounded-md p-5 mt-5">
@@ -87,3 +88,4 @@
     
     </div>
 </form>
+

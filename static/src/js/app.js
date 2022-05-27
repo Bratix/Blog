@@ -30,24 +30,23 @@ import "./calendar";
  | Import JS components.
  |
  */
-import "./maps";
+//import "./maps";
 import "./chat";
 import "./show-modal";
 import "./show-slide-over";
 import "./show-dropdown";
-import "./search";
-import "./copy-code";
-import "./show-code";
+//import "./search";
+//import "./copy-code";
+//import "./show-code";
 import "./side-menu";
 import "./mobile-menu";
 import "./side-menu-tooltip";
-import "./dark-mode-switcher";
+//import "./dark-mode-switcher";
 
 //custom imports
 import "./custom/active_tab.js"
 import "./custom/modals.js"
 import "./custom/infinite_scroll.js"
-import "./custom/wysiwyg.js"
 import "./custom/form_image_handler.js"
 import "./custom/post_like.js"
 import "./custom/post_comments.js"

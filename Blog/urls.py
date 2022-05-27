@@ -26,10 +26,11 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls'), name = "login"),
     path('register/', views.Registration.as_view(), name = "register"),
     path('',include('blogapp.urls')),
-    path('chat/', include('chat.urls'))
+    path('chat/', include('chat.urls')),
+    path("ckeditor5/", include('django_ckeditor_5.urls')) 
     #path('djrichtextfield/', include('djrichtextfield.urls'))
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
