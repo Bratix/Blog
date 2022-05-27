@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'taggit',
     'widget_tweaks',
     'django.contrib.humanize',
-    'djrichtextfield'
+    'djrichtextfield',
+    'channels',
+    'chat'
 ]
 
 MIDDLEWARE = [
@@ -144,6 +146,18 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'Basic',
     },
 }
+
+# Channels
+ASGI_APPLICATION = 'chat.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+
 """ 
 DJRICHTEXTFIELD_CONFIG = {
     'js': ['//cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js'],

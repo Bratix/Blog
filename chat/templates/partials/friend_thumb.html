@@ -1,0 +1,10 @@
+<div class="chat-select cursor-pointer box relative flex items-center p-5 mt-5" data-href="{% url 'blog:profile_detail' user.profile.id %}">
+    <div class="w-12 h-12 flex-none image-fit mr-1">
+        <img alt="Rubick Tailwind HTML Admin Template" class="rounded-full" src="{{user.profile.image.url}}">
+        <div class="w-3 h-3 bg-theme-9 absolute right-0 bottom-0 rounded-full border-2 border-white"></div>
+    </div>
+    <div class="ml-2 overflow-hidden">
+        <div class="flex items-center"> <a href="" class="font-medium">{{user.username}}</a> </div>
+        <div class="w-full truncate text-gray-600 mt-0.5">{{user.profile.first_name}} {{user.profile.last_name}}</div>
+    </div>
+</div>

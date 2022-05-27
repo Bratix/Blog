@@ -4,7 +4,9 @@ module.exports = {
   mode: "jit",
   purge: [
     '../blogapp/templates/**/*.html',
-    "../templates/**/*.html",
+    '../templates/**/*.html',
+    '../templates/*.html',
+    '../chat/templates/**.html'
   ],
   darkMode: "class",
   theme: {

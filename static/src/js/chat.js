@@ -3,6 +3,7 @@ import Velocity from "velocity-animate";
 (function (cash) {
     "use strict";
 
+    
     cash(".chat__chat-list")
         .children()
         .each(function () {
@@ -22,8 +23,12 @@ import Velocity from "velocity-animate";
                                         cash(el)
                                             .removeClass("hidden")
                                             .removeAttr("style");
+                                            
+                                            $(".chat-content").scrollTop($(".chat-content")[0].scrollHeight);
+
                                     },
                                 }
+                                
                             );
                         },
                     }

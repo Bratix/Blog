@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content%}
+<div class="intro-y chat grid grid-cols-12 gap-5 mt-5">
+    <!-- BEGIN: Chat Side Menu -->
+    <div class="col-span-12 lg:col-span-4 2xl:col-span-3">
+        <div class="intro-y pr-1">
+            <div class="box p-2">
+                <div class="chat__tabs nav nav-tabs justify-center" role="tablist"> 
+                    <a id="chats-tab" data-toggle="tab" data-target="#chats" href="javascript:;" class="flex-1 py-2 rounded-md text-center active" role="tab" aria-controls="chats" aria-selected="true">Chats</a> 
+                    <a id="friend-tab" data-toggle="tab" data-target="#friend" href="javascript:;" class="flex-1 py-2 rounded-md text-center" role="tab" aria-controls="friend" aria-selected="false">Friends</a> 
+                </div>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div id="chats" class="tab-pane active" role="tabpanel" aria-labelledby="chats-tab">
+                <div class="chat__chat-list overflow-y-auto scrollbar-hidden pr-1 pt-1 mt-4">
+                    {% include "partials/chat_thumb.html" %}
+                </div>
+            </div>
+            <div id="friend" class="tab-pane" role="tabpanel" aria-labelledby="friend-tab">
+                <div class="pr-1">
+                    <div class="box p-5 mt-5 w-auto">
+                        <div class="font-medium py-3"> Message a friend: </div>
+                        <div class="relative text-gray-700 dark:text-gray-300">
+                            <select id="search_friend_chat" class="tom-select py-3 px-4 border-transparent bg-gray-200 pr-10 placeholder-theme-13" placeholder="Start chatting with a friend">
+                                <option value="" selected></option>
+                                {% for user in user.profile.friends.all %}
+                                <option value="{% url 'blog:profile_detail' user.profile.id %}">
+                                    {{user.username}}
+                                </option>
+                                {% endfor %}
+                            </select>
+                            <i class="w-4 h-4 hidden sm:absolute my-auto inset-y-0 mr-3 right-0" data-feather="search"></i> 
+                        </div>
+                        <button type="button" class="btn btn-primary w-full mt-3">Open chat</button>
+                    </div>
+                </div>
+                <div class="overflow-y-auto scrollbar-hidden pr-1 pt-1">
+                    {% for user in user.profile.friends.all %}
+                        
+                            {% include "partials/friend_thumb.html" with user=user%}  
+                        
+                    {% endfor %}                  
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END: Chat Side Menu -->
+    <!-- BEGIN: Chat Content -->
+    <div class="intro-y col-span-12 lg:col-span-8 2xl:col-span-9">
+        <div class="chat__box box">
+            <!-- BEGIN: Chat Active -->
+            <div class="hidden h-full flex flex-col">
+                {% include 'partials/chat_header.html' %}
+                <div class="overflow-y-scroll  px-5 pt-5 flex-1 chat-content">
+                    {% include 'partials/friend_message.html' %}
+                    {% include 'partials/user_message.html' %}
+                    {% include 'partials/friend_message.html' %}
+                    {% include 'partials/user_message.html' %}
+                    {% include 'partials/friend_message.html' %}
+                    {% include 'partials/user_message.html' %}
+                    {% include 'partials/friend_message.html' %}
+                    {% include 'partials/user_message.html' %}
+                    {% include 'partials/friend_message.html' %}
+                    {% include 'partials/user_message.html' %}
+                    {% include 'partials/friend_message.html' %}
+                    {% include 'partials/user_message.html' %}
+                    {% include 'partials/friend_message.html' %}
+                    {% include 'partials/user_message.html' %}
+                    {% include 'partials/friend_message.html' %}
+                    {% include 'partials/user_message.html' %}
+                    {% include 'partials/friend_message.html' %}
+                    {% include 'partials/user_message.html' %}
+                    {% include 'partials/friend_message.html' %}
+                    {% include 'partials/user_message.html' %}
+                </div>
+                <div class="pt-4 pb-10 sm:py-4 flex items-center border-t border-gray-200 dark:border-dark-5">
+                    <textarea class="chat__box__input form-control dark:bg-dark-3 h-16 resize-none border-transparent px-5 py-3 shadow-none focus:ring-0" rows="1" placeholder="Type your message..."></textarea>
+                    <a href="javascript:;" class="w-8 h-8 sm:w-10 sm:h-10 block bg-theme-1 text-white rounded-full flex-none flex items-center justify-center mr-5"> <i data-feather="send" class="w-4 h-4"></i> </a>
+                </div>
+            </div>
+            <!-- END: Chat Active -->
+            <!-- BEGIN: Chat Default -->
+            {% include 'partials/chat_default.html' %}
+            <!-- END: Chat Default -->
+        </div>
+    </div>
+    <!-- END: Chat Content -->
+</div>
+
+{% endblock %}

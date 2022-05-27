@@ -34,16 +34,9 @@ License: You must have a valid license purchased only from themeforest(the above
                 {% include "partials/sidebar.html" %}
                 {% endif %}
                 <!-- BEGIN: Content -->
-                <div class="content overflow-hidden">
-                    
-                    <div class="grid grid-cols-12 gap-6">
-                        <div class="col-span-12">
-                                
-                                {% block content %}
-                                {% endblock content %}
-                                
-                        </div>
-                    </div>
+                <div class="content">     
+                    {% block content %}
+                    {% endblock content %}
                 </div>
                 <!-- END: Content -->
             </div>

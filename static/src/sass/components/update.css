@@ -73,3 +73,19 @@ label.file-upload{
 body { 
 	padding: 15px !important;
 }
+
+.content ::-webkit-scrollbar {
+    width: 10px;
+}
+
+.content ::-webkit-scrollbar-track {
+    border-radius: 100px;
+	background-color: #ccccce;
+}
+
+.content ::-webkit-scrollbar-thumb {
+    border: 5px solid transparent;
+	
+	background-color: #0e2a75;
+    border-radius: 100px;
+}
