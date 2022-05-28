@@ -7,6 +7,10 @@ from .views import FRIEND_REQUEST, FRIENDS
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 
+import sys
+sys.path.append("..")
+
+from chat.models import Chat
 
 class FriendList(LoginRequiredMixin, generic.ListView):
     login_url = reverse_lazy('login')
@@ -66,6 +70,19 @@ class AcceptFriendRequest(LoginRequiredMixin, View):
                 friend_request.submitter.profile.pending_friends.remove(friend_request.reciever)
                 friend_request.active = False
                 friend_request.save()
+                inactive_chat = Chat.objects.filter(
+                    ((Q(user1 = friend_request.submitter) & Q(user2 = friend_request.reciever)) | 
+                    (Q(user2 = friend_request.submitter) & Q(user1 = friend_request.reciever))) & Q(active=False) ).first()
+
+                if inactive_chat: 
+                    inactive_chat.active = True
+                    inactive_chat.save()
+                else:
+                    chat = Chat.objects.create(
+                        user1 = friend_request.submitter,
+                        user2 = friend_request.reciever
+                    )
+
                 data = {
                 'status': 'success'
                 }
@@ -130,6 +147,14 @@ class DeleteFriend(LoginRequiredMixin, View):
 
             request.user.profile.friends.remove(reciever.user)
             reciever.friends.remove(request.user)
+            print("Reciever : ", reciever.user, "Submitter:", request.user)
+            active_chat = Chat.objects.filter(
+                ((Q(user1 = request.user) & Q(user2 = reciever.user)) | 
+                (Q(user2 = request.user) & Q(user1 = reciever.user))) & Q(active=True) ).first()
+            print(active_chat)
+            active_chat.active = False
+            active_chat.save()
+
             data = {
                 "status" : 'success'
             }

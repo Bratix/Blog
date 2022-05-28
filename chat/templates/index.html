@@ -12,23 +12,21 @@
             </div>
         </div>
         <div class="tab-content">
-            
             <div id="friend" class="tab-pane active" role="tabpanel" aria-labelledby="friend-tab">
                 <div class="pr-1">
                     <div class="box p-5 mt-5 w-auto">
-                        <div class="font-medium py-3"> Message a friend: </div>
+                        <div class="font-medium py-3"> Search friends: </div>
                         <div class="relative text-gray-700 dark:text-gray-300">
-                            <select id="search_friend_chat" class="tom-select py-3 px-4 border-transparent bg-gray-200 pr-10 placeholder-theme-13" placeholder="Start chatting with a friend">
-                                <option value="" selected></option>
-                                {% for user in user.profile.friends.all %}
-                                <option value="{% url 'blog:profile_detail' user.profile.id %}">
-                                    {{user.username}}
-                                </option>
-                                {% endfor %}
-                            </select>
-                            <i class="w-4 h-4 hidden sm:absolute my-auto inset-y-0 mr-3 right-0" data-feather="search"></i> 
+                            <form action="" id="friend_search_form">
+                                <input type="text" id="search_param" class="search__input form-control dark:bg-dark-1 border-transparent placeholder-theme-8" placeholder="Search...">
+                                <div class="text-center mt-5">
+                                    <!-- BEGIN: Modal Toggle -->
+                                    <button href="javascript:;" class="btn btn-outline-secondary w-24 mr-1 modal_trigger" >Reset</button>
+                                    <!-- END: Modal Toggle -->
+                                    <button type="submit" class="btn btn-primary w-24" >Submit</button>
+                                </div>
+                            </form>
                         </div>
-                        <button type="button" class="btn btn-primary w-full mt-3">Open chat</button>
                     </div>
                 </div>
                 <div class="overflow-y-auto scrollbar-hidden pr-1 pt-1">

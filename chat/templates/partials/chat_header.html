@@ -1,11 +1,20 @@
 <div class="flex flex-col sm:flex-row border-b border-gray-200 dark:border-dark-5 px-5 py-4">
     <div class="flex items-center">
         <div class="w-10 h-10 sm:w-12 sm:h-12 flex-none image-fit relative">
-            <img alt="Rubick Tailwind HTML Admin Template" class="rounded-full" src="{{user.profile.image.url}}">
+            {% if chat.user1 == user %}
+                <img alt="Rubick Tailwind HTML Admin Template" class="rounded-full" src="{{chat.user2.profile.image.url}}" id="image">
+            {% else %}
+                <img alt="Rubick Tailwind HTML Admin Template" class="rounded-full" src="{{chat.user1.profile.image.url}}" id="image">
+            {% endif %}
         </div>
         <div class="ml-3 mr-auto">
-            <div class="font-medium text-base">Username</div>
-            <div class="text-gray-600 text-xs sm:text-sm">First and last name</div>
+            {% if chat.user1 == user %}
+                <div class="font-medium text-base">{{chat.user2.username}}</div>
+                <div class="text-gray-600 text-xs sm:text-sm">{{chat.user2.profile.first_name}} {{chat.user2.profile.last_name}}</div>
+            {% else %}
+                <div class="font-medium text-base">{{chat.user1.username}}</div>
+                <div class="text-gray-600 text-xs sm:text-sm">{{chat.user1.profile.first_name}} {{chat.user1.profile.last_name}}</div>
+            {% endif %}
         </div>
     </div>
 </div>

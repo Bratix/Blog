@@ -1,0 +1,19 @@
+{% extends 'base.html' %}   
+{% block title %}Welcome to Blogo{% endblock title %}
+
+{% block content %}
+{% load static %}
+<div class="intro-y grid-cols-12 col-span-12 grid gap-6 mt-5">
+        <div class="intro-y blog col-span-4 col-start-5 m-3 text-center"> 
+            <img src="{% static 'dist/images/no_result.png' %}">
+            <h2 class="text-lg font-medium mr-auto">
+                To start chatting add a friend first!
+            </h2>
+        </div>           
+    </div>     
+</div> 
+
+
+    
+
+{% endblock content %}

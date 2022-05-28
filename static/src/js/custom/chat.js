@@ -23,6 +23,10 @@ $(function(){
             + chat_id
         );
         
+        window.onbeforeunload = function() {
+            chatSocket.onclose = function () {}; // disable onclose handler first
+            chatSocket.close();
+        };
 
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
@@ -45,12 +49,18 @@ $(function(){
 
         document.querySelector('#chat-message-submit').onclick = function(e) {
             const messageInputDom = document.querySelector('#chat-message-input');
-            const message = messageInputDom.value;
-            chatSocket.send(JSON.stringify({
-                'message': message,
-                'user_id': user_id
-            }));
-            messageInputDom.value = '';
+            const message_uncleaned = messageInputDom.value;
+            let message_cleaned = message_uncleaned.trim()
+            
+            if (message_cleaned != ""){
+                chatSocket.send(JSON.stringify({
+                    'message': message_cleaned,
+                    'user_id': user_id
+                }));
+                messageInputDom.value = '';
+            } else {
+                messageInputDom.value = '';
+            }
         };
     }
 })
