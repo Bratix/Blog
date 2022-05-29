@@ -46,7 +46,8 @@
                     {% if page_obj.has_next %}
                         {% include 'partials/common/loader.html' %}
                     {% endif %} 
-                        <div class="" id="trigger-load">Amar</div>
+                        <div class="hidden" id="trigger-load"></div>
+                        <div class="hidden" id="after-this"></div>
                         {% include 'partials/friend_hidden_message.html' %}
                         {% include 'partials/user_hidden_message.html' %}
                         

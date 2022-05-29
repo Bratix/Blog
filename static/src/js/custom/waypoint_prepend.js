@@ -6,11 +6,11 @@
     /* http://imakewebthings.com/waypoints/shortcuts/infinite-scroll */
     function InfinitePrepend(options) {
       this.options = $.extend({}, InfinitePrepend.defaults, options)
-      this.container = this.options.element
+      //this.container = this.options.element
       
-      if (this.options.container !== 'auto') {
-        this.container = this.options.container
-      }
+      
+      this.container = this.options.container
+      
       
       this.$container = $(this.container)
       this.$more = $(this.options.more)
@@ -23,8 +23,9 @@
     /* Private */
     InfinitePrepend.prototype.setupHandler = function() {
       this.options.handler = $.proxy(function() {
+        console.log("waypoint hit")
         this.options.onBeforePageLoad()
-        this.destroy()
+        //this.destroy()
         this.$container.addClass(this.options.loadingClass)
         
         $.get($(this.options.more).attr('href'), $.proxy(function(data) {
@@ -45,9 +46,10 @@
           if ($newMore.length) {
             this.$more.replaceWith($newMore)
             this.$more = $newMore
-            this.waypoint = new Waypoint(this.options)
+            //this.waypoint = new Waypoint(this.options)
           }
           else {
+            this.destroy()
             this.$more.remove()
           }
   
@@ -59,6 +61,7 @@
     /* Public */
     InfinitePrepend.prototype.destroy = function() {
       if (this.waypoint) {
+        console.log("destroyed waypoint")
         this.waypoint.destroy()
       }
     }
@@ -66,9 +69,8 @@
     InfinitePrepend.defaults = {
       context: $("#chat-content")[0],
       element: $("#trigger-load")[0],
-      container: $("#trigger-load")[0], 
-      
-      offset: 0,
+      container: $("#after-this")[0],
+      offset: -100,
       items: '.infinite-item',
       more: '.infinite-more-link',
       loadingClass: 'infinite-loading',

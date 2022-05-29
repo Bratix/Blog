@@ -13,7 +13,7 @@ from django.db.models import Q
 class ChatDetail(LoginRequiredMixin, generic.ListView):
     login_url = reverse_lazy('login')
     model = Message
-    paginate_by = 20
+    paginate_by = 12
     context_object_name = 'messages'
     template_name = 'index.html'
 
