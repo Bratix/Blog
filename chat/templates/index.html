@@ -20,20 +20,15 @@
                             <form action="" id="friend_search_form">
                                 <input type="text" id="search_param" class="search__input form-control dark:bg-dark-1 border-transparent placeholder-theme-8" placeholder="Search...">
                                 <div class="text-center mt-5">
-                                    <!-- BEGIN: Modal Toggle -->
-                                    <button href="javascript:;" class="btn btn-outline-secondary w-24 mr-1 modal_trigger" >Reset</button>
-                                    <!-- END: Modal Toggle -->
-                                    <button type="submit" class="btn btn-primary w-24" >Submit</button>
+                                    <button type="submit" class="btn btn-primary w-24" >Search</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
-                <div class="overflow-y-auto scrollbar-hidden pr-1 pt-1">
+                <div class="overflow-y-auto scrollbar-hidden pr-1 pt-1" id="friend-list">
                     {% for user in user.profile.friends.all %}
-                        
-                            {% include "partials/friend_thumb.html" with user=user%}  
-                        
+                        {% include "partials/friend_thumb.html" with user=user%}
                     {% endfor %}                  
                 </div>
             </div>
@@ -47,29 +42,35 @@
             <div class="h-full flex flex-col">
                 
                 {% include 'partials/chat_header.html' %}
-                <div class="overflow-y-scroll  px-5 pt-5 flex-1 chat-content" id="chat-content">
-                    {% include 'partials/friend_hidden_message.html' %}
-                    {% include 'partials/user_hidden_message.html' %}
-                    {% include 'partials/friend_message.html' %}
-                    {% include 'partials/user_message.html' %}
-                    {% include 'partials/friend_message.html' %}
-                    {% include 'partials/user_message.html' %}
-                    {% include 'partials/friend_message.html' %}
-                    {% include 'partials/user_message.html' %}
-                    {% include 'partials/friend_message.html' %}
-                    {% include 'partials/user_message.html' %}
-                    {% include 'partials/friend_message.html' %}
-                    {% include 'partials/user_message.html' %}
-                    {% include 'partials/friend_message.html' %}
-                    {% include 'partials/user_message.html' %}
-                    {% include 'partials/friend_message.html' %}
-                    {% include 'partials/user_message.html' %}
-                    {% include 'partials/friend_message.html' %}
-                    {% include 'partials/user_message.html' %}
-                    {% include 'partials/friend_message.html' %}
-                    {% include 'partials/user_message.html' %}
-                    {% include 'partials/friend_message.html' %}
-                    {% include 'partials/user_message.html' %}
+                <div class="overflow-y-scroll  px-5 pt-5 flex-1 infinite-container-chat" id="chat-content">
+                    {% if page_obj.has_next %}
+                        {% include 'partials/common/loader.html' %}
+                    {% endif %} 
+                        <div class="" id="trigger-load">Amar</div>
+                        {% include 'partials/friend_hidden_message.html' %}
+                        {% include 'partials/user_hidden_message.html' %}
+                        
+                        {% for message in messages reversed %}
+                        {% if forloop.first %}
+                            <div class="infinite-item">
+                                {% if user.id == message.user.id %}
+                                    {% include 'partials/user_message.html' %}
+                                {% else %}
+                                    {% include 'partials/friend_message.html' %}
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <div class="infinite-item">
+                                {% if user.id == message.user.id %}
+                                    {% include 'partials/user_message.html' %}
+                                {% else %}
+                                    {% include 'partials/friend_message.html' %}
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                        
+                        {% endfor %}
+                        
                     
                 </div>
                 <div class="pt-4 pb-10 sm:py-4 flex items-center border-t border-gray-200 dark:border-dark-5">
@@ -82,6 +83,10 @@
     </div>
     <!-- END: Chat Content -->
 </div>
+
+{% if page_obj.has_next %}
+    <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
+{% endif %} 
 
 {{ chat.id|json_script:"chat_id" }}
 {{ user.id|json_script:"user_id" }}

@@ -1,17 +1,19 @@
-# chat/consumers.py
+# chat_name/consumers.py
 import json
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from .models import Chat, Message
+from django.contrib.auth.models import User
 
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
-        self.chat_id = self.scope['url_route']['kwargs']['pk']
-        self.chat = 'chat_%s' % self.chat_id
+        chat_id = self.scope['url_route']['kwargs']['pk']
+        self.chat_name = 'chat_%s' % chat_id
+        self.chat = Chat.objects.get(pk=chat_id)
 
         async_to_sync(self.channel_layer.group_add)(
-            self.chat,
+            self.chat_name,
             self.channel_name
         )
 
@@ -19,7 +21,7 @@ class ChatConsumer(WebsocketConsumer):
 
     def disconnect(self, closing_code):
         async_to_sync(self.channel_layer.group_discard)(
-            self.chat,
+            self.chat_name,
             self.channel_name
         )
 
@@ -27,9 +29,18 @@ class ChatConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
         user_id = text_data_json['user_id']
+        user = User.objects.get(pk = user_id)
+
+        chat_message = Message.objects.create(
+            chat = self.chat,
+            user = user,
+            text = message
+        )
+        self.chat.last_message = chat_message.time
+        self.chat.save()
 
         async_to_sync(self.channel_layer.group_send)(
-            self.chat,
+            self.chat_name,
             {
                 'type': 'chat_message',
                 'message': message,

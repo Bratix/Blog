@@ -23,4 +23,5 @@ app_name = 'chat'
 urlpatterns = [
     path('detail/<pk>', views.ChatDetail.as_view(), name='chat_detail'),
     path('', views.ChatSideMenu.as_view(), name='chat_index'),
+    path('friend/<pk>', views.FriendChat.as_view(), name='friend_chat'),
 ]

@@ -14,7 +14,7 @@ $(function(){
     if (url.includes('chat')){
         const chat_id = JSON.parse(document.getElementById('chat_id').textContent);
         const user_id = JSON.parse(document.getElementById('user_id').textContent);
-        $("#chat-content").fadeIn(500).scrollTop($("#chat-content")[0].scrollHeight);
+        $(".infinite-container-chat").fadeIn(500).scrollTop($(".infinite-container-chat")[0].scrollHeight);
 
         const chatSocket = new WebSocket(
             'ws://'
@@ -30,9 +30,9 @@ $(function(){
 
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            $('.chat-content').append('<div class="clear-both"></div>');
+            $('.infinite-container-chat').append('<div class="clear-both"></div>');
             let message = generate_chat_message(data, user_id);
-            $('.chat-content').append(message.hide().fadeIn(500));
+            $('.infinite-container-chat').append(message.hide().fadeIn(500));
             $("#chat-content").scrollTop($("#chat-content")[0].scrollHeight);
         };
 
@@ -65,13 +65,47 @@ $(function(){
     }
 })
 
+$(function(){
+    $("#friend_search_form").on("submit", function (e) {
+        e.preventDefault();
+        
+        search = $("#search_param").val()
+        console.log("there brah", $(".friend-thumb[class*='" + search + "']"))
+        $("#friend-list").prepend($(".friend-thumb[class*='" + search + "']").hide().fadeIn(500))
+    })
+
+    $(".friend-thumb").on('click', function(){
+        console.log(this)
+        url = this.getAttribute('data-href')
+        console.log(url)
+        window.location.href = url;
+    })
+})
+
+$(function(){
+    
+    if($('.infinite-container-chat')[0]){
+        /* setTimeout(() => { */
+            let infinite_chat = new Waypoint.InfinitePrepend({
+                onBeforePageLoad: function () {
+                $('.spinner-border').show();
+                },
+                onAfterPageLoad: function () {
+                $('.spinner-border').hide();
+                },
+            })
+            console.log(infinite_chat)
+        /* }, 1000); */
+    }
+})
+
 function generate_chat_message(data, user_id) {
     if (data.user_id === user_id){
-        selector = "#user_hidden_message"
+        selector = "#user_hidden_message";
     } else {
-        selector = "#friend_hidden_message"
+        selector = "#friend_hidden_message";
     }
     let message = $(selector).clone().removeClass('hidden');
-    message.find("#text").html(data.message)
-    return message
+    message.find("#text").html(data.message);
+    return message;
 }
