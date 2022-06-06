@@ -55,7 +55,8 @@ $(function(){
             if (message_cleaned != ""){
                 chatSocket.send(JSON.stringify({
                     'message': message_cleaned,
-                    'user_id': user_id
+                    'user_id': user_id,
+                    'url' : window.location.pathname,
                 }));
                 messageInputDom.value = '';
             } else {

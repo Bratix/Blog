@@ -3,7 +3,7 @@ from django.shortcuts import render
 from ..models import Friend_Request, Profile
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .views import FRIEND_REQUEST, FRIENDS
+from .constants import FRIEND_REQUEST, FRIENDS
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 

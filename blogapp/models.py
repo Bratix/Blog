@@ -91,3 +91,12 @@ class Comment(models.Model):
         return reverse("blog:post_detail", kwargs={"pk": self.post.id})
     
 
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete= models.CASCADE)
+    title = models.CharField(max_length=30)
+    url = models.CharField(max_length=100)
+    text = models.TextField()
+    type = models.IntegerField()
+
+    def __str__(self):
+        return self.text

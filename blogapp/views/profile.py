@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from ..models import Friend_Request, Profile
 from django.views.generic import DetailView, UpdateView
 from django.urls import reverse_lazy
-from .views import BROWSE, BLOG, NEW_BLOG
+from .constants import BROWSE, BLOG, NEW_BLOG
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 

@@ -5,7 +5,7 @@ from django.views.generic import CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.http import JsonResponse
-from .views import BROWSE, BLOG, NEW_BLOG
+from .constants import BROWSE, BLOG, NEW_BLOG
 
 
 class PostDetail(generic.ListView):

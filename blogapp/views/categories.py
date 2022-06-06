@@ -1,6 +1,6 @@
 from sre_constants import CATEGORY
 from django.views import generic
-from .views import CATEGORY
+from .constants import CATEGORY
 from ..models import Category, Blog
 
 class CategoryDetail(generic.ListView):
