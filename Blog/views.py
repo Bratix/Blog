@@ -5,10 +5,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.views.generic import View
 from .forms import UserForm
-
-import sys
-sys.path.append("..")
-
 from blogapp.models import Profile
 
 class Registration(View):

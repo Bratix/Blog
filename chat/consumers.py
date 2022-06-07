@@ -60,22 +60,18 @@ class ChatConsumer(WebsocketConsumer):
             notify_user = self.chat.user2
         else:
             notify_user = self.chat.user1
-
         
-        notification = Notification.objects.create(
+        Notification.objects.create(
             user = notify_user,
             title = "New chat message",
             url = url,
             text = self.current_user.username + ": " + message,
             type = NOTIFICATION_CHAT
         )
-        print(notification)
 
     def chat_message(self, event):
         message = event['message']
         user_id = event['user_id']
-
-       
 
         self.send(text_data=json.dumps({
             'message': message,

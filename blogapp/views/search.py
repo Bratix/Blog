@@ -44,3 +44,21 @@ class PostSearch(generic.ListView):
     def get_queryset(self):
         search_param = self.request.GET.get('param')
         return Post.objects.filter(title__contains = search_param).order_by("title")
+
+class ProfileSearch(generic.ListView):
+    model = Profile
+    paginate_by = 10
+    context_object_name = 'profiles'
+    template_name = 'search/profile.html'
+
+    def get_context_data(self, **kwargs):
+        search_param = self.request.GET.get('param')
+        context = super().get_context_data(**kwargs)
+        context['search_param'] =search_param
+        return context
+
+    def get_queryset(self):
+        search_param = self.request.GET.get('param')
+        return Profile.objects.filter(Q(user__username__contains = search_param) | 
+                Q(first_name__contains = search_param) |
+                Q(last_name__contains = search_param)).order_by("user__username")

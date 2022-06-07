@@ -7,7 +7,7 @@ import django_ckeditor_5.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blogapp', '0008_alter_post_text'),
+        ('blogapp', '0007_alter_post_text'),
     ]
 
     operations = [

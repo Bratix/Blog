@@ -13,18 +13,18 @@
     
     <div class="2xl:col-span-12 col-span-12 ">
         <div class="grid-cols-12 grid" style="overflow: visible;">
+            {% if profiles|length > 0 %}
+                <h2 class="text-lg font-medium mr-auto">
+                    People
+                </h2>
+            {% endif %}
+            <div class="intro-y blog col-span-12 grid grid-cols-12 gap-3 m-3 infinite-container"> 
                 
-            <div class="intro-y blog col-span-12 grid grid-cols-12 gap-6 m-3 infinite-container"> 
-                {% if profiles|length > 0 %}
-                    <h2 class="text-lg font-medium mr-auto">
-                        People
-                    </h2>
-                {% endif %}
                 {% for profile in profiles %}
-                        <a href="{% url 'blog:profile_detail' profile.id %}" class="intro-y blog col-span-5 col-start-3 m-10 infinite-item">
-                            {% include 'partials/common/user_thumb.html' with profile=profile %}
-                        </a>
-                    {% endfor %}
+                    <a href="{% url 'blog:profile_detail' profile.id %}" class="intro-y blog col-span-5 m-10 infinite-item">
+                        {% include 'partials/common/user_thumb.html' with profile=profile %}
+                    </a>
+                {% endfor %}
             </div>
             
         </div>

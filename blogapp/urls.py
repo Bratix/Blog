@@ -40,6 +40,7 @@ urlpatterns = [
     path('search', views.IndexSearch.as_view(), name="search_index"),
     path('search/blog', views.BlogSearch.as_view(), name="search_blog"),
     path('search/post', views.PostSearch.as_view(), name="search_post"),
+    path('search/profile', views.ProfileSearch.as_view(), name="search_profile"),
 
     #Friend request
     path('friends', views.FriendList.as_view(), name="friend_list" ),

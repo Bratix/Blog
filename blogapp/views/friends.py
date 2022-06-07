@@ -1,16 +1,13 @@
 from django.views import generic, View
 from django.shortcuts import render
-from ..models import Friend_Request, Profile
+from ..models import Friend_Request, Profile, Notification
+from chat.models import Chat
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .constants import FRIEND_REQUEST, FRIENDS
-from django.urls import reverse_lazy
+from .constants import FRIEND_REQUEST, FRIENDS, NOTIFICATION_FRIEND_REQUEST
+from django.urls import reverse, reverse_lazy
 from django.http import JsonResponse
 
-import sys
-sys.path.append("..")
-
-from chat.models import Chat
 
 class FriendList(LoginRequiredMixin, generic.ListView):
     login_url = reverse_lazy('login')
@@ -121,12 +118,20 @@ class SendFriendRequest(LoginRequiredMixin, View):
 
 
             if not (len(friend_requests) > 0) and reciever != request.user:
-                friend_request = Friend_Request.objects.create(
+                Friend_Request.objects.create(
                     submitter = request.user,
                     reciever = reciever,
                     active = True
                 )
                 request.user.profile.pending_friends.add(reciever)
+
+                Notification.objects.create(
+                    user = reciever,
+                    title = "New friend request",
+                    url = reverse('blog:recieved_friend_requests'),
+                    text = request.user.username + " sent you a friend request",
+                    type = NOTIFICATION_FRIEND_REQUEST
+                )
                 data = {
                     "status" : 'success'
                 }

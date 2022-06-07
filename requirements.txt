@@ -1,5 +1,9 @@
-Django
+Django==3.2
 uwsgi
 django-taggit
 django_widget_tweaks
 django-ckeditor-5
+channels_redis
+psycopg2
+Pillow
+requests
