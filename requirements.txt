@@ -8,3 +8,5 @@ psycopg2
 Pillow
 requests
 django-debug-toolbar
+django-cleanup
+django-unused-media

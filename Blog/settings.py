@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'chat',
     'django_ckeditor_5',
     "debug_toolbar",
+    'django_cleanup.apps.CleanupConfig',
+    'django_unused_media'
 ]
 
 MIDDLEWARE = [
