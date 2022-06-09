@@ -12,7 +12,7 @@
     <!-- BEGIN: Blog Layout -->
     
     <div class="2xl:col-span-12 col-span-12 ">
-        <div class="grid-cols-12 grid infinite-container" style="overflow: visible;">
+        <div class="grid-cols-12 grid infinite-container " style="overflow: visible;">
             {% for blog in blogs %}
                 <a href="{% url 'blog:blog_detail' blog.id %}" class="intro-y blog col-span-4 2xl:col-span-4 m-10 infinite-item">
                     {% include 'partials/blog/thumb.html' with blog=blog %}

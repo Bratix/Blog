@@ -1,5 +1,5 @@
 {% load humanize %}
-<div class="mt-5 intro-x">
+<div class="mt-5 intro-x flex-col">
     <div class="box zoom-in">
         <div class="px-5 py-3  flex items-center">
             <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden" >
@@ -7,9 +7,9 @@
             </div>
             <div class="ml-4 mr-auto">
                 <div class="font-medium">{{blog.title}}</div>
-                <div class="text-gray-600 text-xs mt-0.5" > <span id="subscribers"> {{ blog.subscribers.all|length|intcomma }} </span> Subscribers</div>
+                <div class="text-gray-600 text-xs mt-0.5" > <span id="subscribers"> {{ blog.subscriber_count|intcomma }} </span> Subscribers</div>
             </div>
         </div>        
-        <div class="text-gray-600 px-5 py-3 text-justify">{{blog.description}}</div>        
+        <div class="text-gray-600 px-5 py-3 text-justify">{{blog.description|truncatewords:15}}</div>        
     </div>
 </div>

@@ -74,7 +74,7 @@
                 </div>
             </a>
             <ul class="side-menu__sub">
-                {% for blog in user.blog_set.all%}
+                {% for blog in user.subscribers.all%}
                     {% if user in blog.subscribers.all and user != blog.author %}
                     <li>
                         <a href="{% url 'blog:blog_detail' blog.id %}" class="side-menu" id="blog{{blog.id}}" >

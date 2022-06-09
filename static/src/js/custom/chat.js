@@ -1,20 +1,10 @@
 $(function(){
-    /* $('#search_friend_chat').on('change', function(e){
-        let redirect = this.value 
-        window.location.href = redirect;
-    })
-
-    $('.chat-select').on('click', function(e){
-        let redirect = $(this).data("href") 
-        console.log("redirect" + redirect)
-        window.location.href = redirect;
-    }) */
-    
+       
     let url = window.location.href
     if (url.includes('chat')){
         const chat_id = JSON.parse(document.getElementById('chat_id').textContent);
         const user_id = JSON.parse(document.getElementById('user_id').textContent);
-        $(".infinite-container-chat").fadeIn(500).scrollTop($(".infinite-container-chat")[0].scrollHeight);
+        $(".infinite-container-chat").scrollTop($(".infinite-container-chat")[0].scrollHeight);
 
         const chatSocket = new WebSocket(
             'ws://'
@@ -72,6 +62,7 @@ $(function(){
         
         search = $("#search_param").val()
         console.log("there brah", $(".friend-thumb[class*='" + search + "']"))
+        $("#search_param").html("")
         $("#friend-list").prepend($(".friend-thumb[class*='" + search + "']").hide().fadeIn(500))
     })
 
@@ -86,18 +77,6 @@ $(function(){
 $(function(){
     
     if($('.infinite-container-chat')[0]){
-        /* setTimeout(() => {
-            var waypoint = new Waypoint({
-                element: $("#trigger-load")[0],
-                container: $("#after-this")[0],
-                handler: function() {
-                  console.log('triggered')
-                },
-                context: $("#chat-content")[0]
-              })
-            console.log(waypoint)
-        }, 1000); */
-
         setTimeout(() => {
             var infinite_waypoint = new Waypoint.InfinitePrepend({
                 onBeforePageLoad: function () {
@@ -107,85 +86,9 @@ $(function(){
                     $('.spinner-border').hide();
                 },
               })
-            console.log(infinite_waypoint.waypoint)
+              console.log(infinite_waypoint)
         }, 1000);
     }
-
-    /* context: $("#chat-content")[0],
-    element: $("#trigger-load")[0],
-    container: $("#after-this")[0], 
-    
-    offset: 0,
-    items: '.infinite-item',
-    more: '.infinite-more-link',
-    loadingClass: 'infinite-loading',
-    onBeforePageLoad: $.noop,
-    onAfterPageLoad: $.noop */
-    /* if($('.infinite-container-chat')[0]){
-        setTimeout(() => {
-            WaypointConf = {
-                context: $("#chat-content")[0],
-                element: $("#trigger-load")[0],
-                container: $("#after-this")[0], 
-                items: '.infinite-item',
-                more: '.infinite-more-link',
-                loadingClass: 'infinite-loading',
-                onBeforePageLoad: $.noop,
-                onAfterPageLoad: $.noop
-            }
-
-            
-            
-
-            var waypoint = new Waypoint({
-                element: $("#trigger-load")[0],
-                container: $("#after-this")[0],
-                onBeforePageLoad: function () {
-                    $('.spinner-border').show();
-                },
-                onAfterPageLoad: function () {
-                    $('.spinner-border').hide();
-                },
-                handler: function() {
-                  console.log('waypoint hit')
-                    $.proxy(function() {
-                      onBeforePageLoad()
-                      waypoint.destroy()
-                      $("#after-this").addClass(this.options.loadingClass)
-                      
-                      $.get($('.infinite-more-link').attr('href'), $.proxy(function(data) {
-                        var $data = $($.parseHTML(data))
-                        var $newMore = $data.find('.infinite-more-link')
-                
-                        var $items = $data.find('.infinite-item')
-                        if (!$items.length) {
-                          $items = $data.filter('.infinite-item')
-                        }
-                
-                        $("#after-this").after($items)
-                        $("#after-this").removeClass(this.options.loadingClass)
-                
-                        if (!$newMore.length) {
-                          $newMore = $data.filter('.infinite-more-link')
-                        }
-                        if ($newMore.length) {
-                          $('.infinite-more-link').replaceWith($newMore)
-                          $more = $newMore
-                          waypoint = new Waypoint(this.options)
-                        }
-                        else {
-                          this.$more.remove()
-                        }
-                
-                        this.options.onAfterPageLoad($items)
-                      }, this))
-                    }, this)
-                  
-                },
-                context: $("#chat-content")[0]
-              })
-        }, 1000);
-    } */
 })
 
 function generate_chat_message(data, user_id) {

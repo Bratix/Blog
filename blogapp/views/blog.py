@@ -9,12 +9,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from django.db.models import Count, DateTimeField
+from django.db.models.functions import Trunc
+from django.db.models import Exists, OuterRef
 
 
 class BlogDetail(generic.ListView):
     
     model = Post
-    paginate_by = 4
+    paginate_by = 10
     context_object_name = 'posts'
     template_name = 'blog/detail.html'
     
@@ -35,7 +38,16 @@ class BlogDetail(generic.ListView):
 
     def get_queryset(self):
         blog_id = self.kwargs['pk']
-        return Post.objects.filter(blog__id = blog_id).order_by('-title')
+        return  Post.objects.annotate(like_count=Count('likes', distinct=True), 
+                                        comment_count=Count('comment', distinct=True),
+                                        interactions=Count('likes', distinct=True)+Count('comment', distinct=True),  
+                                        liked=Exists(Post.likes.through.objects.filter(
+                                                        post_id = OuterRef('pk'),
+                                                        user_id = self.request.user.id
+                                                        )
+                                                    )
+                                    ).filter(blog__id = blog_id
+                                    ).order_by(Trunc('creation_date', 'day', output_field=DateTimeField()).desc(), '-interactions')  
 
 class BlogCreate(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')

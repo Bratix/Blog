@@ -27,7 +27,8 @@ urlpatterns = [
     path('register/', views.Registration.as_view(), name = "register"),
     path('',include('blogapp.urls')),
     path('chat/', include('chat.urls')),
-    path("ckeditor5/", include('django_ckeditor_5.urls')) 
+    path("ckeditor5/", include('django_ckeditor_5.urls')) ,
+    path('__debug__/', include('debug_toolbar.urls')),
     #path('djrichtextfield/', include('djrichtextfield.urls'))
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

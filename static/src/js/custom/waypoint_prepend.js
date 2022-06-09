@@ -25,7 +25,7 @@
       this.options.handler = $.proxy(function() {
         console.log("waypoint hit")
         this.options.onBeforePageLoad()
-        //this.destroy()
+        this.waypoint.disable()
         this.$container.addClass(this.options.loadingClass)
         
         $.get($(this.options.more).attr('href'), $.proxy(function(data) {
@@ -46,7 +46,7 @@
           if ($newMore.length) {
             this.$more.replaceWith($newMore)
             this.$more = $newMore
-            //this.waypoint = new Waypoint(this.options)
+            this.waypoint.enable()
           }
           else {
             this.destroy()
@@ -70,7 +70,7 @@
       context: $("#chat-content")[0],
       element: $("#trigger-load")[0],
       container: $("#after-this")[0],
-      offset: -100,
+      offset: 200,
       items: '.infinite-item',
       more: '.infinite-more-link',
       loadingClass: 'infinite-loading',

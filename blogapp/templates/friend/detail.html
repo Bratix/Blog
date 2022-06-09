@@ -17,7 +17,7 @@
             <div class="intro-y blog col-span-12 grid grid-cols-12 gap-6 m-3 infinite-container"> 
                 
                 {% for profile in friends %}
-                    <a href="{% url 'blog:profile_detail' profile.id %}" class="intro-y blog col-span-3 gap-6 m-10 infinite-item">
+                    <a href="{% url 'blog:profile_detail' profile.id %}" class=" blog col-span-3 gap-6 m-10 infinite-item">
                         {% include 'partials/common/user_thumb.html' with profile=profile %}
                     </a>
                 {% endfor %}

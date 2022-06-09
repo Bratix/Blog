@@ -45,7 +45,7 @@
         "tom-select": "^1.7.5",
         "velocity-animate": "^1.5.2",
         "waypoints": "^4.0.1",
-        "xlsx": "^0.16.6",
+        "xlsx": "^0.17.0",
         "zoom-vanilla.js": "^2.0.6"
     },
     "devDependencies": {

@@ -18,7 +18,7 @@
                         <div class="font-medium py-3"> Search friends: </div>
                         <div class="relative text-gray-700 dark:text-gray-300">
                             <form action="" id="friend_search_form">
-                                <input type="text" id="search_param" class="search__input form-control dark:bg-dark-1 border-transparent placeholder-theme-8" placeholder="Search...">
+                                <input type="text" id="search_param" minlength="3" class="search__input form-control dark:bg-dark-1 border-transparent placeholder-theme-8" placeholder="Search...">
                                 <div class="text-center mt-5">
                                     <button type="submit" class="btn btn-primary w-24" >Search</button>
                                 </div>
@@ -26,8 +26,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="overflow-y-auto scrollbar-hidden pr-1 pt-1" id="friend-list">
-                    {% for user in user.profile.friends.all %}
+                <div class="chat__user-list overflow-y-scroll pr-1 pt-1" id="friend-list">
+                    {% for user in user.profile.friends.all|dictsort:"username" %}
                         {% include "partials/friend_thumb.html" with user=user%}
                     {% endfor %}                  
                 </div>

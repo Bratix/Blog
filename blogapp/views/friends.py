@@ -12,7 +12,7 @@ from django.http import JsonResponse
 class FriendList(LoginRequiredMixin, generic.ListView):
     login_url = reverse_lazy('login')
     model = Profile
-    paginate_by = 4
+    paginate_by = 16
     context_object_name = 'friends'
     template_name = 'friend/detail.html'
     
