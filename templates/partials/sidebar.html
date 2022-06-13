@@ -15,6 +15,7 @@
             </a>
         </li>
         
+        {% if user.is_authenticated %}
         <li>
             <a href="javascript:;" class="side-menu-main side-menu">
                 <div class="side-menu__icon"> <i class="bi bi-layout-text-window-reverse"></i> </div>
@@ -38,6 +39,7 @@
                         </a>
                     </li>
                 {% endfor %}
+                
                 {% for blog in user.moderators.all %}
                     {% if blog not in user.blog_set.all %}
                         <li>
@@ -50,6 +52,7 @@
                         </li>
                     {% endif %}
                 {% endfor %}
+                
 
                 <li>
                     <a href="{% url 'blog:blog_create'  %}" class="side-menu" id="new_blog" >
@@ -89,6 +92,7 @@
 
             </ul>
         </li>
+        {% endif %}
 
         <li>
             <a href="javascript:;" class="side-menu-main side-menu">

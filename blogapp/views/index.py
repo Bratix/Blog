@@ -20,7 +20,20 @@ class IndexView(generic.ListView):
         return context
 
     def get_queryset(self):
-        return Post.objects.annotate(like_count=Count('likes', distinct=True), 
+
+        if self.request.user.is_authenticated:
+            qs = Post.objects.select_related('author__profile').prefetch_related("tags").annotate(like_count=Count('likes', distinct=True), 
+                                        comment_count=Count('comment', distinct=True), 
+                                        interactions=Count('likes', distinct=True)+Count('comment', distinct=True), 
+                                        liked=Exists(Post.likes.through.objects.filter(
+                                                            post_id = OuterRef('pk'),
+                                                            user_id = self.request.user.id
+                                                            )
+                                                    )
+                                        ).filter(blog__in = self.request.user.subscribers.all()
+                                        ).order_by(Trunc('creation_date', 'day', output_field=DateTimeField()).desc(), '-interactions')  
+        else:
+            qs = Post.objects.select_related('author__profile').prefetch_related("tags").annotate(like_count=Count('likes', distinct=True), 
                                     comment_count=Count('comment', distinct=True), 
                                     interactions=Count('likes', distinct=True)+Count('comment', distinct=True), 
                                     liked=Exists(Post.likes.through.objects.filter(
@@ -28,5 +41,5 @@ class IndexView(generic.ListView):
                                                         user_id = self.request.user.id
                                                         )
                                                 )
-                                    ).filter(blog__in = self.request.user.subscribers.all()
-                                    ).order_by(Trunc('creation_date', 'day', output_field=DateTimeField()).desc(), '-interactions')  
+                                    ).all().order_by(Trunc('creation_date', 'day', output_field=DateTimeField()).desc(), '-interactions')  
+        return qs

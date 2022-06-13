@@ -94,7 +94,7 @@ async function chartListener(){
     while (true) {
         last_timestamp = await getNotificationsFeed(last_timestamp);
         console.log(last_timestamp)
-        await delay(1000);
+        await delay(300000);
     }
 } 
 

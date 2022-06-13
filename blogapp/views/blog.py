@@ -26,10 +26,13 @@ class BlogDetail(generic.ListView):
         blog_id = self.kwargs['pk']
         blog = Blog.objects.get(pk=blog_id)
 
-        if self.request.user == blog.author or self.request.user in blog.moderators.all():
-            context['active_tab'] = BLOG + blog_id
-        elif self.request.user in blog.subscribers.all() and self.request.user not in blog.moderators.all():
-            context['active_tab'] = SUBSCRIBED + blog_id
+        if self.request.user.is_authenticated:
+            if self.request.user == blog.author or self.request.user in blog.moderators.all():
+                context['active_tab'] = BLOG + blog_id
+            elif self.request.user in blog.subscribers.all() and self.request.user not in blog.moderators.all():
+                context['active_tab'] = SUBSCRIBED + blog_id
+            else:
+                context['active_tab'] = BROWSE
         else:
             context['active_tab'] = BROWSE
 
