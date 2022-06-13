@@ -2,6 +2,8 @@ from django.contrib.humanize.templatetags.humanize import  intcomma
 from django.shortcuts import redirect
 from django.views import generic
 from .models import Chat, Message
+from blogapp.models import Notification
+from blogapp.views import NOTIFICATION_CHAT
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
@@ -33,6 +35,8 @@ class ChatDetail(LoginRequiredMixin, generic.ListView):
         chat = Chat.objects.get(pk=chat_id)
         if (chat.user1 != self.request.user and chat.user2 != self.request.user) or chat.active == False :
             return redirect("blog:index")
+
+        Notification.objects.filter(Q(user = self.request.user) & Q(type = NOTIFICATION_CHAT) & Q(url = request.get_full_path())).delete()
         return super(ChatDetail, self).get(self, request, *args, **kwargs)
 
 class ChatSideMenu(LoginRequiredMixin,  generic.View):

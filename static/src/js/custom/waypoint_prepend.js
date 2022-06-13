@@ -70,7 +70,7 @@
       context: $("#chat-content")[0],
       element: $("#trigger-load")[0],
       container: $("#after-this")[0],
-      offset: 200,
+      offset: 150,
       items: '.infinite-item',
       more: '.infinite-more-link',
       loadingClass: 'infinite-loading',

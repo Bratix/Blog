@@ -5,6 +5,8 @@ from channels.generic.websocket import WebsocketConsumer
 from requests import request
 from .models import Chat, Message
 from django.contrib.auth.models import User
+from django.db.models import Q
+from django.utils.timezone import now
 
 import sys
 sys.path.append("..")
@@ -58,16 +60,27 @@ class ChatConsumer(WebsocketConsumer):
 
         if self.current_user == self.chat.user1:
             notify_user = self.chat.user2
+            thumb_image = self.chat.user1.profile.image.url
         else:
             notify_user = self.chat.user1
+            thumb_image = self.chat.user2.profile.image.url
         
-        Notification.objects.create(
-            user = notify_user,
-            title = "New chat message",
-            url = url,
-            text = self.current_user.username + ": " + message,
-            type = NOTIFICATION_CHAT
-        )
+        notification = Notification.objects.filter(Q(type=NOTIFICATION_CHAT) & Q(url = url)).first()
+        
+        if notification:
+            notification.text = self.current_user.username + ": " + message
+            notification.created_at = now()
+            notification.save()
+            
+        else: 
+            Notification.objects.create(
+                user = notify_user,
+                thumb_image = thumb_image,
+                title = "New message",
+                url = url,
+                text = self.current_user.username + ": " + message,
+                type = NOTIFICATION_CHAT
+            )
 
     def chat_message(self, event):
         message = event['message']

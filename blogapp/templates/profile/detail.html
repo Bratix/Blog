@@ -29,6 +29,7 @@
             </div>
             {% elif profile.user in user.profile.friends.all %}
                 <div class="flex mt-4 lg:mt-0 request_options" >
+                    <a href="{{ chat_url }}" class="btn btn-primary py-1 px-2 mr-2"> <i class="bi bi-chat-dots mr-2"></i> Chat </a>
                     <a href="javascript:;" data-href="{% url 'blog:delete_friend' profile.id %}" class="btn btn-primary py-1 px-2 mr-2 add-remove-friend"> <i class="bi bi-person-dash mr-2"></i> Remove friend </a>
                 </div>
                 <div id="success_note" class="hidden text-gray-600 text-xs mt-0.5 text-center">

@@ -6,4 +6,5 @@ from .profile import *
 from .categories import *
 from .search import *
 from .friends import *
+from .notification import *
 from .constants import *

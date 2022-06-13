@@ -1,10 +1,11 @@
+from django.dispatch import receiver
 from django.views import generic, View
 from django.shortcuts import render
 from ..models import Friend_Request, Profile, Notification
 from chat.models import Chat
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .constants import FRIEND_REQUEST, FRIENDS, NOTIFICATION_FRIEND_REQUEST
+from .constants import FRIEND_REQUEST, FRIENDS, NOTIFICATION_FRIEND_REQUEST, NOTIFICATION_FRIEND_REQUEST_ACCEPTED
 from django.urls import reverse, reverse_lazy
 from django.http import JsonResponse
 
@@ -15,7 +16,11 @@ class FriendList(LoginRequiredMixin, generic.ListView):
     paginate_by = 16
     context_object_name = 'friends'
     template_name = 'friend/detail.html'
-    
+
+    def get(self, request, *args, **kwargs):
+        Notification.objects.filter(Q(user = request.user) & Q(type = NOTIFICATION_FRIEND_REQUEST_ACCEPTED)).delete()
+        return super().get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['active_tab'] = FRIENDS
@@ -30,6 +35,10 @@ class RecievedFriendRequestList(LoginRequiredMixin, generic.ListView):
     paginate_by = 20
     context_object_name = 'friend_requests'
     template_name = 'friend_request/recieved.html'
+
+    def get(self, request, *args, **kwargs):
+        Notification.objects.filter(Q(user = request.user) & Q(type = NOTIFICATION_FRIEND_REQUEST)).delete()
+        return super().get(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -70,12 +79,22 @@ class AcceptFriendRequest(LoginRequiredMixin, View):
                 inactive_chat = Chat.objects.filter(
                     ((Q(user1 = friend_request.submitter) & Q(user2 = friend_request.reciever)) | 
                     (Q(user2 = friend_request.submitter) & Q(user1 = friend_request.reciever))) & Q(active=False) ).first()
+                
+                Notification.objects.create(
+                    user = friend_request.submitter,
+                    thumb_image = friend_request.reciever.profile.image.url,
+                    title = "Friend request accepted",
+                    url = reverse('blog:profile_detail', args=[friend_request.reciever.profile.id]),
+                    text = friend_request.reciever.username + " accepted your friend request",
+                    type = NOTIFICATION_FRIEND_REQUEST_ACCEPTED
+                )
+
 
                 if inactive_chat: 
                     inactive_chat.active = True
                     inactive_chat.save()
                 else:
-                    chat = Chat.objects.create(
+                    Chat.objects.create(
                         user1 = friend_request.submitter,
                         user2 = friend_request.reciever
                     )
@@ -127,6 +146,7 @@ class SendFriendRequest(LoginRequiredMixin, View):
 
                 Notification.objects.create(
                     user = reciever,
+                    thumb_image = request.user.profile.image.url,
                     title = "New friend request",
                     url = reverse('blog:recieved_friend_requests'),
                     text = request.user.username + " sent you a friend request",

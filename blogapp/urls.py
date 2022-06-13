@@ -50,13 +50,12 @@ urlpatterns = [
     path('friend-request/cancel/<pk>',  views.CancelFriendRequest.as_view(), name="cancel_friend_request" ),
     path('friend-request/send/<pk>',  views.SendFriendRequest.as_view(), name="send_friend_request" ),
     path('friend-request/delete/<pk>',  views.DeleteFriend.as_view(), name="delete_friend" ),
-    # #view/categories
-    # path('view/categories', views.CategoryView.as_view(), name = "category"),
-    # #view/categories/1
-    # path('view/categories/<pk>', views.BlogsbyCategoryView.as_view(), name = "category_detail"),
+   
+    #Notifications
+    path('notifications',  views.GetNotifications.as_view(), name="notifications"),
+    path('notifications/new/<last_time>', views.NewNotifications.as_view() , name="new_notifications"),
+    path('notification/delete/<pk>', views.DeleteNotification.as_view() ,name="delete_notifications")
 
-    # #view/search/tags
-    # path('view/search/tags', views.PostSearchByTag.as_view(), name = 'search_tag'),
 
 ]
 
