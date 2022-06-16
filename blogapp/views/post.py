@@ -58,7 +58,7 @@ class PostLike(View):
 
 class PostCreate(CreateView):
     model = Post
-    fields = ['title','text','image','tags']
+    fields = ['title', 'subtitle', 'text', 'image', 'tags']
     template_name = "post/add.html"
 
     def get(self, request, *args, **kwargs):

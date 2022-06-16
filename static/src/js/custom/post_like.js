@@ -4,7 +4,6 @@ $(function(){
         $(this).hide();
         var url = $(this).data("href");
         var token = $("input[name='csrfmiddlewaretoken']").val();
-        console.log(token)
         $.ajax({
             type: "POST",
             headers: {

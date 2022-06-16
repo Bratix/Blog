@@ -23,7 +23,6 @@
     /* Private */
     InfinitePrepend.prototype.setupHandler = function() {
       this.options.handler = $.proxy(function() {
-        console.log("waypoint hit")
         this.options.onBeforePageLoad()
         this.waypoint.disable()
         this.$container.addClass(this.options.loadingClass)
@@ -61,7 +60,6 @@
     /* Public */
     InfinitePrepend.prototype.destroy = function() {
       if (this.waypoint) {
-        console.log("destroyed waypoint")
         this.waypoint.destroy()
       }
     }

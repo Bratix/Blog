@@ -6,6 +6,7 @@ app_name = "blog"
 urlpatterns = [
     #home page
     path('', views.IndexView.as_view(), name = "index"),
+    path('popular', views.Popular.as_view(), name= "popular"),
 
     #Blog
     path('blog/create', views.BlogCreate.as_view(), name = "blog_create"),
@@ -41,6 +42,8 @@ urlpatterns = [
     path('search/blog', views.BlogSearch.as_view(), name="search_blog"),
     path('search/post', views.PostSearch.as_view(), name="search_post"),
     path('search/profile', views.ProfileSearch.as_view(), name="search_profile"),
+    path('search/post-by-tags/<tag>', views.TagSearch.as_view(), name="search_tag"),
+    path('search/my-posts', views.UserPostSearch.as_view(), name="search_post_by_user"),
 
     #Friend request
     path('friends', views.FriendList.as_view(), name="friend_list" ),

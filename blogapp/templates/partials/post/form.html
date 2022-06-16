@@ -9,6 +9,9 @@
         {% with WIDGET_ERROR_CLASS='has-error' WIDGET_REQUIRED_CLASS='my_required' %}
         {% render_field form.title class="intro-y form-control py-3 px-4 box pr-10 placeholder-theme-8"  placeholder="Title" value=post.title %}
         <div class="text-red-500 hover:p-1">{{form.title.errors}}</div>
+
+        {% render_field form.subtitle class="intro-y form-control py-3 px-4 box pr-10 placeholder-theme-8 mt-4" rows="4"  placeholder="Subtitle" value=post.subtitle %}
+        <div class="text-red-500 hover:p-1">{{form.subtitle.errors}}</div>
         <div class="post intro-y overflow-hidden box mt-5">
             <div class="post__content tab-content">
                 <div id="content" class="tab-pane p-5 active" role="tabpanel" aria-labelledby="content-tab">

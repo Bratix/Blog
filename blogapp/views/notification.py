@@ -17,7 +17,7 @@ from dateutil import parser
 class GetNotifications(LoginRequiredMixin, View):
     login_url = reverse_lazy('login')
     def get(self, request, *args, **kwargs):
-        #if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.user.is_authenticated :
             notifications = Notification.objects.filter(Q(user=request.user))
 
             data = json.loads(serializers.serialize('json',notifications))          
@@ -27,7 +27,7 @@ class GetNotifications(LoginRequiredMixin, View):
 class NewNotifications(LoginRequiredMixin, View):
     login_url = reverse_lazy('login')
     def get(self, request, *args, **kwargs):
-        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.user.is_authenticated :
             last_time =parser.isoparse(kwargs.get('last_time'))
             notifications = Notification.objects.filter(Q(user=request.user) & Q(created_at__gte =last_time + timedelta(seconds=1)))
             data = json.loads(serializers.serialize('json',notifications))         

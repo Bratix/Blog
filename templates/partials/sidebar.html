@@ -5,9 +5,17 @@
         <li>
             <a href="{% url 'blog:index'  %}" class="side-menu-main side-menu" id="browse" >
                 <div class="side-menu__icon"> <i class="bi bi-house"></i> </div>
-                <div class="side-menu__title"> Browse </div>
+                <div class="side-menu__title"> Home </div>
             </a>
         </li>
+
+        <li>
+            <a href="{% url 'blog:popular'  %}" class="side-menu-main side-menu" id="popular" >
+                <div class="side-menu__icon"> <i class="bi bi-arrow-up-right-circle"></i> </div>
+                <div class="side-menu__title"> Popular </div>
+            </a>
+        </li>
+
         <li>
             <a href="{% url 'chat:chat_index'  %}" class="side-menu-main side-menu" id="chat" >
                 <div class="side-menu__icon"> <i class="bi bi-chat-dots"></i> </div>
@@ -92,6 +100,13 @@
 
             </ul>
         </li>
+
+        <li>
+            <a href="{% url 'blog:search_post_by_user'  %}" class="side-menu-main side-menu" id="my_posts" >
+                <div class="side-menu__icon"> <i class="bi bi-file-earmark-post"></i> </div>
+                <div class="side-menu__title"> My posts </div>
+            </a>
+        </li>
         {% endif %}
 
         <li>
@@ -118,6 +133,7 @@
             </ul>
         </li>
 
+        {% if user.is_authenticated %}
         <li>
             <a href="{% url 'blog:friend_list'  %}" class="side-menu-main side-menu" id="friends" >
                 <div class="side-menu__icon"> <i class="bi bi-people"></i> </div>
@@ -131,7 +147,7 @@
                 <div class="side-menu__title"> Friend requests </div>
             </a>
         </li>
-
+        {% endif %}
 
     </ul>
 </nav>

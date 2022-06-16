@@ -29,8 +29,6 @@ class BlogDetail(generic.ListView):
         if self.request.user.is_authenticated:
             if self.request.user == blog.author or self.request.user in blog.moderators.all():
                 context['active_tab'] = BLOG + blog_id
-            elif self.request.user in blog.subscribers.all() and self.request.user not in blog.moderators.all():
-                context['active_tab'] = SUBSCRIBED + blog_id
             else:
                 context['active_tab'] = BROWSE
         else:
@@ -41,16 +39,29 @@ class BlogDetail(generic.ListView):
 
     def get_queryset(self):
         blog_id = self.kwargs['pk']
-        return  Post.objects.annotate(like_count=Count('likes', distinct=True), 
-                                        comment_count=Count('comment', distinct=True),
-                                        interactions=Count('likes', distinct=True)+Count('comment', distinct=True),  
+        if self.request.user.is_authenticated:
+            qs = Post.objects.select_related('author__profile').prefetch_related("tags").annotate(like_count=Count('likes', distinct=True), 
+                                        comment_count=Count('comment', distinct=True), 
+                                        interactions=Count('likes', distinct=True)+Count('comment', distinct=True), 
                                         liked=Exists(Post.likes.through.objects.filter(
+                                                            post_id = OuterRef('pk'),
+                                                            user_id = self.request.user.id
+                                                            )
+                                                    )
+                                        ).filter(blog__id = blog_id
+                                        ).order_by(Trunc('creation_date', 'day', output_field=DateTimeField()).desc(), '-interactions')  
+        else:
+            qs = Post.objects.select_related('author__profile').prefetch_related("tags").annotate(like_count=Count('likes', distinct=True), 
+                                    comment_count=Count('comment', distinct=True), 
+                                    interactions=Count('likes', distinct=True)+Count('comment', distinct=True), 
+                                    liked=Exists(Post.likes.through.objects.filter(
                                                         post_id = OuterRef('pk'),
                                                         user_id = self.request.user.id
                                                         )
-                                                    )
+                                                )
                                     ).filter(blog__id = blog_id
                                     ).order_by(Trunc('creation_date', 'day', output_field=DateTimeField()).desc(), '-interactions')  
+        return  qs 
 
 class BlogCreate(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')

@@ -32,7 +32,7 @@ $(function(){
 
         document.querySelector('#chat-message-input').focus();
         document.querySelector('#chat-message-input').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // enter, return
+            if (e.keyCode === 13) { 
                 document.querySelector('#chat-message-submit').click();
             }
         };
@@ -61,15 +61,12 @@ $(function(){
         e.preventDefault();
         
         search = $("#search_param").val()
-        console.log("there brah", $(".friend-thumb[class*='" + search + "']"))
         $("#search_param").html("")
         $("#friend-list").prepend($(".friend-thumb[class*='" + search + "']").hide().fadeIn(500))
     })
 
     $(".friend-thumb").on('click', function(){
-        console.log(this)
         url = this.getAttribute('data-href')
-        console.log(url)
         window.location.href = url;
     })
 })
@@ -86,7 +83,6 @@ $(function(){
                     $('.spinner-border').hide();
                 },
               })
-              console.log(infinite_waypoint)
         }, 1000);
     }
 })

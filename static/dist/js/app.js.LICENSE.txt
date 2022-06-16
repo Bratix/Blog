@@ -5,25 +5,6 @@
 */
 
 /*!
- * 
- * litepicker.umd.js
- * Litepicker v2.0.12 (https://github.com/wakirin/Litepicker)
- * Package: litepicker (https://www.npmjs.com/package/litepicker)
- * License: MIT (https://github.com/wakirin/Litepicker/blob/master/LICENCE.md)
- * Copyright 2019-2021 Rinat G.
- *     
- * Hash: 504eef9c08cb42543660
- * 
- */
-
-/*!
- * Chart.js v2.9.4
- * https://www.chartjs.org
- * (c) 2020 Chart.js Contributors
- * Released under the MIT License
- */
-
-/*!
  * Sizzle CSS Selector Engine v2.3.6
  * https://sizzlejs.com/
  *
@@ -55,12 +36,6 @@
  *
  * Date: 2021-03-02T17:08Z
  */
-
-/*!
-FullCalendar v5.10.2
-Docs & License: https://fullcalendar.io/
-(c) 2021 Adam Shaw
-*/
 
 /*!
 Waypoints - 4.0.1
@@ -577,7 +552,3 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
 * (c) 2017-2021 atomiks
 * MIT License
 */
-
-//! moment.js
-
-//! moment.js locale configuration

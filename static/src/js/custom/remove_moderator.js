@@ -15,7 +15,6 @@ $(function(){
             },
             url: url,
         }).done(function(data){
-            console.log(data)
             $("#" + hide).removeClass("intro-x").fadeOut(500)
         })
     });

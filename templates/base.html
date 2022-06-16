@@ -30,6 +30,7 @@ License: You must have a valid license purchased only from themeforest(the above
         
         {% include "partials/top_bar.html" %}
         <div class="wrapper">
+            {% include 'partials/notification.html' %}
             <div class="wrapper-box">
                 {% if user.is_authenticated %}
                 {% include "partials/sidebar.html" %}

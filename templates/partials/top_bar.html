@@ -9,9 +9,12 @@
         <!-- BEGIN: Breadcrumb -->
         <div class="-intro-x breadcrumb mr-auto"> </div>
         <!-- END: Breadcrumb -->
+        {% if user.is_authenticated %}
         {% include "partials/top_bar/search.html" %}
         {% include "partials/top_bar/notifications.html" %}
+        {% endif %}
         {% include "partials/top_bar/account_menu.html" %}
+        
         
         
     </div>

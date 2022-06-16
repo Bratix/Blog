@@ -1,5 +1,4 @@
 function newNotification(notification, pk) {
-    console.log(notification)
     let html_notification
     let date = new Date(notification.created_at);
 
@@ -16,14 +15,12 @@ function newNotification(notification, pk) {
             },
         };
         $.ajax(settings).done(function (response) {
-            console.log(response)
         });
 
         return
     }
 
     if ($('#notification-' + pk).length > 0) {
-        console.log('#notification' + pk)
         html_notification = $('#notification-' + pk)
     } else {
         html_notification = $("#empty-notification").clone().removeClass("hidden").attr('id',"notification-" + pk);
@@ -52,6 +49,10 @@ async function getNotifications(){
             let notification = newNotification(element.fields, element.pk)
             $("#notifications").after(notification)
         });
+
+        if (response.length > 0){
+            $("#notification-dropdown").addClass('notification--bullet')
+        }
     });
     return last_timestamp
 }
@@ -70,6 +71,9 @@ async function getNotificationsFeed(last_timestamp){
                 let notification = newNotification(element.fields, element.pk)
                 $("#notifications").after(notification)
             });
+
+            $("#notification-dropdown").addClass('notification--bullet')
+                        
         }                
     });
     return last_timestamp
@@ -82,7 +86,7 @@ async function delay(ms) {
 }
   
 
-async function chartListener(){
+async function notificationListener(){
     let last_timestamp = await getNotifications()
     await delay(1000);
 
@@ -90,22 +94,26 @@ async function chartListener(){
         let date = new Date();
         last_timestamp = date.toISOString()
     }
-    console.log(last_timestamp)
+    
     while (true) {
         last_timestamp = await getNotificationsFeed(last_timestamp);
-        console.log(last_timestamp)
-        await delay(300000);
+        await delay(1000);
     }
 } 
 
 
 $(function(){
     $(document).on('click', '.notification-thumb', function(){
-        console.log(this)
         let url = $(this).find("#title").attr('href')
         window.location.pathname = url
     })
 
-    chartListener()
+    $("#notification-dropdown").on('click', function(){
+        $(this).removeClass('notification--bullet')
+    })
+
+    if ($("#notification-dropdown").length > 0){
+        notificationListener()
+    }
 })
   

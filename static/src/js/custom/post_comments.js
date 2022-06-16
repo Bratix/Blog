@@ -17,7 +17,6 @@ $(function(){
         }
 
         var url = $(this).data("action");
-        console.log(url)
         var token = $("input[name='csrfmiddlewaretoken']").val();
         $.ajax({
             type: "POST",
@@ -34,7 +33,6 @@ $(function(){
             $('#comment_text').val("");
             $('.comment-count').hide();
             $('.comment-count').text(data.comment_count).fadeIn(1000);
-            console.log(data);
 
             let comment = generate_comment(data)
             
@@ -50,7 +48,6 @@ $(function(){
 
         let target = $(this).attr('data-update-form')
         let comment_main = $(this).attr('data-hide')
-        console.log("#" + target)
         $("#" + comment_main).hide();
         $("#" + target).fadeIn(500);   
                 
@@ -63,11 +60,9 @@ $(function(){
         var url = $(this).data("action");
         let comment_main = $("#" + $(this).attr('data-show'))
         let form = $(this)
-        console.log(url)
         var token = $("input[name='csrfmiddlewaretoken']").val();
 
         var text = $(this).find('#comment_text').val();
-        console.log(text)
         if(text===" " || text===""){
             $("#comment_form_notification").trigger('click');
             return
@@ -98,7 +93,6 @@ $(function(){
         e.preventDefault();
         e.stopImmediatePropagation();
         var url = $(this).attr("action");
-        console.log(url)
         var token = $("input[name='csrfmiddlewaretoken']").val();
         var current_comment_count = $(".comment-count:first").text();
         $.ajax({
@@ -113,7 +107,6 @@ $(function(){
         })
         
         let div = $(this).data("div");
-        console.log(div)
         $('#' + div).fadeOut(400);
         setTimeout(() => {
             $('#' + div).remove;

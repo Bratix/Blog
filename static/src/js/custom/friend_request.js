@@ -4,7 +4,6 @@ $(function(){
         var url = $(this).data("href");
         let show = $(this).data("show");
         var token = $("input[name='csrfmiddlewaretoken']").val();
-        console.log(token)
         let request_options_buttons = $(this).closest('.request_options')
         $.ajax({
             type: "POST",
@@ -14,7 +13,6 @@ $(function(){
             },
             url: url,
         }).done(function(data){
-            console.log(data)
             request_options_buttons.hide(300)
             $("#" + show).fadeIn(300)
         })
@@ -38,7 +36,6 @@ $(function(){
                 $("#success_note").html(data.message).fadeIn(300)
             }
                 
-            console.log(data)
             request_options_buttons.hide()
             $("#success_note").fadeIn(300)
         })

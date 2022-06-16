@@ -4,6 +4,7 @@ from ..models import Blog, Post, Profile
 from django.db.models import Q, Count, DateTimeField
 from django.db.models.functions import Trunc
 from django.db.models import Exists, OuterRef
+from .constants import MY_POSTS
 
 class IndexSearch(generic.View):
     def get(self, request):
@@ -17,7 +18,6 @@ class IndexSearch(generic.View):
                                                         user_id = self.request.user.id
                                                         )
                                                 )
-                                    ).filter(blog__in = self.request.user.subscribers.all()
                                     ).order_by(Trunc('creation_date', 'day', output_field=DateTimeField()).desc(), '-interactions')[:3], 
             'profiles': Profile.objects.filter(
                 Q(user__username__icontains = search_param) | 
@@ -61,7 +61,6 @@ class PostSearch(generic.ListView):
                                                         user_id = self.request.user.id
                                                         )
                                                 )
-                                    ).filter(blog__in = self.request.user.subscribers.all()
                                     ).order_by(Trunc('creation_date', 'day', output_field=DateTimeField()).desc(), '-interactions')
 
 class ProfileSearch(generic.ListView):
@@ -81,3 +80,54 @@ class ProfileSearch(generic.ListView):
         return Profile.objects.filter(Q(user__username__icontains = search_param) | 
                 Q(first_name__icontains = search_param) |
                 Q(last_name__icontains = search_param)).order_by("user__username")
+
+
+class TagSearch(generic.ListView):
+    model = Post
+    paginate_by = 10
+    context_object_name = 'posts'
+    template_name = 'search/post.html'
+
+    def get_context_data(self, **kwargs):
+        search_param = self.request.GET.get('param')
+        context = super().get_context_data(**kwargs)
+        context['search_param'] =search_param
+        return context
+
+    def get_queryset(self):
+        tag = self.kwargs['tag']
+        return Post.objects.filter(tags__name=tag
+                                    ).annotate(like_count=Count('likes', distinct=True), 
+                                    comment_count=Count('comment', distinct=True), 
+                                    interactions=Count('likes', distinct=True)+Count('comment', distinct=True), 
+                                    liked=Exists(Post.likes.through.objects.filter(
+                                                        post_id = OuterRef('pk'),
+                                                        user_id = self.request.user.id
+                                                        )
+                                                )
+                                    ).filter(
+                                    ).order_by(Trunc('creation_date', 'day', output_field=DateTimeField()).desc(), '-interactions')
+
+class UserPostSearch(generic.ListView):
+    model = Post
+    paginate_by = 10
+    context_object_name = 'posts'
+    template_name = 'search/post.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['active_tab'] = MY_POSTS
+        return context
+
+    def get_queryset(self):
+        user = self.request.user
+        return Post.objects.filter(author = user
+                                    ).annotate(like_count=Count('likes', distinct=True), 
+                                    comment_count=Count('comment', distinct=True), 
+                                    interactions=Count('likes', distinct=True)+Count('comment', distinct=True), 
+                                    liked=Exists(Post.likes.through.objects.filter(
+                                                        post_id = OuterRef('pk'),
+                                                        user_id = self.request.user.id
+                                                        )
+                                                )
+                                    ).order_by(Trunc('creation_date', 'day', output_field=DateTimeField()).desc(), '-interactions')
