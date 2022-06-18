@@ -20,6 +20,7 @@ $(function(){
         var token = $("input[name='csrfmiddlewaretoken']").val();
         $.ajax({
             type: "POST",
+            crossDomain:true,
             headers: {
                 "X-CSRFToken": token,
             },
@@ -69,6 +70,7 @@ $(function(){
         }
 
         $.ajax({
+            crossDomain:true,
             type: "POST",
             headers: {
                 "X-CSRFToken": token,
@@ -96,6 +98,7 @@ $(function(){
         var token = $("input[name='csrfmiddlewaretoken']").val();
         var current_comment_count = $(".comment-count:first").text();
         $.ajax({
+            crossDomain:true,
             type: "POST",
             headers: {
                 "X-CSRFToken": token,

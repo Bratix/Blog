@@ -8,6 +8,7 @@ $(function(){
         $.ajax({
             type: "POST",
             dataType: "json",
+            crossDomain:true,
             headers: {
                 "X-CSRFToken": token,
             },
@@ -26,6 +27,7 @@ $(function(){
         $.ajax({
             type: "POST",
             dataType: "json",
+            crossDomain:true,
             headers: {
                 "X-CSRFToken": token,
             },

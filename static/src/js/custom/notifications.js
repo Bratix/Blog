@@ -7,9 +7,10 @@ function newNotification(notification, pk) {
         var token = $("input[name='csrfmiddlewaretoken']").val();
         
         let settings = {
-            "url": url,
-            "method": "POST",
-            "timeout": 0,
+            url: url,
+            method: "POST",
+            timeout: 0,
+            crossDomain:true,
             headers: {
                 "X-CSRFToken": token,
             },
@@ -38,9 +39,10 @@ function newNotification(notification, pk) {
 async function getNotifications(){
     let url = "http://localhost:8000/notifications"
     let settings = {
-        "url": url,
-        "method": "GET",
-        "timeout": 0
+        url: url,
+        method: "GET",
+        crossDomain:true,
+        timeout: 0
     };
     let last_timestamp
     await $.ajax(settings).done(function (response) {
@@ -60,9 +62,9 @@ async function getNotifications(){
 async function getNotificationsFeed(last_timestamp){
     let url = "http://localhost:8000/notifications/new/" + last_timestamp
     let settings = {
-        "url": url,
-        "method": "GET",
-        "timeout": 0,
+        url: url,
+        method: "GET",
+        timeout: 0,
     };
     await $.ajax(settings).done(function (response) {
         if (response.length > 0) {

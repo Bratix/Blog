@@ -5,6 +5,7 @@ $(function(){
         var url = $(this).data("href");
         var token = $("input[name='csrfmiddlewaretoken']").val();
         $.ajax({
+            crossDomain:true,
             type: "POST",
             headers: {
                 "X-CSRFToken": token,

@@ -8,6 +8,7 @@ $(function(){
         var token = $("input[name='csrfmiddlewaretoken']").val();
         let hide = $(this).data("hide")
         $.ajax({
+            crossDomain:true,
             type: "POST",
             dataType: "json",
             headers: {

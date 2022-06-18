@@ -6,6 +6,7 @@ $(function(){
         $.ajax({
             type: "GET",
             dataType: "json",
+            crossDomain:true,
             url: url,
         }).done(function(data){
             if (data.status === 'unsubbed'){
