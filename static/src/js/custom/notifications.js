@@ -43,7 +43,6 @@ async function getNotifications(){
         method: "GET",
         timeout: 0
     };
-    console.log(url)
     let last_timestamp
     await $.ajax(settings).done(function (response) {
         response.forEach( element => {
