@@ -26,7 +26,7 @@ SECRET_KEY = 'odatc$y9k!mots3pka2h*bg1%olxps7m2pik=-$c)x=f7j=4tb'
 DEBUG = True
 DJANGO_TOOLBAR = False
 
-ALLOWED_HOSTS = []
+CORS_ORIGIN_ALLOW_ALL=True
 
 
 # Application definition
@@ -150,10 +150,7 @@ LOGOUT_REDIRECT_URL = 'login'
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['http://67.207.76.151:8000', 'http://localhost:8000']
-CORS_ALLOWED_ORIGINS = [
-'http://67.207.76.151:8000',
-"http://localhost:8000",
-]
+
 
 # Channels
 ASGI_APPLICATION = 'chat.asgi.application'
