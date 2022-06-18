@@ -2,6 +2,7 @@ version: "3.9"
    
 services:
   db:
+    restart: always
     image: postgres
     volumes:
       - ./data/db:/var/lib/postgresql/data
@@ -15,6 +16,7 @@ services:
     build: 
       context: .
       dockerfile: ./build/dockerfile
+    restart: always
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
@@ -29,6 +31,7 @@ services:
       - db
       - redis
   redis:
+    restart: always
     image: redis:6.2-alpine
     ports:
       - "6379:6379"
