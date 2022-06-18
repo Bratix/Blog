@@ -3873,6 +3873,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+console.log(ajax_url);
 
 /***/ }),
 
@@ -4234,13 +4235,12 @@ function newNotification(notification, pk) {
   var date = new Date(notification.created_at);
 
   if (notification.url.includes('chat') && notification.url === window.location.pathname) {
-    var url = "http://localhost:8000/notification/delete/" + pk;
+    var url = ajax_url + "notification/delete/" + pk;
     var token = $("input[name='csrfmiddlewaretoken']").val();
     var settings = {
       url: url,
       method: "POST",
       timeout: 0,
-      crossDomain: true,
       headers: {
         "X-CSRFToken": token
       }
@@ -4274,14 +4274,14 @@ function _getNotifications() {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            url = "http://localhost:8000/notifications";
+            url = ajax_url + "notifications";
             settings = {
               url: url,
               method: "GET",
-              crossDomain: true,
               timeout: 0
             };
-            _context.next = 4;
+            console.log(url);
+            _context.next = 5;
             return $.ajax(settings).done(function (response) {
               response.forEach(function (element) {
                 last_timestamp = element.fields.created_at;
@@ -4294,10 +4294,10 @@ function _getNotifications() {
               }
             });
 
-          case 4:
+          case 5:
             return _context.abrupt("return", last_timestamp);
 
-          case 5:
+          case 6:
           case "end":
             return _context.stop();
         }
@@ -4318,7 +4318,7 @@ function _getNotificationsFeed() {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            url = "http://localhost:8000/notifications/new/" + last_timestamp;
+            url = ajax_url + "notifications/new/" + last_timestamp;
             settings = {
               url: url,
               method: "GET",
