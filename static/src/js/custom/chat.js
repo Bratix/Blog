@@ -6,8 +6,7 @@ $(function(){
         const user_id = JSON.parse(document.getElementById('user_id').textContent);
         $(".infinite-container-chat").scrollTop($(".infinite-container-chat")[0].scrollHeight);
 
-        //let ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-        let ws_scheme = 'ws';
+        let ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
         const chatSocket = new WebSocket(
             ws_scheme 
             + '://'
