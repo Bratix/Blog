@@ -151,7 +151,8 @@ LOGOUT_REDIRECT_URL = 'login'
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['http://67.207.76.151:8000', 'http://localhost:8000']
 CORS_ALLOWED_ORIGINS = [
-"*",
+'http://67.207.76.151:8000',
+"http://localhost:8000",
 ]
 
 # Channels
