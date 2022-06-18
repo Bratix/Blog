@@ -83,7 +83,7 @@ class AcceptFriendRequest(LoginRequiredMixin, View):
                 Notification.objects.create(
                     user = friend_request.submitter,
                     thumb_image = friend_request.reciever.profile.image.url,
-                    title = "Friend request accepted",
+                    title = "New friend",
                     url = reverse('blog:profile_detail', args=[friend_request.reciever.profile.id]),
                     text = friend_request.reciever.username + " accepted your friend request",
                     type = NOTIFICATION_FRIEND_REQUEST_ACCEPTED
