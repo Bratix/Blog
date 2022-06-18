@@ -149,7 +149,10 @@ LOGOUT_REDIRECT_URL = 'login'
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['http://67.207.76.151:8000', 'http://localhost:8000']
+CSRF_TRUSTED_ORIGINS = [
+    'http://67.207.76.151:8000', 
+    'http://localhost:8000', 
+    'https://blogo.projects.eastsquare.com/']
 
 
 # Channels

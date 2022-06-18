@@ -24,7 +24,7 @@ services:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - AJAX_URL=http://67.207.76.151:8000/
+      - AJAX_URL=https://blogo.projects.eastsquare.com/
     depends_on:
       - db
       - redis
