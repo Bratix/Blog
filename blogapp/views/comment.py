@@ -25,7 +25,6 @@ class CommentCreate(CreateView):
         form.instance.post = Post.objects.get(pk=self.kwargs['pk'])
         response = super(CommentCreate, self).form_valid(form)
 
-        #if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
         data = {
             'pk' : self.object.pk,
             'text' : self.object.text,
@@ -37,8 +36,6 @@ class CommentCreate(CreateView):
             'delete_link' : reverse("blog:comment_delete", args=[self.object.pk])
         }
         return JsonResponse(data)
-        #else:
-            #return response
 
         
 
@@ -57,7 +54,6 @@ class CommentUpdate(UpdateView):
         form.instance.edit_date = datetime.datetime.now()
         response = super(CommentUpdate, self).form_valid(form)
 
-        #if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
         data = {
             'pk' : self.object.pk,
             'text' : self.object.text,
@@ -67,8 +63,6 @@ class CommentUpdate(UpdateView):
             'comment_count' : self.object.post.comment_set.count(),
         }
         return JsonResponse(data)
-        #else:
-            #return response
 
 class CommentDelete(DeleteView):
     model = Comment

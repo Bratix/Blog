@@ -31,29 +31,28 @@ class PostSearchByTag(generic.ListView):
     def get_queryset(self):
         wanted_tag = self.request.GET.get('search').split(",")
         return Post.objects.filter(tags__name__in = wanted_tag ).distinct()
-        #return Post.objects.filter(functools.reduce(or_, [Q(tags__name__icontains=q) for q in wanted_tag]))
 
 class PostLike(View):
     def post(self, request, *args, **kwargs):
-        #if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            post_id = kwargs.get('pk')
-            post = Post.objects.get(id = post_id)
-            user = request.user
-            user_like = False
-            if user.is_authenticated:
-                if user in post.likes.all() :
-                    post.likes.remove(user)
-                    user_like = False
-                else:
-                    post.likes.add(user)
-                    user_like = True
-            
-            like_number = intcomma(post.likes.count())
-            data = {
-                'like_counter': like_number,
-                'user_like' : user_like,
-            }
-            return JsonResponse(data)
+       
+        post_id = kwargs.get('pk')
+        post = Post.objects.get(id = post_id)
+        user = request.user
+        user_like = False
+        if user.is_authenticated:
+            if user in post.likes.all() :
+                post.likes.remove(user)
+                user_like = False
+            else:
+                post.likes.add(user)
+                user_like = True
+        
+        like_number = intcomma(post.likes.count())
+        data = {
+            'like_counter': like_number,
+            'user_like' : user_like,
+        }
+        return JsonResponse(data)
     
 
 class PostCreate(CreateView):

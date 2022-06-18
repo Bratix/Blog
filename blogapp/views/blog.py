@@ -117,24 +117,24 @@ class BlogDelete(LoginRequiredMixin ,DeleteView):
 class BlogSubscribe(LoginRequiredMixin , generic.View):
     login_url = reverse_lazy('login')
     def get(self, request, *args, **kwargs): 
-        #if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            blog_id =self.kwargs['pk']
-            blog = Blog.objects.get(pk = blog_id)
+        
+        blog_id =self.kwargs['pk']
+        blog = Blog.objects.get(pk = blog_id)
 
-            if self.request.user in blog.subscribers.all():
-                blog.subscribers.remove(request.user)
-                status = 'unsubbed'
-            else:
-                blog.subscribers.add(request.user)
-                status = 'subbed'
+        if self.request.user in blog.subscribers.all():
+            blog.subscribers.remove(request.user)
+            status = 'unsubbed'
+        else:
+            blog.subscribers.add(request.user)
+            status = 'subbed'
 
-            data = {
-                'blog' : blog.title,
-                'subscribers' : intcomma(blog.subscribers.all().count()),
-                'request_user': request.user.username,
-                'status' : status
-            }
-            return JsonResponse(data)
+        data = {
+            'blog' : blog.title,
+            'subscribers' : intcomma(blog.subscribers.all().count()),
+            'request_user': request.user.username,
+            'status' : status
+        }
+        return JsonResponse(data)
 
 class AddModerators(LoginRequiredMixin , generic.View):
 
@@ -163,17 +163,17 @@ class AddModerators(LoginRequiredMixin , generic.View):
 
 class RemoveModerator(LoginRequiredMixin, generic.View): 
     def post(self, request, *args, **kwargs):
-        #if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            blog = Blog.objects.get(id=self.kwargs['pk'])
         
-            if blog.author != request.user:
-                return redirect("blog:index")
-            moderator = User.objects.get(id=self.kwargs['moderator_pk'])
-            
-            blog.moderators.remove(moderator)
-            blog.subscribers.remove(moderator)
-            data = {
-                'status' : 'success'
-            }
-            return JsonResponse(data)
+        blog = Blog.objects.get(id=self.kwargs['pk'])
+    
+        if blog.author != request.user:
+            return redirect("blog:index")
+        moderator = User.objects.get(id=self.kwargs['moderator_pk'])
         
+        blog.moderators.remove(moderator)
+        blog.subscribers.remove(moderator)
+        data = {
+            'status' : 'success'
+        }
+        return JsonResponse(data)
+    

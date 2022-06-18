@@ -66,121 +66,117 @@ class SentFriendRequestList(LoginRequiredMixin, generic.ListView):
 class AcceptFriendRequest(LoginRequiredMixin, View):
     login_url = reverse_lazy('login')
     def post(self, request, *args, **kwargs):
-        #if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            friend_request_id = kwargs.get('pk')
-            friend_request = Friend_Request.objects.get(id = friend_request_id)
+        friend_request_id = kwargs.get('pk')
+        friend_request = Friend_Request.objects.get(id = friend_request_id)
 
-            if request.user.is_authenticated and request.user == friend_request.reciever :
-                friend_request.submitter.profile.friends.add(friend_request.reciever)
-                friend_request.reciever.profile.friends.add(friend_request.submitter)
-                friend_request.submitter.profile.pending_friends.remove(friend_request.reciever)
-                friend_request.active = False
-                friend_request.save()
-                inactive_chat = Chat.objects.filter(
-                    ((Q(user1 = friend_request.submitter) & Q(user2 = friend_request.reciever)) | 
-                    (Q(user2 = friend_request.submitter) & Q(user1 = friend_request.reciever))) & Q(active=False) ).first()
-                
-                Notification.objects.create(
-                    user = friend_request.submitter,
-                    thumb_image = friend_request.reciever.profile.image.url,
-                    title = "New friend",
-                    url = reverse('blog:profile_detail', args=[friend_request.reciever.profile.id]),
-                    text = friend_request.reciever.username + " accepted your friend request",
-                    type = NOTIFICATION_FRIEND_REQUEST_ACCEPTED
+        if request.user.is_authenticated and request.user == friend_request.reciever :
+            friend_request.submitter.profile.friends.add(friend_request.reciever)
+            friend_request.reciever.profile.friends.add(friend_request.submitter)
+            friend_request.submitter.profile.pending_friends.remove(friend_request.reciever)
+            friend_request.active = False
+            friend_request.save()
+            inactive_chat = Chat.objects.filter(
+                ((Q(user1 = friend_request.submitter) & Q(user2 = friend_request.reciever)) | 
+                (Q(user2 = friend_request.submitter) & Q(user1 = friend_request.reciever))) & Q(active=False) ).first()
+            
+            Notification.objects.create(
+                user = friend_request.submitter,
+                thumb_image = friend_request.reciever.profile.image.url,
+                title = "New friend",
+                url = reverse('blog:profile_detail', args=[friend_request.reciever.profile.id]),
+                text = friend_request.reciever.username + " accepted your friend request",
+                type = NOTIFICATION_FRIEND_REQUEST_ACCEPTED
+            )
+
+
+            if inactive_chat: 
+                inactive_chat.active = True
+                inactive_chat.save()
+            else:
+                Chat.objects.create(
+                    user1 = friend_request.submitter,
+                    user2 = friend_request.reciever
                 )
 
-
-                if inactive_chat: 
-                    inactive_chat.active = True
-                    inactive_chat.save()
-                else:
-                    Chat.objects.create(
-                        user1 = friend_request.submitter,
-                        user2 = friend_request.reciever
-                    )
-
-                data = {
-                'status': 'success'
-                }
-            
-            return JsonResponse(data)
+            data = {
+            'status': 'success'
+            }
+        
+        return JsonResponse(data)
 
 class CancelFriendRequest(LoginRequiredMixin, View):
     login_url = reverse_lazy('login')
     def post(self, request, *args, **kwargs):
-        #if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            friend_request_id = kwargs.get('pk')
-            friend_request = Friend_Request.objects.get(id = friend_request_id)
+        friend_request_id = kwargs.get('pk')
+        friend_request = Friend_Request.objects.get(id = friend_request_id)
 
-            if request.user.is_authenticated and (request.user == friend_request.reciever or request.user == friend_request.submitter):
-                friend_request.active = False
-                friend_request.submitter.profile.pending_friends.remove(friend_request.reciever)
-                friend_request.save()
-                data = {
-                'status': 'success'
-                }
-            
-            return JsonResponse(data)
+        if request.user.is_authenticated and (request.user == friend_request.reciever or request.user == friend_request.submitter):
+            friend_request.active = False
+            friend_request.submitter.profile.pending_friends.remove(friend_request.reciever)
+            friend_request.save()
+            data = {
+            'status': 'success'
+            }
+        
+        return JsonResponse(data)
 
 class SendFriendRequest(LoginRequiredMixin, View):
     login_url = reverse_lazy('login')
     def post(self, request, *args, **kwargs):
-        #if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            reciever_id = kwargs.get('pk')
-            reciever = Profile.objects.get(pk=reciever_id)
-            reciever = reciever.user
+        reciever_id = kwargs.get('pk')
+        reciever = Profile.objects.get(pk=reciever_id)
+        reciever = reciever.user
 
-            friend_requests = Friend_Request.objects.filter(
-                (Q(reciever = reciever) & Q(submitter = request.user) &  Q(active = True))  |
-                (Q(reciever = request.user) & Q(submitter = reciever) & Q(active = True))
+        friend_requests = Friend_Request.objects.filter(
+            (Q(reciever = reciever) & Q(submitter = request.user) &  Q(active = True))  |
+            (Q(reciever = request.user) & Q(submitter = reciever) & Q(active = True))
+        )
+
+
+        if not (len(friend_requests) > 0) and reciever != request.user:
+            Friend_Request.objects.create(
+                submitter = request.user,
+                reciever = reciever,
+                active = True
             )
+            request.user.profile.pending_friends.add(reciever)
 
-
-            if not (len(friend_requests) > 0) and reciever != request.user:
-                Friend_Request.objects.create(
-                    submitter = request.user,
-                    reciever = reciever,
-                    active = True
-                )
-                request.user.profile.pending_friends.add(reciever)
-
-                Notification.objects.create(
-                    user = reciever,
-                    thumb_image = request.user.profile.image.url,
-                    title = "New friend request",
-                    url = reverse('blog:recieved_friend_requests'),
-                    text = request.user.username + " sent you a friend request",
-                    type = NOTIFICATION_FRIEND_REQUEST
-                )
-                data = {
-                    "status" : 'success'
-                }
-            else:
-                data = { 
-                    "status" : 'failed',
-                    "message" : 'This friend request already exists or this user sent you a friend request already'
-                }
-            
-            return JsonResponse(data)
+            Notification.objects.create(
+                user = reciever,
+                thumb_image = request.user.profile.image.url,
+                title = "New friend request",
+                url = reverse('blog:recieved_friend_requests'),
+                text = request.user.username + " sent you a friend request",
+                type = NOTIFICATION_FRIEND_REQUEST
+            )
+            data = {
+                "status" : 'success'
+            }
+        else:
+            data = { 
+                "status" : 'failed',
+                "message" : 'This friend request already exists or this user sent you a friend request already'
+            }
+        
+        return JsonResponse(data)
 
 class DeleteFriend(LoginRequiredMixin, View):
     login_url = reverse_lazy('login')
     def post(self, request, *args, **kwargs):
-        #if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            reciever_id = kwargs.get('pk')
-            reciever = Profile.objects.get(pk=reciever_id)
+        reciever_id = kwargs.get('pk')
+        reciever = Profile.objects.get(pk=reciever_id)
 
-            request.user.profile.friends.remove(reciever.user)
-            reciever.friends.remove(request.user)
-            print("Reciever : ", reciever.user, "Submitter:", request.user)
-            active_chat = Chat.objects.filter(
-                ((Q(user1 = request.user) & Q(user2 = reciever.user)) | 
-                (Q(user2 = request.user) & Q(user1 = reciever.user))) & Q(active=True) ).first()
-            print(active_chat)
-            active_chat.active = False
-            active_chat.save()
+        request.user.profile.friends.remove(reciever.user)
+        reciever.friends.remove(request.user)
+        print("Reciever : ", reciever.user, "Submitter:", request.user)
+        active_chat = Chat.objects.filter(
+            ((Q(user1 = request.user) & Q(user2 = reciever.user)) | 
+            (Q(user2 = request.user) & Q(user1 = reciever.user))) & Q(active=True) ).first()
+        print(active_chat)
+        active_chat.active = False
+        active_chat.save()
 
-            data = {
-                "status" : 'success'
-            }
-            return JsonResponse(data)
+        data = {
+            "status" : 'success'
+        }
+        return JsonResponse(data)
