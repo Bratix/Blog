@@ -25,20 +25,20 @@ class CommentCreate(CreateView):
         form.instance.post = Post.objects.get(pk=self.kwargs['pk'])
         response = super(CommentCreate, self).form_valid(form)
 
-        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            data = {
-                'pk' : self.object.pk,
-                'text' : self.object.text,
-                'user' : str(self.object.author),
-                'image' : "random",
-                'creation_date' : naturaltime(self.object.creation_date),
-                'comment_count' : intcomma(self.object.post.comment_set.count()),
-                'update_link' : reverse("blog:comment_update", args=[self.object.pk]),
-                'delete_link' : reverse("blog:comment_delete", args=[self.object.pk])
-            }
-            return JsonResponse(data)
-        else:
-            return response
+        #if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        data = {
+            'pk' : self.object.pk,
+            'text' : self.object.text,
+            'user' : str(self.object.author),
+            'image' : "random",
+            'creation_date' : naturaltime(self.object.creation_date),
+            'comment_count' : intcomma(self.object.post.comment_set.count()),
+            'update_link' : reverse("blog:comment_update", args=[self.object.pk]),
+            'delete_link' : reverse("blog:comment_delete", args=[self.object.pk])
+        }
+        return JsonResponse(data)
+        #else:
+            #return response
 
         
 
@@ -57,18 +57,18 @@ class CommentUpdate(UpdateView):
         form.instance.edit_date = datetime.datetime.now()
         response = super(CommentUpdate, self).form_valid(form)
 
-        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            data = {
-                'pk' : self.object.pk,
-                'text' : self.object.text,
-                'user' : str(self.object.author),
-                'creation_date' : naturaltime(self.object.edit_date),
-                'edited' : self.object.edited,
-                'comment_count' : self.object.post.comment_set.count(),
-            }
-            return JsonResponse(data)
-        else:
-            return response
+        #if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        data = {
+            'pk' : self.object.pk,
+            'text' : self.object.text,
+            'user' : str(self.object.author),
+            'creation_date' : naturaltime(self.object.edit_date),
+            'edited' : self.object.edited,
+            'comment_count' : self.object.post.comment_set.count(),
+        }
+        return JsonResponse(data)
+        #else:
+            #return response
 
 class CommentDelete(DeleteView):
     model = Comment

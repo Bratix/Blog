@@ -35,7 +35,7 @@ class PostSearchByTag(generic.ListView):
 
 class PostLike(View):
     def post(self, request, *args, **kwargs):
-        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        #if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             post_id = kwargs.get('pk')
             post = Post.objects.get(id = post_id)
             user = request.user

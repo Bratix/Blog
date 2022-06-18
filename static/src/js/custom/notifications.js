@@ -3,14 +3,14 @@ function newNotification(notification, pk) {
     let date = new Date(notification.created_at);
 
     if (notification.url.includes('chat') && notification.url === window.location.pathname){
-        let url = "http://localhost:8000/notification/delete/" + pk
+        let url = ajax_url + "notification/delete/" + pk
+        
         var token = $("input[name='csrfmiddlewaretoken']").val();
         
         let settings = {
             url: url,
             method: "POST",
             timeout: 0,
-            crossDomain:true,
             headers: {
                 "X-CSRFToken": token,
             },
@@ -37,13 +37,13 @@ function newNotification(notification, pk) {
 }
 
 async function getNotifications(){
-    let url = "http://localhost:8000/notifications"
+    let url = ajax_url + "notifications"
     let settings = {
         url: url,
         method: "GET",
-        crossDomain:true,
         timeout: 0
     };
+    console.log(url)
     let last_timestamp
     await $.ajax(settings).done(function (response) {
         response.forEach( element => {
@@ -60,7 +60,7 @@ async function getNotifications(){
 }
 
 async function getNotificationsFeed(last_timestamp){
-    let url = "http://localhost:8000/notifications/new/" + last_timestamp
+    let url = ajax_url + "notifications/new/" + last_timestamp
     let settings = {
         url: url,
         method: "GET",

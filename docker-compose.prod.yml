@@ -24,7 +24,7 @@ services:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - AJAX_URL=http://localhost:8000/
+      - AJAX_URL=http://67.207.76.151:8000/
     depends_on:
       - db
       - redis

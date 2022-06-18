@@ -117,7 +117,7 @@ class BlogDelete(LoginRequiredMixin ,DeleteView):
 class BlogSubscribe(LoginRequiredMixin , generic.View):
     login_url = reverse_lazy('login')
     def get(self, request, *args, **kwargs): 
-        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        #if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             blog_id =self.kwargs['pk']
             blog = Blog.objects.get(pk = blog_id)
 
@@ -163,7 +163,7 @@ class AddModerators(LoginRequiredMixin , generic.View):
 
 class RemoveModerator(LoginRequiredMixin, generic.View): 
     def post(self, request, *args, **kwargs):
-        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        #if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             blog = Blog.objects.get(id=self.kwargs['pk'])
         
             if blog.author != request.user:
