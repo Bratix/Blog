@@ -11,3 +11,4 @@ django-debug-toolbar
 django-cleanup
 django-unused-media
 python-dateutil
+django-cors-headers

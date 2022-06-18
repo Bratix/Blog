@@ -47,12 +47,14 @@ INSTALLED_APPS = [
     'django_ckeditor_5',
     "debug_toolbar",
     'django_cleanup.apps.CleanupConfig',
-    'django_unused_media'
+    'django_unused_media',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -147,7 +149,10 @@ LOGOUT_REDIRECT_URL = 'login'
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://diplomski-tfb.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ['http://67.207.76.151:8000']
+CORS_ALLOWED_ORIGINS = [
+"http://67.207.76.151:8000",
+]
 
 # Channels
 ASGI_APPLICATION = 'chat.asgi.application'
