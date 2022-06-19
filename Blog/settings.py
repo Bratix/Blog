@@ -73,6 +73,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'blogapp.context_processors.load_categories',
+                'blogapp.context_processors.load_url',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
