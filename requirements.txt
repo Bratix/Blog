@@ -1,4 +1,4 @@
-Django==3.2.13
+Django==3.2.18
 uwsgi
 django-taggit
 django_widget_tweaks
