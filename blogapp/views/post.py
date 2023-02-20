@@ -81,7 +81,7 @@ class PostCreate(CreateView):
 
 class PostUpdate(UpdateView):
     model = Post
-    fields = ['title','text','image','tags']
+    fields = ['title', 'subtitle', 'text','image','tags']
     template_name = "post/edit.html"
 
     def get(self, request, *args, **kwargs):
