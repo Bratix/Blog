@@ -24,7 +24,7 @@ class BlogDetail(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         blog_id = self.kwargs['pk']
-        blog = Blog.objects.get(pk=blog_id)
+        blog = Blog.objects.annotate(subscriber_count=Count('subscribers')).get(pk=blog_id)
 
         if self.request.user.is_authenticated:
             if self.request.user == blog.author or self.request.user in blog.moderators.all():
